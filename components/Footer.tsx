@@ -20,10 +20,13 @@ export default function Footer() {
                 </span>
               </div>
             </div>
-            <p className="text-navy-300 max-w-md leading-relaxed mb-6">
-              A dedicated team of volunteers providing professional search and
-              rescue services to Pierce County, Washington. Available 24/7 to
-              respond when our community needs us.
+            <p className="text-navy-300 max-w-md leading-relaxed mb-4">
+              100% volunteer. 100% free. Available 24/7/365 to respond when our
+              community needs us. Working alongside Pierce County Sheriff&apos;s Department,
+              Tacoma Police Department, and Pierce County Emergency Management.
+            </p>
+            <p className="text-rescue-orange font-semibold text-sm mb-6">
+              All rescue services provided at no charge.
             </p>
             {/* Social Links */}
             <div className="flex space-x-4">
@@ -82,7 +85,8 @@ export default function Footer() {
                 { name: 'Home', href: '#hero' },
                 { name: 'Mission', href: '#mission' },
                 { name: 'Services', href: '#services' },
-                { name: 'Capabilities', href: '#capabilities' },
+                { name: 'Safety Resources', href: '#safety' },
+                { name: 'Partners', href: '#partners' },
                 { name: 'Gallery', href: '#gallery' },
                 { name: 'Contact', href: '#contact' },
               ].map((link) => (

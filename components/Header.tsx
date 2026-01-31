@@ -6,7 +6,8 @@ const navItems = [
   { name: 'Home', href: '#hero' },
   { name: 'Mission', href: '#mission' },
   { name: 'Services', href: '#services' },
-  { name: 'Capabilities', href: '#capabilities' },
+  { name: 'Safety', href: '#safety' },
+  { name: 'Partners', href: '#partners' },
   { name: 'Gallery', href: '#gallery' },
   { name: 'Contact', href: '#contact' },
 ]
@@ -34,7 +35,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-8 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'bg-navy-900/95 backdrop-blur-sm shadow-lg'
           : 'bg-transparent'
@@ -59,7 +60,7 @@ export default function Header() {
           </a>
 
           {/* Desktop Navigation */}
-          <ul className="hidden lg:flex items-center space-x-8">
+          <ul className="hidden lg:flex items-center space-x-6">
             {navItems.map((item) => (
               <li key={item.name}>
                 <a

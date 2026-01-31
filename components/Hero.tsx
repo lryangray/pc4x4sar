@@ -22,7 +22,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center"
+      className="relative min-h-screen flex items-center justify-center pt-8"
     >
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
@@ -41,18 +41,31 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 text-center px-4 md:px-8 max-w-5xl mx-auto">
         <div className="animate-fade-in-up">
-          <span className="inline-block bg-rescue-orange/90 text-white text-sm font-semibold px-4 py-2 rounded-full mb-6">
-            Volunteer Search & Rescue Team
-          </span>
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
+            <span className="inline-block bg-rescue-orange/90 text-white text-sm font-semibold px-4 py-2 rounded-full">
+              100% Volunteer
+            </span>
+            <span className="inline-block bg-white/10 backdrop-blur-sm text-white text-sm font-semibold px-4 py-2 rounded-full border border-white/20">
+              24/7/365 Ready to Respond
+            </span>
+          </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 text-shadow leading-tight">
             Pierce County
             <span className="block text-rescue-orange">4x4 Search & Rescue</span>
           </h1>
 
-          <p className="text-lg md:text-xl lg:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl text-gray-200 mb-4 max-w-3xl mx-auto leading-relaxed">
             Dedicated volunteers providing professional search and rescue services
             across Pierce County, Washington. Ready to respond when you need us most.
+          </p>
+
+          <p className="text-base md:text-lg text-gray-300 mb-10 max-w-2xl mx-auto">
+            Working alongside Pierce County Sheriff&apos;s Department, Tacoma Police Department,
+            and Pierce County Emergency Management.
+            <span className="block mt-2 text-rescue-orange font-semibold">
+              All services provided free of charge.
+            </span>
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
