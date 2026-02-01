@@ -25,7 +25,9 @@
       "WebFetch(domain:alpinerescueteam.org)",
       "WebFetch(domain:www.wc4x4sar.org)",
       "WebFetch(domain:www.texsar.org)",
-      "WebFetch(domain:unsplash.com)"
+      "WebFetch(domain:unsplash.com)",
+      "Bash(git remote set-url:*)",
+      "Bash(git push:*)"
     ]
   }
 }
