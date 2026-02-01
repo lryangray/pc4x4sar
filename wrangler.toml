@@ -2,6 +2,15 @@ name = "pc4x4sar"
 main = "worker.js"
 compatibility_date = "2024-01-01"
 
+# Production environment (default)
 [assets]
+directory = "./out"
+binding = "ASSETS"
+
+# Preview environment
+[env.preview]
+name = "pc4x4sar-preview"
+
+[env.preview.assets]
 directory = "./out"
 binding = "ASSETS"
