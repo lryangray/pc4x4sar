@@ -27,7 +27,8 @@
       "WebFetch(domain:www.texsar.org)",
       "WebFetch(domain:unsplash.com)",
       "Bash(git remote set-url:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(git checkout:*)"
     ]
   }
 }
