@@ -1,3 +1,6 @@
 name = "pc4x4sar"
-pages_build_output_dir = "out"
+main = "worker.js"
 compatibility_date = "2024-01-01"
+
+[assets]
+directory = "./out"
