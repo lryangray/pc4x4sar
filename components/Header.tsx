@@ -56,10 +56,9 @@ export default function Header() {
     if (e.key !== 'Tab' || !menuRef.current) return
 
     const focusable = menuRef.current.querySelectorAll<HTMLElement>('a, button')
-    if (focusable.length === 0) return
-
     const first = focusable[0]
     const last = focusable[focusable.length - 1]
+    if (!first || !last) return
 
     if (e.shiftKey && document.activeElement === first) {
       e.preventDefault()
