@@ -14,7 +14,7 @@ const capabilities = [
       'Rescue stretchers and litters',
       'Technical rope rescue gear',
     ],
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&q=75&fm=auto',
     imageAlt: '4x4 rescue vehicle equipped for search and rescue operations',
   },
   {
@@ -27,7 +27,7 @@ const capabilities = [
       'Swift water awareness',
       'GPS navigation & mapping',
     ],
-    image: 'https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=600&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=600&h=400&fit=crop&q=75&fm=auto',
     imageAlt: 'Search and rescue team training in wilderness setting',
   },
   {
@@ -40,7 +40,7 @@ const capabilities = [
       'Drone search assistance',
       'Evidence search protocols',
     ],
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&h=400&fit=crop&q=75&fm=auto',
     imageAlt: 'Mountain terrain typical of search and rescue operations',
   },
 ]
@@ -50,6 +50,11 @@ export default function Capabilities() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
+      if (typeof IntersectionObserver === 'undefined') {
+        setIsVisible(true)
+        return
+      }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

@@ -27,7 +27,7 @@ export default function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1434394354979-a235cd36269d?w=1920&h=1080&fit=crop"
+          src="https://images.unsplash.com/photo-1434394354979-a235cd36269d?w=1920&h=1080&fit=crop&q=75&fm=auto"
           alt="Mount Rainier, Washington - Pierce County 4x4 Search and Rescue service area"
           fill
           className="object-cover"

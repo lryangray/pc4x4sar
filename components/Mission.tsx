@@ -8,6 +8,11 @@ export default function Mission() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
+      if (typeof IntersectionObserver === 'undefined') {
+        setIsVisible(true)
+        return
+      }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -39,7 +44,7 @@ export default function Mission() {
             }`}
           >
             <Image
-              src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&h=600&fit=crop"
+              src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&h=600&fit=crop&q=75&fm=auto"
               alt="Search and rescue team members preparing for a mission"
               fill
               className="object-cover"
