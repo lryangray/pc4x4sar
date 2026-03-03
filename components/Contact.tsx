@@ -8,6 +8,11 @@ export default function Contact() {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
   useEffect(() => {
+      if (typeof IntersectionObserver === 'undefined') {
+        setIsVisible(true)
+        return
+      }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -28,16 +33,28 @@ export default function Contact() {
     e.preventDefault()
     setFormStatus('submitting')
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setFormStatus('success')
-
-    // Reset form
     const form = e.target as HTMLFormElement
-    form.reset()
+    const formData = new FormData(form)
 
-    // Reset status after 3 seconds
-    setTimeout(() => setFormStatus('idle'), 3000)
+    try {
+      const response = await fetch('https://formspree.io/f/PLACEHOLDER_FORM_ID', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Accept: 'application/json',
+        },
+      })
+
+      if (response.ok) {
+        setFormStatus('success')
+        form.reset()
+        setTimeout(() => setFormStatus('idle'), 5000)
+      } else {
+        setFormStatus('error')
+      }
+    } catch {
+      setFormStatus('error')
+    }
   }
 
   return (
@@ -69,6 +86,12 @@ export default function Contact() {
             }`}
           >
             <div className="bg-white rounded-2xl p-8 shadow-lg">
+              {/* TODO: Replace PLACEHOLDER_FORM_ID in handleSubmit with real Formspree ID */}
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+                <p className="text-amber-800 text-sm font-medium">
+                  ⚠️ Contact form is being set up. In the meantime, please reach us directly by phone or email below.
+                </p>
+              </div>
               <h3 className="text-2xl font-bold text-navy-900 mb-6">
                 Send Us a Message
               </h3>
@@ -220,7 +243,10 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="text-navy-900 font-bold text-lg">Phone</h4>
-                    <p className="text-navy-600">(253) 555-0123</p>
+                    {/* TODO: Replace with real SAR phone number */}
+                    <p className="text-navy-600">
+                      <a href="tel:+12535550123" className="hover:text-rescue-orange transition-colors">(253) 555-0123</a>
+                    </p>
                     <p className="text-navy-500 text-sm">
                       Non-emergency inquiries only
                     </p>
@@ -247,7 +273,9 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="text-navy-900 font-bold text-lg">Email</h4>
-                    <p className="text-navy-600">info@piercecounty4x4sar.org</p>
+                    <p className="text-navy-600">
+                      <a href="mailto:info@piercecounty4x4sar.org" className="hover:text-rescue-orange transition-colors">info@piercecounty4x4sar.org</a>
+                    </p>
                     <p className="text-navy-500 text-sm">
                       We respond within 24-48 hours
                     </p>

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=630&fit=crop',
+        url: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=630&fit=crop&q=75&fm=auto',
         width: 1200,
         height: 630,
         alt: 'Pierce County 4x4 Search and Rescue Team in action',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Pierce County 4x4 Search and Rescue',
     description: 'FREE 24/7 volunteer search and rescue serving Pierce County, Washington.',
-    images: ['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=630&fit=crop'],
+    images: ['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=630&fit=crop&q=75&fm=auto'],
   },
   robots: {
     index: true,
@@ -222,10 +222,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="geo.region" content="US-WA" />
-        <meta name="geo.placename" content="Pierce County, Washington" />
-        <meta name="geo.position" content="47.0676;-122.1295" />
-        <meta name="ICBM" content="47.0676, -122.1295" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        />
+        <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="canonical" href="https://pierce-county-4x4-sar.pages.dev" />
         <script
           type="application/ld+json"

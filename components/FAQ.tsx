@@ -35,6 +35,11 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   useEffect(() => {
+      if (typeof IntersectionObserver === 'undefined') {
+        setIsVisible(true)
+        return
+      }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
