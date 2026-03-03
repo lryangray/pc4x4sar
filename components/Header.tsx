@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { scrollToSection } from '@/lib/scroll'
 
 const navItems = [
   { name: 'Home', href: '#hero' },
@@ -71,10 +72,7 @@ export default function Header() {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
+    scrollToSection(href)
     setIsMobileMenuOpen(false)
   }
 

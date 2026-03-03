@@ -1,5 +1,7 @@
 'use client'
 
+import { handleScrollClick } from '@/lib/scroll'
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
@@ -71,12 +73,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      document
-                        .querySelector(link.href)
-                        ?.scrollIntoView({ behavior: 'smooth' })
-                    }}
+                    onClick={(e) => handleScrollClick(e, link.href)}
                     className="text-navy-300 hover:text-rescue-orange transition-colors duration-200"
                   >
                     {link.name}

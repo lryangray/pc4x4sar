@@ -1,66 +1,11 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useScrollVisible } from '@/hooks/useScrollVisible'
+import { galleryImages } from '@/lib/data/content'
 import Image from 'next/image'
 
-const galleryImages = [
-  {
-    src: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=600&fit=crop&q=75&fm=auto',
-    alt: 'Mount Rainier with lake reflection - Pierce County iconic landmark',
-    span: 'md:col-span-2',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1542332213-31f87348057f?w=400&h=400&fit=crop&q=75&fm=auto',
-    alt: 'Pacific Northwest forest trail near Puyallup',
-    span: '',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1509515837298-2c67a3933321?w=400&h=400&fit=crop&q=75&fm=auto',
-    alt: 'Puget Sound waterfront - Tacoma service area',
-    span: '',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=400&fit=crop&q=75&fm=auto',
-    alt: 'Dense forest terrain typical of Carbon River valley searches',
-    span: '',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=600&h=400&fit=crop&q=75&fm=auto',
-    alt: 'Mt. Rainier National Park wilderness where rescue operations occur',
-    span: 'md:col-span-2',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=400&fit=crop&q=75&fm=auto',
-    alt: 'Alpine terrain in the Mt. Rainier foothills',
-    span: '',
-  },
-]
-
 export default function Gallery() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-      if (typeof IntersectionObserver === 'undefined') {
-        setIsVisible(true)
-        return
-      }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
+  const { ref: sectionRef, isVisible } = useScrollVisible(0.2)
 
   return (
     <section
