@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Pierce County 4x4 Search and Rescue | Volunteer SAR Team',
     description: 'FREE 24/7 volunteer search and rescue serving Pierce County, WA. Wilderness rescue, missing person searches, disaster response. Working with Pierce County Sheriff and Emergency Management.',
-    url: 'https://pierce-county-4x4-sar.pages.dev',
+    url: 'https://piercecounty4x4sar.org',
     siteName: 'Pierce County 4x4 Search and Rescue',
     locale: 'en_US',
     type: 'website',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://pierce-county-4x4-sar.pages.dev',
+    canonical: 'https://piercecounty4x4sar.org',
   },
   other: {
     'geo.region': 'US-WA',
@@ -70,7 +70,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         />
         <link rel="preconnect" href="https://images.unsplash.com" />
-        <link rel="canonical" href="https://pierce-county-4x4-sar.pages.dev" />
+        <link rel="canonical" href="https://piercecounty4x4sar.org" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
