@@ -99,8 +99,6 @@ export default function Capabilities() {
             <div
               key={cap.category}
               className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center ${
-                index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-              } ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'

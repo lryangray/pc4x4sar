@@ -10,6 +10,7 @@ import Gallery from '@/components/Gallery'
 import FAQ from '@/components/FAQ'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
+import ErrorBoundary from '@/components/ErrorBoundary'
 
 export default function Home() {
   return (
@@ -18,14 +19,30 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <Mission />
-        <Services />
-        <SafetyResources />
-        <Capabilities />
-        <Partners />
-        <Gallery />
-        <FAQ />
-        <Contact />
+        <ErrorBoundary>
+          <Mission />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Services />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <SafetyResources />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Capabilities />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Partners />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Gallery />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <FAQ />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Contact />
+        </ErrorBoundary>
       </main>
       <Footer />
     </>

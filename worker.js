@@ -7,6 +7,14 @@ export default {
       return handleContactForm(request, env);
     }
 
+    // Health check endpoint for uptime monitoring
+    if (url.pathname === '/api/health') {
+      return new Response(
+        JSON.stringify({ status: 'ok', timestamp: new Date().toISOString() }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Serve static assets with proper headers
     const response = await env.ASSETS.fetch(request);
 
