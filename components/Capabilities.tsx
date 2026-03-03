@@ -1,75 +1,12 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useScrollVisible } from '@/hooks/useScrollVisible'
+import { scrollToSection } from '@/lib/scroll'
+import { capabilities } from '@/lib/data/content'
 import Image from 'next/image'
 
-const capabilities = [
-  {
-    category: 'Vehicles & Equipment',
-    items: [
-      '12 specialized 4x4 rescue vehicles',
-      'ATVs and UTVs for trail access',
-      'Command and communications trailer',
-      'Portable lighting systems',
-      'Rescue stretchers and litters',
-      'Technical rope rescue gear',
-    ],
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&q=75&fm=auto',
-    imageAlt: '4x4 rescue vehicle equipped for search and rescue operations',
-  },
-  {
-    category: 'Training & Certifications',
-    items: [
-      'NASAR certified search technicians',
-      'Wilderness First Responder (WFR)',
-      'Technical rope rescue Level II',
-      'ICS-100 through ICS-400',
-      'Swift water awareness',
-      'GPS navigation & mapping',
-    ],
-    image: 'https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=600&h=400&fit=crop&q=75&fm=auto',
-    imageAlt: 'Search and rescue team training in wilderness setting',
-  },
-  {
-    category: 'Search Capabilities',
-    items: [
-      'Grid search operations',
-      'Tracking and sign cutting',
-      'K-9 search team support',
-      'Night operations capability',
-      'Drone search assistance',
-      'Evidence search protocols',
-    ],
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&h=400&fit=crop&q=75&fm=auto',
-    imageAlt: 'Mountain terrain typical of search and rescue operations',
-  },
-]
-
 export default function Capabilities() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-      if (typeof IntersectionObserver === 'undefined') {
-        setIsVisible(true)
-        return
-      }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
+  const { ref: sectionRef, isVisible } = useScrollVisible(0.2)
 
   return (
     <section
@@ -175,7 +112,7 @@ export default function Capabilities() {
               href="#contact"
               onClick={(e) => {
                 e.preventDefault()
-                document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
+                scrollToSection('#contact')
               }}
               className="btn-primary inline-block"
             >

@@ -1,6 +1,7 @@
-# robots.txt for Pierce County 4x4 Search and Rescue
 User-agent: *
 Allow: /
+Sitemap: https://piercecounty4x4sar.org/sitemap.xml
 
-# Sitemap location
-Sitemap: https://pierce-county-4x4-sar.pages.dev/sitemap.xml
+# Block preview environments from indexing
+User-agent: *
+Disallow: /api/

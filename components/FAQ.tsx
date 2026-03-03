@@ -1,60 +1,13 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-
-const faqs = [
-  {
-    question: 'How do I request search and rescue assistance?',
-    answer: 'In an emergency, always dial 911 first. Our team is dispatched through Pierce County Emergency Management and the Pierce County Sheriff\'s Department. Do not contact us directly for emergencies - 911 dispatchers will coordinate with our team when SAR resources are needed.',
-  },
-  {
-    question: 'What areas does Pierce County 4x4 SAR cover?',
-    answer: 'We serve all of Pierce County, Washington, including the Mt. Rainier foothills, Carbon River area, Puyallup, Tacoma, Lakewood, University Place, Bonney Lake, Buckley, Orting, and surrounding wilderness areas. We also provide mutual aid to neighboring counties when requested.',
-  },
-  {
-    question: 'How much does a search and rescue operation cost?',
-    answer: 'Nothing. All of our services are provided completely free of charge. We are a 501(c)(3) non-profit organization staffed entirely by volunteers. Our operations are funded through donations and grants.',
-  },
-  {
-    question: 'How can I become a volunteer?',
-    answer: 'We welcome new volunteers! No prior experience is required - we provide all necessary training. Attend one of our monthly meetings held on the first Tuesday of each month at 7:00 PM. You\'ll need a reliable 4x4 vehicle, a commitment to training, and a desire to help your community. Contact us through our website to learn more.',
-  },
-  {
-    question: 'What kind of training do volunteers receive?',
-    answer: 'Volunteers receive comprehensive training including wilderness navigation, GPS and mapping, search techniques, emergency first aid, radio communications, off-road driving skills, and incident command system (ICS) protocols. Training is ongoing throughout your membership.',
-  },
-  {
-    question: 'How can I support Pierce County 4x4 SAR?',
-    answer: 'You can support us by making a tax-deductible donation, becoming a corporate sponsor, volunteering your time, or simply spreading the word about outdoor safety. Every contribution helps us maintain our equipment and training programs.',
-  },
-]
+import { useState } from 'react'
+import { useScrollVisible } from '@/hooks/useScrollVisible'
+import { scrollToSection } from '@/lib/scroll'
+import { faqs } from '@/lib/data/content'
 
 export default function FAQ() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
+  const { ref: sectionRef, isVisible } = useScrollVisible(0.1)
   const [openIndex, setOpenIndex] = useState<number | null>(0)
-
-  useEffect(() => {
-      if (typeof IntersectionObserver === 'undefined') {
-        setIsVisible(true)
-        return
-      }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
 
   // Generate FAQ Schema
   const faqSchema = {
@@ -162,7 +115,7 @@ export default function FAQ() {
             href="#contact"
             onClick={(e) => {
               e.preventDefault()
-              document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
+              scrollToSection('#contact')
             }}
             className="btn-primary inline-block"
           >

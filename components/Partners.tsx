@@ -1,50 +1,11 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-
-const partners = [
-  {
-    name: 'Pierce County Sheriff\'s Department',
-    description: 'Our primary coordinating agency for search and rescue operations throughout Pierce County.',
-    type: 'Law Enforcement',
-  },
-  {
-    name: 'Tacoma Police Department',
-    description: 'Partnering on urban search operations and missing person cases within Tacoma city limits.',
-    type: 'Law Enforcement',
-  },
-  {
-    name: 'Pierce County Department of Emergency Management',
-    description: 'Coordinating disaster response and emergency preparedness across the county.',
-    type: 'Emergency Management',
-  },
-]
+import { useScrollVisible } from '@/hooks/useScrollVisible'
+import { scrollToSection } from '@/lib/scroll'
+import { partners } from '@/lib/data/content'
 
 export default function Partners() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-      if (typeof IntersectionObserver === 'undefined') {
-        setIsVisible(true)
-        return
-      }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
+  const { ref: sectionRef, isVisible } = useScrollVisible(0.2)
 
   return (
     <section
@@ -137,7 +98,7 @@ export default function Partners() {
               href="#contact"
               onClick={(e) => {
                 e.preventDefault()
-                document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
+                scrollToSection('#contact')
               }}
               className="btn-primary whitespace-nowrap"
             >

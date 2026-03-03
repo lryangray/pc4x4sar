@@ -1,24 +1,9 @@
 'use client'
 
 import Image from 'next/image'
+import { handleScrollClick } from '@/lib/scroll'
 
 export default function Hero() {
-  const handleScrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    const element = document.querySelector('#contact')
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
-  const handleScrollToMission = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    const element = document.querySelector('#mission')
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
   return (
     <section
       id="hero"
@@ -71,14 +56,14 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="#contact"
-              onClick={handleScrollToContact}
+              onClick={(e) => handleScrollClick(e, "#contact")}
               className="btn-primary text-lg"
             >
               Get In Touch
             </a>
             <a
               href="#mission"
-              onClick={handleScrollToMission}
+              onClick={(e) => handleScrollClick(e, "#mission")}
               className="btn-secondary text-lg"
             >
               Learn More
@@ -91,7 +76,7 @@ export default function Hero() {
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
         <a
           href="#mission"
-          onClick={handleScrollToMission}
+          onClick={(e) => handleScrollClick(e, "#mission")}
           className="text-white/80 hover:text-white transition-colors"
           aria-label="Scroll to mission section"
         >
