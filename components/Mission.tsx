@@ -87,7 +87,7 @@ export default function Mission() {
               </div>
               <div className="text-center">
                 <span className="block text-3xl md:text-4xl font-bold text-rescue-orange">
-                  39
+                  {new Date().getFullYear() - 1985}
                 </span>
                 <span className="text-navy-600 text-sm">Years of Service</span>
               </div>

@@ -41,6 +41,20 @@ export default {
     // Serve static assets
     const response = await env.ASSETS.fetch(request);
 
+    // Serve custom 404 page for missing assets
+    if (response.status === 404) {
+      const notFoundResponse = await env.ASSETS.fetch(new URL('/404.html', request.url));
+      const newHeaders = new Headers(notFoundResponse.headers);
+      for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+        newHeaders.set(key, value);
+      }
+      newHeaders.set('Cache-Control', 'public, max-age=0, must-revalidate');
+      return new Response(notFoundResponse.body, {
+        status: 404,
+        headers: newHeaders,
+      });
+    }
+
     // Clone into a mutable response and add headers
     const newHeaders = new Headers(response.headers);
     for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
