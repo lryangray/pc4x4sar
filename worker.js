@@ -1,29 +1,51 @@
+// Security headers applied to all responses
+const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+};
+
+function addSecurityHeaders(response) {
+  const newResponse = new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: new Headers(response.headers),
+  });
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    newResponse.headers.set(key, value);
+  }
+  return newResponse;
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
     // Handle contact form submissions
     if (url.pathname === '/api/contact' && request.method === 'POST') {
-      return handleContactForm(request, env);
+      const response = await handleContactForm(request, env);
+      return addSecurityHeaders(response);
     }
 
     // Health check endpoint for uptime monitoring
     if (url.pathname === '/api/health') {
-      return new Response(
-        JSON.stringify({ status: 'ok', timestamp: new Date().toISOString() }),
-        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      return addSecurityHeaders(
+        new Response(
+          JSON.stringify({ status: 'ok', timestamp: new Date().toISOString() }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        )
       );
     }
 
-    // Serve static assets with proper headers
+    // Serve static assets
     const response = await env.ASSETS.fetch(request);
 
-    // Add security headers
+    // Clone into a mutable response and add headers
     const newHeaders = new Headers(response.headers);
-    newHeaders.set('X-Content-Type-Options', 'nosniff');
-    newHeaders.set('X-Frame-Options', 'DENY');
-    newHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-    newHeaders.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+      newHeaders.set(key, value);
+    }
 
     // Cache static assets aggressively
     if (url.pathname.match(/\/_next\/static\//)) {
@@ -36,6 +58,7 @@ export default {
 
     return new Response(response.body, {
       status: response.status,
+      statusText: response.statusText,
       headers: newHeaders,
     });
   },
