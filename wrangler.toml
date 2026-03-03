@@ -7,7 +7,7 @@ compatibility_date = "2024-01-01"
 # Then paste the returned id below
 [[kv_namespaces]]
 binding = "CONTACT_SUBMISSIONS"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "c46cf36749f0404eb1f1b2f29e64487f"
 
 # Production environment (default)
 [assets]
