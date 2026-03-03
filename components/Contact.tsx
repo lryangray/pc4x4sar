@@ -37,12 +37,9 @@ export default function Contact() {
     const formData = new FormData(form)
 
     try {
-      const response = await fetch('https://formspree.io/f/PLACEHOLDER_FORM_ID', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         body: formData,
-        headers: {
-          Accept: 'application/json',
-        },
       })
 
       if (response.ok) {
@@ -86,12 +83,6 @@ export default function Contact() {
             }`}
           >
             <div className="bg-white rounded-2xl p-8 shadow-lg">
-              {/* TODO: Replace PLACEHOLDER_FORM_ID in handleSubmit with real Formspree ID */}
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-                <p className="text-amber-800 text-sm font-medium">
-                  ⚠️ Contact form is being set up. In the meantime, please reach us directly by phone or email below.
-                </p>
-              </div>
               <h3 className="text-2xl font-bold text-navy-900 mb-6">
                 Send Us a Message
               </h3>
