@@ -68,7 +68,6 @@ export default function RootLayout({
     foundingDate: '1985',
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+1-253-555-0123',
       contactType: 'customer service',
       areaServed: 'Pierce County, Washington',
       availableLanguage: 'English',
@@ -124,7 +123,6 @@ export default function RootLayout({
     name: 'Pierce County 4x4 Search and Rescue',
     description: 'Volunteer emergency search and rescue team specializing in 4x4 vehicle operations for wilderness and backcountry rescue missions',
     url: 'https://pierce-county-4x4-sar.pages.dev',
-    telephone: '+1-253-555-0123',
     areaServed: {
       '@type': 'GeoCircle',
       geoMidpoint: {
@@ -144,7 +142,6 @@ export default function RootLayout({
     availableChannel: {
       '@type': 'ServiceChannel',
       serviceUrl: 'https://pierce-county-4x4-sar.pages.dev',
-      servicePhone: '+1-253-555-0123',
       availableLanguage: 'English',
     },
     provider: {
@@ -174,7 +171,6 @@ export default function RootLayout({
     name: 'Pierce County 4x4 Search and Rescue',
     description: 'Volunteer search and rescue organization serving Pierce County, Washington',
     url: 'https://pierce-county-4x4-sar.pages.dev',
-    telephone: '+1-253-555-0123',
     email: 'info@piercecounty4x4sar.org',
     address: {
       '@type': 'PostalAddress',
