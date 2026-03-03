@@ -1,6 +1,7 @@
 'use client'
 
 import { useScrollVisible } from '@/hooks/useScrollVisible'
+import { scrollToSection } from '@/lib/scroll'
 
 const safetyTips = [
   {
@@ -174,7 +175,11 @@ export default function SafetyResources() {
           </div>
 
           <p className="text-center text-navy-400 text-sm mt-6">
-            Resources coming soon. Contact us if you&apos;d like to request specific materials.
+            Downloadable resources are being prepared. In the meantime,{' '}
+            <a href="#contact" onClick={() => scrollToSection('#contact')} className="text-rescue-orange hover:underline">
+              contact us
+            </a>{' '}
+            to request specific safety materials.
           </p>
         </div>
       </div>
