@@ -10,8 +10,8 @@ export const organizationSchema = {
   description:
     'Volunteer search and rescue organization providing FREE emergency response services 24/7/365 to Pierce County, Washington',
   url: SITE_URL,
-  logo: `${SITE_URL}/logo.png`,
-  image: `${SITE_URL}/og-image.jpg`,
+  logo: `${SITE_URL}/logo.svg`,
+  image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=630&fit=crop&q=75&fm=auto',
   foundingDate: '1985',
   sameAs: [
     'https://www.facebook.com/PierceCounty4x4SAR',

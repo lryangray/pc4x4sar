@@ -11,13 +11,11 @@ import { useEffect, useRef, useState } from 'react'
  */
 export function useScrollVisible(threshold = 0.2) {
   const ref = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
+  const supportsObserver = typeof IntersectionObserver !== 'undefined'
+  const [isVisible, setIsVisible] = useState(!supportsObserver)
 
   useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') {
-      setIsVisible(true)
-      return
-    }
+    if (!supportsObserver) return
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -34,7 +32,7 @@ export function useScrollVisible(threshold = 0.2) {
     }
 
     return () => observer.disconnect()
-  }, [threshold])
+  }, [threshold, supportsObserver])
 
   return { ref, isVisible }
 }

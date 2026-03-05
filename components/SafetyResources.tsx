@@ -64,19 +64,32 @@ const resources = [
   {
     title: 'Trip Planning Checklist',
     description: 'A comprehensive checklist to prepare for your outdoor adventure.',
-    type: 'PDF',
+    type: 'Guide',
   },
   {
     title: 'Ten Essentials Guide',
     description: 'Detailed guide on what to pack for any outdoor excursion.',
-    type: 'PDF',
+    type: 'Guide',
   },
   {
     title: 'Emergency Signal Guide',
     description: 'Learn how to signal for help if you become lost or injured.',
-    type: 'PDF',
+    type: 'Guide',
   },
 ]
+
+function requestResource(title: string) {
+  scrollToSection('#contact')
+  // Allow scroll to complete, then pre-fill the subject and message
+  setTimeout(() => {
+    const subject = document.getElementById('subject') as HTMLSelectElement | null
+    const message = document.getElementById('message') as HTMLTextAreaElement | null
+    if (subject) subject.value = 'general'
+    if (message && !message.value) {
+      message.value = `I'd like to request a copy of the "${title}" resource. Thank you!`
+    }
+  }, 500)
+}
 
 export default function SafetyResources() {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.1)
@@ -137,19 +150,20 @@ export default function SafetyResources() {
         >
           <div className="text-center mb-8">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
-              Downloadable Resources
+              Safety Guides
             </h3>
             <p className="text-navy-200 max-w-2xl mx-auto">
-              Free guides and checklists to help you prepare for your next outdoor adventure.
-              Share these with friends and family to help everyone stay safe.
+              Request free guides and checklists to help you prepare for your next outdoor adventure.
+              We&apos;ll send them directly to your email.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {resources.map((resource) => (
-              <div
+              <button
                 key={resource.title}
-                className="bg-navy-800 rounded-xl p-6 hover:bg-navy-700 transition-colors group cursor-pointer"
+                onClick={() => requestResource(resource.title)}
+                className="bg-navy-800 rounded-xl p-6 hover:bg-navy-700 transition-colors group cursor-pointer text-left"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold text-rescue-orange bg-rescue-orange/10 px-2 py-1 rounded">
@@ -165,23 +179,18 @@ export default function SafetyResources() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                     />
                   </svg>
                 </div>
                 <h4 className="font-bold text-white mb-2">{resource.title}</h4>
-                <p className="text-navy-300 text-sm">{resource.description}</p>
-              </div>
+                <p className="text-navy-300 text-sm mb-3">{resource.description}</p>
+                <span className="text-rescue-orange text-sm font-medium group-hover:underline">
+                  Request this resource →
+                </span>
+              </button>
             ))}
           </div>
-
-          <p className="text-center text-navy-400 text-sm mt-6">
-            Downloadable resources are being prepared. In the meantime,{' '}
-            <a href="#contact" onClick={() => scrollToSection('#contact')} className="text-rescue-orange hover:underline">
-              contact us
-            </a>{' '}
-            to request specific safety materials.
-          </p>
         </div>
       </div>
     </section>
