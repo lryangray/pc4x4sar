@@ -55,9 +55,10 @@ export default function Gallery() {
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                 sizes="(max-width: 768px) 50vw, 25vw"
               />
-              <div className="absolute inset-0 bg-navy-900/0 group-hover:bg-navy-900/40 transition-colors duration-300" />
-              <div className="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-white text-sm font-medium">{image.alt}</p>
+              {/* Overlay: always visible on touch, hover-only on desktop */}
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 to-transparent md:from-transparent md:to-transparent md:group-hover:from-navy-900/60 transition-colors duration-300" />
+              <div className="absolute inset-0 flex items-end p-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                <p className="text-white text-sm font-medium drop-shadow-md">{image.alt}</p>
               </div>
             </div>
           ))}

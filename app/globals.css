@@ -12,8 +12,18 @@
   }
 
   /* Offset scroll targets for fixed header + emergency banner */
+  :root {
+    --header-offset: 100px;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --header-offset: 140px;
+    }
+  }
+
   section[id] {
-    scroll-margin-top: 140px;
+    scroll-margin-top: var(--header-offset);
   }
 
   /* Respect motion preferences */
@@ -31,7 +41,14 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-rescue-orange hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg;
+    @apply bg-rescue-orange hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg;
+  }
+
+  /* Only scale on devices with hover capability (no layout shift on touch) */
+  @media (hover: hover) {
+    .btn-primary:hover {
+      transform: scale(1.05);
+    }
   }
 
   .btn-secondary {
