@@ -61,12 +61,14 @@ export default function FAQ() {
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-5'
               }`}
-              style={{ transitionDelay: `${index * 75}ms` }}
+              style={{ transitionDelay: `${Math.min(index * 75, 300)}ms` }}
             >
               <button
+                id={`faq-question-${index}`}
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full py-6 flex items-center justify-between text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rescue-orange focus-visible:ring-offset-2 rounded-sm"
                 aria-expanded={openIndex === index}
+                aria-controls={`faq-answer-${index}`}
               >
                 <span className="text-lg font-semibold text-navy-900 pr-8">
                   {faq.question}
@@ -92,6 +94,9 @@ export default function FAQ() {
                 </span>
               </button>
               <div
+                id={`faq-answer-${index}`}
+                role="region"
+                aria-labelledby={`faq-question-${index}`}
                 className={`overflow-hidden transition-all duration-300 ${
                   openIndex === index ? 'max-h-96 pb-6' : 'max-h-0'
                 }`}

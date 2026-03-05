@@ -126,7 +126,7 @@ export default function SafetyResources() {
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'
               }`}
-              style={{ transitionDelay: `${index * 75}ms` }}
+              style={{ transitionDelay: `${Math.min(index * 75, 300)}ms` }}
             >
               <div className="w-12 h-12 bg-rescue-orange/10 rounded-lg flex items-center justify-center text-rescue-orange flex-shrink-0">
                 {tip.icon}

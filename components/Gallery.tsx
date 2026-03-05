@@ -44,7 +44,7 @@ export default function Gallery() {
               }`}
               style={{
                 transition: 'all 0.5s ease-out',
-                transitionDelay: `${index * 75}ms`,
+                transitionDelay: `${Math.min(index * 75, 300)}ms`,
               }}
             >
               <Image

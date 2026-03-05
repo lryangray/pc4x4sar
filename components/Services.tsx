@@ -95,7 +95,7 @@ export default function Services() {
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'
               }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              style={{ transitionDelay: `${Math.min(index * 100, 300)}ms` }}
             >
               <div className="w-16 h-16 bg-rescue-orange/10 rounded-xl flex items-center justify-center text-rescue-orange mb-6">
                 {service.icon}
