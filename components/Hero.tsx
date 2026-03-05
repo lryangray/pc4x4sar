@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center pt-8"
+      className="relative min-h-screen flex items-center justify-center pt-8 bg-noise"
     >
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
@@ -35,7 +35,7 @@ export default function Hero() {
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 text-shadow leading-tight">
+          <h1 className="font-display uppercase tracking-wide text-5xl md:text-7xl lg:text-8xl text-white mb-6 text-shadow leading-none">
             Pierce County
             <span className="block text-rescue-orange">4x4 Search & Rescue</span>
           </h1>
@@ -59,7 +59,7 @@ export default function Hero() {
               onClick={(e) => handleScrollClick(e, "#contact")}
               className="btn-primary text-lg"
             >
-              Get In Touch
+              Get In Touch <span className="btn-arrow">→</span>
             </a>
             <a
               href="#mission"

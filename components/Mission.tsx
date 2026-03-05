@@ -46,7 +46,7 @@ export default function Mission() {
             <span className="text-rescue-orange font-semibold text-sm uppercase tracking-wider">
               Our Mission
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-navy-900 mt-2 mb-6">
+            <h2 className="font-display uppercase tracking-wide text-4xl md:text-5xl lg:text-6xl text-navy-900 mt-2 mb-6">
               Saving Lives Through Dedication & Expertise
             </h2>
             <div className="space-y-4 text-navy-700 text-lg leading-relaxed">

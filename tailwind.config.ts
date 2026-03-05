@@ -29,6 +29,10 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'Impact', 'sans-serif'],
+      },
+      borderWidth: {
+        '3': '3px',
       },
     },
   },
