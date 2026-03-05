@@ -131,3 +131,26 @@ export const capabilities = [
       'Mountain terrain typical of search and rescue operations',
   },
 ]
+
+export const sponsors = [
+  {
+    name: 'Example Sponsor 1',
+    logo: '/sponsors/sponsor-placeholder.svg',
+    url: 'https://example.com',
+  },
+  {
+    name: 'Example Sponsor 2',
+    logo: '/sponsors/sponsor-placeholder.svg',
+    url: 'https://example.com',
+  },
+  {
+    name: 'Example Sponsor 3',
+    logo: '/sponsors/sponsor-placeholder.svg',
+    url: 'https://example.com',
+  },
+  {
+    name: 'Example Sponsor 4',
+    logo: '/sponsors/sponsor-placeholder.svg',
+    url: 'https://example.com',
+  },
+]
