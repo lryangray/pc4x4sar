@@ -43,7 +43,7 @@ export default function Capabilities() {
               }`}
               style={{
                 transition: 'all 0.6s ease-out',
-                transitionDelay: `${index * 150}ms`,
+                transitionDelay: `${Math.min(index * 150, 300)}ms`,
               }}
             >
               {/* Image */}
