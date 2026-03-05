@@ -67,6 +67,8 @@ export default function Footer() {
                 { name: 'Services', href: '#services' },
                 { name: 'Safety Resources', href: '#safety' },
                 { name: 'Capabilities', href: '#capabilities' },
+                { name: 'Partners', href: '#partners' },
+                { name: 'Sponsors', href: '#sponsors' },
                 { name: 'Gallery', href: '#gallery' },
                 { name: 'FAQ', href: '#faq' },
                 { name: 'Contact', href: '#contact' },
