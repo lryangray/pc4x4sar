@@ -107,7 +107,7 @@ export default function SafetyResources() {
           <span className="text-rescue-orange font-semibold text-sm uppercase tracking-wider">
             Stay Safe Outdoors
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-navy-900 mt-2 mb-6">
+          <h2 className="font-display uppercase tracking-wide text-4xl md:text-5xl lg:text-6xl text-navy-900 mt-2 mb-6">
             Safety Resources
           </h2>
           <p className="text-navy-700 text-lg leading-relaxed">

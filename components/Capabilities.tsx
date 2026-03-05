@@ -13,7 +13,7 @@ export default function Capabilities() {
       id="capabilities"
       ref={sectionRef}
       aria-label="Capabilities and Equipment"
-      className="section-padding bg-navy-900 text-white"
+      className="section-padding bg-navy-900 text-white bg-noise"
     >
       <div className="container-custom">
         {/* Header */}
@@ -21,7 +21,7 @@ export default function Capabilities() {
           <span className="text-rescue-orange font-semibold text-sm uppercase tracking-wider">
             Our Resources
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mt-2 mb-6">
+          <h2 className="font-display uppercase tracking-wide text-4xl md:text-5xl lg:text-6xl mt-2 mb-6">
             Capabilities & Equipment
           </h2>
           <p className="text-navy-200 text-lg leading-relaxed">

@@ -75,7 +75,7 @@ export default function Services() {
           <span className="text-rescue-orange font-semibold text-sm uppercase tracking-wider">
             What We Do
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-navy-900 mt-2 mb-6">
+          <h2 className="font-display uppercase tracking-wide text-4xl md:text-5xl lg:text-6xl text-navy-900 mt-2 mb-6">
             Our Services
           </h2>
           <p className="text-navy-700 text-lg leading-relaxed">
@@ -85,9 +85,34 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+        {/* Featured Service */}
+        {services[0] && (
+          <div
+            className={`bg-navy-900 rounded-2xl p-8 md:p-10 mb-8 shadow-xl transition-all duration-700 ${
+              isVisible
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+              <div className="w-20 h-20 bg-rescue-orange rounded-2xl flex items-center justify-center text-white flex-shrink-0">
+                {services[0].icon}
+              </div>
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                  {services[0].title}
+                </h3>
+                <p className="text-navy-200 text-lg leading-relaxed">
+                  {services[0].description}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Remaining Services Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.slice(1).map((service, index) => (
             <div
               key={service.title}
               className={`bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1 ${
@@ -95,15 +120,15 @@ export default function Services() {
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'
               }`}
-              style={{ transitionDelay: `${Math.min(index * 100, 300)}ms` }}
+              style={{ transitionDelay: `${Math.min((index + 1) * 100, 300)}ms` }}
             >
-              <div className="w-16 h-16 bg-rescue-orange/10 rounded-xl flex items-center justify-center text-rescue-orange mb-6">
+              <div className="w-14 h-14 bg-rescue-orange/10 rounded-xl flex items-center justify-center text-rescue-orange mb-5">
                 {service.icon}
               </div>
-              <h3 className="text-xl font-bold text-navy-900 mb-3">
+              <h3 className="text-lg font-bold text-navy-900 mb-2">
                 {service.title}
               </h3>
-              <p className="text-navy-600 leading-relaxed">
+              <p className="text-navy-600 leading-relaxed text-sm">
                 {service.description}
               </p>
             </div>

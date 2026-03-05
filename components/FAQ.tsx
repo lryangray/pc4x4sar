@@ -42,7 +42,7 @@ export default function FAQ() {
           <span className="text-rescue-orange font-semibold text-sm uppercase tracking-wider">
             Common Questions
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-navy-900 mt-2 mb-6">
+          <h2 className="font-display uppercase tracking-wide text-4xl md:text-5xl lg:text-6xl text-navy-900 mt-2 mb-6">
             Frequently Asked Questions
           </h2>
           <p className="text-navy-700 text-lg leading-relaxed">
@@ -101,7 +101,9 @@ export default function FAQ() {
                   openIndex === index ? 'max-h-96 pb-6' : 'max-h-0'
                 }`}
               >
-                <p className="text-navy-600 leading-relaxed">{faq.answer}</p>
+                <div className="border-l-3 border-rescue-orange pl-4 ml-1">
+                  <p className="text-navy-600 leading-relaxed">{faq.answer}</p>
+                </div>
               </div>
             </div>
           ))}
@@ -123,9 +125,9 @@ export default function FAQ() {
               e.preventDefault()
               scrollToSection('#contact')
             }}
-            className="btn-primary inline-block"
+            className="btn-primary"
           >
-            Contact Us
+            Contact Us <span className="btn-arrow">→</span>
           </a>
         </div>
       </div>

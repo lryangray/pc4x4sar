@@ -41,13 +41,20 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-rescue-orange hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg;
+    @apply bg-rescue-orange hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg inline-flex items-center gap-2;
   }
 
-  /* Only scale on devices with hover capability (no layout shift on touch) */
+  .btn-primary .btn-arrow {
+    @apply transition-transform duration-300;
+  }
+
+  /* Only scale + arrow slide on devices with hover capability */
   @media (hover: hover) {
     .btn-primary:hover {
       transform: scale(1.05);
+    }
+    .btn-primary:hover .btn-arrow {
+      transform: translateX(4px);
     }
   }
 
@@ -67,6 +74,23 @@
 @layer utilities {
   .text-shadow {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Noise grain overlay for dark sections */
+  .bg-noise {
+    position: relative;
+  }
+
+  .bg-noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
   }
 
   .animate-fade-in-up {
