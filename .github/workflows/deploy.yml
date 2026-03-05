@@ -29,6 +29,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npx tsc --noEmit
+
       - name: Build
         run: npm run build
 
@@ -91,3 +97,13 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Verify deployment
+        run: |
+          sleep 10
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://piercecounty4x4sar.org/api/health)
+          if [ "$STATUS" != "200" ]; then
+            echo "Health check failed with status $STATUS"
+            exit 1
+          fi
+          echo "Health check passed (HTTP $STATUS)"
