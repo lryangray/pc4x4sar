@@ -1,0 +1,19 @@
+{
+  "name": "Pierce County 4x4 Search and Rescue",
+  "short_name": "PC4x4SAR",
+  "description": "Volunteer search and rescue serving Pierce County, Washington. 24/7/365.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1628",
+  "theme_color": "#0a1628",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["government", "emergency"]
+}
