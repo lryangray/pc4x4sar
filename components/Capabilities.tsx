@@ -12,6 +12,7 @@ export default function Capabilities() {
     <section
       id="capabilities"
       ref={sectionRef}
+      aria-label="Capabilities and Equipment"
       className="section-padding bg-navy-900 text-white"
     >
       <div className="container-custom">
@@ -55,6 +56,7 @@ export default function Capabilities() {
                   src={cap.image}
                   alt={cap.imageAlt}
                   fill
+                  loading="lazy"
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />

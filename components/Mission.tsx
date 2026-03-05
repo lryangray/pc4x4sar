@@ -10,6 +10,7 @@ export default function Mission() {
     <section
       id="mission"
       ref={sectionRef}
+      aria-label="Our Mission"
       className="section-padding bg-white"
     >
       <div className="container-custom">
@@ -24,6 +25,7 @@ export default function Mission() {
               src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&h=600&fit=crop&q=75&fm=auto"
               alt="Search and rescue team members preparing for a mission"
               fill
+              loading="lazy"
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />

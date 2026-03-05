@@ -1,9 +1,27 @@
+const ALLOWED_ORIGIN = 'https://piercecounty4x4sar.org';
+
+// Rate limit: max submissions per IP within the window
+const RATE_LIMIT_MAX = 3;
+const RATE_LIMIT_WINDOW_SECONDS = 60;
+
 // Security headers applied to all responses
 const SECURITY_HEADERS = {
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+  'Content-Security-Policy': [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline'",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com",
+    "img-src 'self' https://images.unsplash.com data:",
+    "connect-src 'self'",
+    "frame-ancestors 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+  ].join('; '),
 };
 
 function addSecurityHeaders(response) {
@@ -18,13 +36,31 @@ function addSecurityHeaders(response) {
   return newResponse;
 }
 
+function corsHeaders(origin) {
+  const allowedOrigin = origin === ALLOWED_ORIGIN ? ALLOWED_ORIGIN : '';
+  return {
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Max-Age': '86400',
+  };
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const origin = request.headers.get('Origin') || '';
+
+    // Handle CORS preflight
+    if (request.method === 'OPTIONS' && url.pathname === '/api/contact') {
+      return addSecurityHeaders(
+        new Response(null, { status: 204, headers: corsHeaders(origin) })
+      );
+    }
 
     // Handle contact form submissions
     if (url.pathname === '/api/contact' && request.method === 'POST') {
-      const response = await handleContactForm(request, env);
+      const response = await handleContactForm(request, env, origin);
       return addSecurityHeaders(response);
     }
 
@@ -78,37 +114,73 @@ export default {
   },
 };
 
-async function handleContactForm(request, env) {
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': new URL(request.url).origin,
+async function checkRateLimit(ip, env) {
+  const key = `ratelimit:${ip}`;
+  const current = await env.CONTACT_SUBMISSIONS.get(key);
+  const count = current ? parseInt(current, 10) : 0;
+
+  if (count >= RATE_LIMIT_MAX) {
+    return false;
+  }
+
+  await env.CONTACT_SUBMISSIONS.put(key, String(count + 1), {
+    expirationTtl: RATE_LIMIT_WINDOW_SECONDS,
+  });
+  return true;
+}
+
+function sanitize(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .trim()
+    .slice(0, 1000);
+}
+
+async function handleContactForm(request, env, origin) {
+  const headers = {
+    ...corsHeaders(origin),
     'Content-Type': 'application/json',
   };
 
   try {
+    // Rate limit check
+    const ip = request.headers.get('cf-connecting-ip') || 'unknown';
+    const allowed = await checkRateLimit(ip, env);
+    if (!allowed) {
+      return new Response(
+        JSON.stringify({ error: 'Too many submissions. Please try again in a minute.' }),
+        { status: 429, headers }
+      );
+    }
+
     const formData = await request.formData();
     const submission = {
-      firstName: formData.get('firstName') || '',
-      lastName: formData.get('lastName') || '',
-      email: formData.get('email') || '',
-      subject: formData.get('subject') || '',
-      message: formData.get('message') || '',
+      firstName: sanitize(formData.get('firstName')),
+      lastName: sanitize(formData.get('lastName')),
+      email: sanitize(formData.get('email')),
+      subject: sanitize(formData.get('subject')),
+      message: sanitize(formData.get('message')),
       submittedAt: new Date().toISOString(),
-      ip: request.headers.get('cf-connecting-ip') || 'unknown',
     };
 
     // Basic validation
     if (!submission.firstName || !submission.email || !submission.message) {
       return new Response(
         JSON.stringify({ error: 'Name, email, and message are required.' }),
-        { status: 400, headers: corsHeaders }
+        { status: 400, headers }
       );
     }
 
-    // Simple email format check
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(submission.email)) {
+    // Email format validation
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(submission.email)) {
       return new Response(
         JSON.stringify({ error: 'Please provide a valid email address.' }),
-        { status: 400, headers: corsHeaders }
+        { status: 400, headers }
       );
     }
 
@@ -121,12 +193,12 @@ async function handleContactForm(request, env) {
 
     return new Response(
       JSON.stringify({ success: true, message: 'Thank you! Your message has been received.' }),
-      { status: 200, headers: corsHeaders }
+      { status: 200, headers }
     );
   } catch (err) {
     return new Response(
       JSON.stringify({ error: 'Something went wrong. Please try again later.' }),
-      { status: 500, headers: corsHeaders }
+      { status: 500, headers }
     );
   }
 }

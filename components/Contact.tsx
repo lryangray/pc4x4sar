@@ -36,6 +36,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
+      aria-label="Contact Us"
       className="section-padding bg-navy-50"
     >
       <div className="container-custom">
@@ -71,7 +72,7 @@ export default function Contact() {
                       htmlFor="firstName"
                       className="block text-navy-700 font-medium mb-2"
                     >
-                      First Name
+                      First Name <span className="text-rescue-red" aria-hidden="true">*</span>
                     </label>
                     <input
                       type="text"
@@ -87,7 +88,7 @@ export default function Contact() {
                       htmlFor="lastName"
                       className="block text-navy-700 font-medium mb-2"
                     >
-                      Last Name
+                      Last Name <span className="text-rescue-red" aria-hidden="true">*</span>
                     </label>
                     <input
                       type="text"
@@ -104,7 +105,7 @@ export default function Contact() {
                     htmlFor="email"
                     className="block text-navy-700 font-medium mb-2"
                   >
-                    Email Address
+                    Email Address <span className="text-rescue-red" aria-hidden="true">*</span>
                   </label>
                   <input
                     type="email"
@@ -120,7 +121,7 @@ export default function Contact() {
                     htmlFor="subject"
                     className="block text-navy-700 font-medium mb-2"
                   >
-                    Subject
+                    Subject <span className="text-rescue-red" aria-hidden="true">*</span>
                   </label>
                   <select
                     id="subject"
@@ -141,7 +142,7 @@ export default function Contact() {
                     htmlFor="message"
                     className="block text-navy-700 font-medium mb-2"
                   >
-                    Message
+                    Message <span className="text-rescue-red" aria-hidden="true">*</span>
                   </label>
                   <textarea
                     id="message"

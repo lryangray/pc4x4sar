@@ -17,7 +17,7 @@ export default function Home() {
     <>
       <EmergencyBanner />
       <Header />
-      <main>
+      <main id="main-content">
         <Hero />
         <ErrorBoundary>
           <Mission />

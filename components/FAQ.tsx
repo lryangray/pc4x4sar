@@ -27,6 +27,7 @@ export default function FAQ() {
     <section
       id="faq"
       ref={sectionRef}
+      aria-label="Frequently Asked Questions"
       className="section-padding bg-white"
     >
       {/* FAQ Schema */}
@@ -64,7 +65,7 @@ export default function FAQ() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full py-6 flex items-center justify-between text-left"
+                className="w-full py-6 flex items-center justify-between text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rescue-orange focus-visible:ring-offset-2 rounded-sm"
                 aria-expanded={openIndex === index}
               >
                 <span className="text-lg font-semibold text-navy-900 pr-8">

@@ -66,6 +66,7 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
+      aria-label="Our Services"
       className="section-padding bg-navy-50"
     >
       <div className="container-custom">

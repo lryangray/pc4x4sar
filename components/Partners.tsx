@@ -11,6 +11,7 @@ export default function Partners() {
     <section
       id="partners"
       ref={sectionRef}
+      aria-label="Our Partners"
       className="section-padding bg-navy-50"
     >
       <div className="container-custom">

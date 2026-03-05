@@ -4,6 +4,8 @@ import {
   organizationSchema,
   emergencyServiceSchema,
   localBusinessSchema,
+  webSiteSchema,
+  breadcrumbSchema,
 } from '@/lib/structured-data'
 
 export const metadata: Metadata = {
@@ -11,6 +13,7 @@ export const metadata: Metadata = {
   description: 'Pierce County 4x4 Search and Rescue provides FREE volunteer emergency search and rescue services 24/7/365. Serving Tacoma, Puyallup, Lakewood, Mt. Rainier foothills, and all Pierce County, Washington. Missing person searches, wilderness rescue, disaster response.',
   keywords: 'search and rescue, SAR, Pierce County, 4x4, emergency response, volunteer, wilderness rescue, Washington State, missing persons, disaster response, Tacoma, Puyallup, Lakewood, Mt Rainier, Bonney Lake, Buckley, Orting, Carbon River, off-road rescue, backcountry rescue',
   authors: [{ name: 'Pierce County 4x4 Search and Rescue' }],
+  applicationName: 'Pierce County 4x4 SAR',
   openGraph: {
     title: 'Pierce County 4x4 Search and Rescue | Volunteer SAR Team',
     description: 'FREE 24/7 volunteer search and rescue serving Pierce County, WA. Wilderness rescue, missing person searches, disaster response. Working with Pierce County Sheriff and Emergency Management.',
@@ -52,6 +55,7 @@ export const metadata: Metadata = {
     'geo.placename': 'Pierce County',
     'geo.position': '47.0676;-122.1295',
     'ICBM': '47.0676, -122.1295',
+    'format-detection': 'telephone=yes',
   },
 }
 
@@ -63,6 +67,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="theme-color" content="#0a1628" />
+        <meta name="apple-mobile-web-app-title" content="PC4x4SAR" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -70,6 +76,11 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         />
         <link rel="preconnect" href="https://images.unsplash.com" />
+        <link
+          rel="preload"
+          as="image"
+          href="https://images.unsplash.com/photo-1434394354979-a235cd36269d?w=1920&h=1080&fit=crop&q=75&fm=auto"
+        />
         <link rel="canonical" href="https://piercecounty4x4sar.org" />
         <script
           type="application/ld+json"
@@ -83,8 +94,22 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
       </head>
       <body className="bg-white text-navy-900">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-rescue-orange focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:text-sm focus:font-semibold"
+        >
+          Skip to main content
+        </a>
         {children}
       </body>
     </html>

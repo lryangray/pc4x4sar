@@ -85,6 +85,7 @@ export default function SafetyResources() {
     <section
       id="safety"
       ref={sectionRef}
+      aria-label="Safety Resources"
       className="section-padding bg-white"
     >
       <div className="container-custom">

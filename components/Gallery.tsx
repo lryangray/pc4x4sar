@@ -11,6 +11,7 @@ export default function Gallery() {
     <section
       id="gallery"
       ref={sectionRef}
+      aria-label="Photo Gallery"
       className="section-padding bg-white"
     >
       <div className="container-custom">
@@ -50,6 +51,7 @@ export default function Gallery() {
                 src={image.src}
                 alt={image.alt}
                 fill
+                loading="lazy"
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                 sizes="(max-width: 768px) 50vw, 25vw"
               />
