@@ -83,6 +83,7 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content="#0a1628" />
         <meta name="apple-mobile-web-app-title" content="PC4x4SAR" />
+        <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link
           rel="preload"
@@ -119,6 +120,20 @@ export default function RootLayout({
           Skip to main content
         </a>
         {children}
+        {/* Service worker registration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js')})}`,
+          }}
+        />
+        {/* Cloudflare Web Analytics — no cookies, no JS overhead, GDPR-friendly */}
+        {process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={`{"token":"${process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN}"}`}
+          />
+        )}
       </body>
     </html>
   )
