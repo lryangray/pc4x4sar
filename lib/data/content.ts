@@ -132,6 +132,27 @@ export const capabilities = [
   },
 ]
 
+export const testimonials = [
+  {
+    quote: "PC4x4SAR is one of our most reliable volunteer resources. When we activate them for a mission, they respond quickly and professionally. Their 4x4 capabilities give us access to terrain that would otherwise be unreachable.",
+    name: 'Placeholder Name',
+    title: 'Search & Rescue Coordinator',
+    org: "Pierce County Sheriff's Department",
+  },
+  {
+    quote: "During the 2023 flooding events, PC4x4SAR was instrumental in our evacuation and damage assessment operations. Their volunteers are well-trained, well-equipped, and ready to serve at a moment's notice.",
+    name: 'Placeholder Name',
+    title: 'Emergency Manager',
+    org: 'Pierce County Dept. of Emergency Management',
+  },
+  {
+    quote: "I joined PC4x4SAR three years ago with zero SAR experience. The training program brought me from complete beginner to confidently deploying on real missions. It's the most rewarding thing I've ever done.",
+    name: 'Placeholder Name',
+    title: 'Active Volunteer Member',
+    org: 'Pierce County 4x4 SAR',
+  },
+]
+
 export const sponsors = [
   {
     name: 'Example Sponsor 1',
