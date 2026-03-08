@@ -6,13 +6,14 @@ export default function NotFound() {
     <div className="min-h-screen bg-navy-950 flex items-center justify-center px-4">
       <div className="text-center max-w-lg">
         {/* Bigfoot walking silhouette */}
-        <div className="mb-8 flex justify-center opacity-30">
+        <div className="mb-8 flex justify-center opacity-20">
           <Image
-            src="/bigfoot.svg"
+            src="/bigfoot.png"
             alt=""
-            width={140}
-            height={180}
+            width={150}
+            height={190}
             aria-hidden="true"
+            className="invert"
           />
         </div>
 
