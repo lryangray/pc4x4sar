@@ -1,19 +1,19 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-navy-950 flex items-center justify-center px-4">
       <div className="text-center max-w-lg">
-        {/* Bigfoot silhouette */}
-        <div className="mb-8 flex justify-center">
-          <svg
-            className="w-32 h-32 text-navy-800"
-            viewBox="0 0 100 100"
-            fill="currentColor"
+        {/* Bigfoot walking silhouette */}
+        <div className="mb-8 flex justify-center opacity-30">
+          <Image
+            src="/bigfoot.svg"
+            alt=""
+            width={140}
+            height={180}
             aria-hidden="true"
-          >
-            <path d="M55 8c-2 0-4 2-5 5-1 2-1 5 0 7 0 1 0 3-1 4-2 2-3 4-3 7 0 2 1 4 2 5 0 1 0 2-1 3-1 2-2 5-1 7 1 3 3 5 5 6l1 2c0 2-1 4-3 6-2 3-5 6-6 10-1 3-1 6 0 8 0 1 0 2-1 3-1 3-1 7 0 10 1 2 2 3 3 4l-3 2c-3 1-5 2-6 4-1 1-1 2 0 3h30c1-1 1-2 0-3-1-2-3-3-6-4l-3-2c1-1 2-2 3-4 1-3 1-7 0-10-1-1-1-2-1-3 1-2 1-5 0-8-1-4-4-7-6-10-2-2-3-4-3-6l1-2c2-1 4-3 5-6 1-2 0-5-1-7-1-1-1-2-1-3 1-1 2-3 2-5 0-3-1-5-3-7-1-1-1-3-1-4 1-2 1-5 0-7-1-3-3-5-5-5z" />
-          </svg>
+          />
         </div>
 
         <h1 className="text-6xl font-extrabold text-white mb-4">404</h1>
