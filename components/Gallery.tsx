@@ -37,13 +37,13 @@ export default function Gallery() {
               key={image.src}
               className={`relative overflow-hidden rounded-xl ${
                 image.span
-              } aspect-square group cursor-pointer ${
+              } aspect-square group ${
                 isVisible
                   ? 'opacity-100 scale-100'
                   : 'opacity-0 scale-95'
               }`}
               style={{
-                transition: 'all 0.5s ease-out',
+                transition: 'opacity 0.5s ease-out, transform 0.5s ease-out',
                 transitionDelay: `${Math.min(index * 75, 300)}ms`,
               }}
             >

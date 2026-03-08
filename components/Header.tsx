@@ -22,10 +22,17 @@ export default function Header() {
   const menuButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
+    let ticking = false
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50)
+          ticking = false
+        })
+      }
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -110,7 +117,7 @@ export default function Header() {
                 <a
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="text-white hover:text-rescue-orange transition-colors duration-200 font-medium"
+                  className="text-white hover:text-rescue-orange focus-visible:text-rescue-orange transition-colors duration-200 font-medium focus-visible:outline-none"
                 >
                   {item.name}
                 </a>
@@ -157,8 +164,9 @@ export default function Header() {
           id="mobile-menu"
           ref={menuRef}
           role="dialog"
-          aria-modal={isMobileMenuOpen}
+          aria-modal={isMobileMenuOpen || undefined}
           aria-label="Navigation menu"
+          inert={!isMobileMenuOpen ? true : undefined}
           className={`lg:hidden transition-all duration-300 overflow-hidden ${
             isMobileMenuOpen ? 'max-h-96 pb-4' : 'max-h-0'
           }`}

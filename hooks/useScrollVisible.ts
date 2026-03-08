@@ -12,7 +12,9 @@ import { useEffect, useRef, useState } from 'react'
 export function useScrollVisible(threshold = 0.2) {
   const ref = useRef<HTMLElement>(null)
   const supportsObserver = typeof IntersectionObserver !== 'undefined'
-  const [isVisible, setIsVisible] = useState(!supportsObserver)
+  const prefersReducedMotion = typeof window !== 'undefined'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const [isVisible, setIsVisible] = useState(!supportsObserver || prefersReducedMotion)
 
   useEffect(() => {
     if (!supportsObserver) return

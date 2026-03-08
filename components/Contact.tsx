@@ -168,12 +168,12 @@ export default function Contact() {
                   {formStatus === 'submitting' ? 'Sending...' : 'Send Message'}
                 </button>
                 {formStatus === 'success' && (
-                  <p className="text-green-600 text-center font-medium">
+                  <p role="status" aria-live="polite" className="text-green-600 text-center font-medium">
                     Thank you! Your message has been sent successfully.
                   </p>
                 )}
                 {formStatus === 'error' && (
-                  <p className="text-red-600 text-center font-medium">
+                  <p role="alert" className="text-red-600 text-center font-medium">
                     Something went wrong. Please try again.
                   </p>
                 )}
@@ -209,6 +209,7 @@ export default function Contact() {
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -238,6 +239,7 @@ export default function Contact() {
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
