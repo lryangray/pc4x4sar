@@ -155,23 +155,38 @@ export const testimonials = [
 
 export const sponsors = [
   {
-    name: 'Example Sponsor 1',
-    logo: '/sponsors/sponsor-placeholder.svg',
-    url: 'https://example.com',
+    name: 'Bonney Lake 911 Driving School',
+    logo: '/sponsors/911-driving-school.png',
+    url: 'https://911drivingschool.com/washington/driving-school-bonney-lake-washington/',
   },
   {
-    name: 'Example Sponsor 2',
-    logo: '/sponsors/sponsor-placeholder.svg',
-    url: 'https://example.com',
+    name: 'Costco',
+    logo: '/sponsors/costco.png',
+    url: 'https://www.costco.com/',
   },
   {
-    name: 'Example Sponsor 3',
-    logo: '/sponsors/sponsor-placeholder.svg',
-    url: 'https://example.com',
+    name: 'Dom Does Media',
+    logo: '/sponsors/dom-does-media.png',
+    url: 'https://www.domdoesmedia.com/',
   },
   {
-    name: 'Example Sponsor 4',
-    logo: '/sponsors/sponsor-placeholder.svg',
-    url: 'https://example.com',
+    name: 'DuraClutch',
+    logo: '/sponsors/duraclutch.png',
+    url: 'https://www.duraclutch.com/',
+  },
+  {
+    name: 'ICOM America',
+    logo: '/sponsors/icom.svg',
+    url: 'https://www.icomamerica.com/',
+  },
+  {
+    name: 'Puyallup Tribe',
+    logo: '/sponsors/puyallup-tribe.png',
+    url: 'https://www.puyalluptribe-nsn.gov/',
+  },
+  {
+    name: 'Safe Jack',
+    logo: '/sponsors/safe-jack.png',
+    url: 'https://safejacks.com/',
   },
 ]
