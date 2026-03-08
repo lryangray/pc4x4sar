@@ -5,23 +5,23 @@ import { useScrollVisible } from '@/hooks/useScrollVisible'
 import { scrollToSection } from '@/lib/scroll'
 import { faqs } from '@/lib/data/content'
 
+// Static schema — computed once at module load, not on every render
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+}
+
 export default function FAQ() {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.1)
   const [openIndex, setOpenIndex] = useState<number | null>(0)
-
-  // Generate FAQ Schema
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  }
 
   return (
     <section

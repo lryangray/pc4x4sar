@@ -85,11 +85,6 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="PC4x4SAR" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://images.unsplash.com" />
-        <link
-          rel="preload"
-          as="image"
-          href="https://images.unsplash.com/photo-1434394354979-a235cd36269d?w=1920&h=1080&fit=crop&q=75&fm=auto"
-        />
         <link rel="canonical" href="https://piercecounty4x4sar.org" />
         <script
           type="application/ld+json"

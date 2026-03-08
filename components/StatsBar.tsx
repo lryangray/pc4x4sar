@@ -42,8 +42,8 @@ function StatItem({ value, suffix, label, isVisible }: {
   const count = useCountUp(value, isVisible)
 
   return (
-    <div className="text-center">
-      <span className="block text-4xl md:text-5xl lg:text-6xl font-bold text-white">
+    <div className="text-center" aria-label={`${value}${suffix} ${label}`}>
+      <span className="block text-4xl md:text-5xl lg:text-6xl font-bold text-white" aria-hidden="true">
         {count}{suffix}
       </span>
       <span className="text-rescue-orange font-semibold text-sm md:text-base mt-2 block">
