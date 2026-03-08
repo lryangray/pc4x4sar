@@ -131,14 +131,9 @@ async function checkRateLimit(ip, env) {
 
 function sanitize(str) {
   if (typeof str !== 'string') return '';
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .trim()
-    .slice(0, 1000);
+  // Strip control characters, trim, and length-limit for safe storage
+  // HTML-encoding should happen at render time, not storage time
+  return str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '').trim().slice(0, 1000);
 }
 
 async function handleContactForm(request, env, origin) {
@@ -159,6 +154,15 @@ async function handleContactForm(request, env, origin) {
     }
 
     const formData = await request.formData();
+
+    // Honeypot — bots fill hidden fields, humans don't
+    if (formData.get('website')) {
+      return new Response(
+        JSON.stringify({ success: true, message: 'Thank you! Your message has been received.' }),
+        { status: 200, headers }
+      );
+    }
+
     const submission = {
       firstName: sanitize(formData.get('firstName')),
       lastName: sanitize(formData.get('lastName')),

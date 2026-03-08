@@ -12,6 +12,7 @@ const navItems = [
   { name: 'Sponsors', href: '#sponsors' },
   { name: 'Gallery', href: '#gallery' },
   { name: 'FAQ', href: '#faq' },
+  { name: 'Volunteer', href: '#volunteer' },
   { name: 'Contact', href: '#contact' },
 ]
 

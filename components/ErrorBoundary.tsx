@@ -21,6 +21,10 @@ export default class ErrorBoundary extends Component<Props, State> {
     return { hasError: true }
   }
 
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
+    console.error('[ErrorBoundary]', error, info)
+  }
+
   render() {
     if (this.state.hasError) {
       return (
@@ -30,10 +34,10 @@ export default class ErrorBoundary extends Component<Props, State> {
               <p className="text-navy-600">
                 Something went wrong loading this section.{' '}
                 <button
-                  onClick={() => this.setState({ hasError: false })}
+                  onClick={() => window.location.reload()}
                   className="text-rescue-orange hover:underline font-medium"
                 >
-                  Try again
+                  Reload page
                 </button>
               </p>
             </div>
