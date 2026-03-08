@@ -161,7 +161,7 @@ export const sponsors = [
   },
   {
     name: 'Costco',
-    logo: '/sponsors/costco.png',
+    logo: '/sponsors/costco.svg',
     url: 'https://www.costco.com/',
   },
   {
