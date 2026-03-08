@@ -46,7 +46,7 @@ export default function Sponsors() {
               rel="noopener noreferrer"
               className="grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300"
               style={{ transitionDelay: `${Math.min(index * 100, 300)}ms` }}
-              title={sponsor.name}
+              aria-label={`Visit ${sponsor.name} (opens in new tab)`}
             >
               <Image
                 src={sponsor.logo}
