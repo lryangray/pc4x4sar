@@ -1,11 +1,27 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useScrollVisible } from '@/hooks/useScrollVisible'
 
 export default function Contact() {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.1)
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const subjectRef = useRef<HTMLSelectElement>(null)
+  const messageRef = useRef<HTMLTextAreaElement>(null)
+
+  // Read pre-fill params from URL hash (e.g., #contact?subject=general&message=...)
+  useEffect(() => {
+    const hash = window.location.hash
+    if (hash.startsWith('#contact?')) {
+      const params = new URLSearchParams(hash.replace('#contact?', ''))
+      const subject = params.get('subject')
+      const message = params.get('message')
+      if (subject && subjectRef.current) subjectRef.current.value = subject
+      if (message && messageRef.current) messageRef.current.value = message
+      // Clean up the hash
+      window.location.hash = 'contact'
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -124,6 +140,7 @@ export default function Contact() {
                     Subject <span className="text-rescue-red" aria-hidden="true">*</span>
                   </label>
                   <select
+                    ref={subjectRef}
                     id="subject"
                     name="subject"
                     required
@@ -145,6 +162,7 @@ export default function Contact() {
                     Message <span className="text-rescue-red" aria-hidden="true">*</span>
                   </label>
                   <textarea
+                    ref={messageRef}
                     id="message"
                     name="message"
                     required
@@ -153,6 +171,15 @@ export default function Contact() {
                     placeholder="Tell us how we can help..."
                   />
                 </div>
+                {/* Honeypot field — hidden from humans, filled by bots */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                  autoComplete="off"
+                  className="absolute opacity-0 pointer-events-none h-0 w-0"
+                />
                 <button
                   type="submit"
                   disabled={formStatus === 'submitting'}

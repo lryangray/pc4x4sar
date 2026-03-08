@@ -79,16 +79,12 @@ const resources = [
 ]
 
 function requestResource(title: string) {
+  const params = new URLSearchParams({
+    subject: 'general',
+    message: `I'd like to request a copy of the "${title}" resource. Thank you!`,
+  })
+  window.location.hash = `contact?${params.toString()}`
   scrollToSection('#contact')
-  // Allow scroll to complete, then pre-fill the subject and message
-  setTimeout(() => {
-    const subject = document.getElementById('subject') as HTMLSelectElement | null
-    const message = document.getElementById('message') as HTMLTextAreaElement | null
-    if (subject) subject.value = 'general'
-    if (message && !message.value) {
-      message.value = `I'd like to request a copy of the "${title}" resource. Thank you!`
-    }
-  }, 500)
 }
 
 export default function SafetyResources() {
