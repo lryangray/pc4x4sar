@@ -13,7 +13,7 @@ export default function Sponsors() {
       id="sponsors"
       ref={sectionRef}
       aria-label="Our Sponsors"
-      className="section-padding bg-white"
+      className="section-padding bg-navy-50"
     >
       <div className="container-custom">
         {/* Header */}
@@ -32,7 +32,7 @@ export default function Sponsors() {
 
         {/* Sponsor Logos */}
         <div
-          className={`flex flex-wrap items-center justify-center gap-8 md:gap-12 transition-all duration-700 ${
+          className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 transition-all duration-700 ${
             isVisible
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-10'
@@ -44,18 +44,21 @@ export default function Sponsors() {
               href={sponsor.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300"
+              className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 flex flex-col items-center justify-center text-center transition-all duration-300"
               style={{ transitionDelay: `${Math.min(index * 100, 300)}ms` }}
               aria-label={`Visit ${sponsor.name} (opens in new tab)`}
             >
-              <Image
-                src={sponsor.logo}
-                alt={sponsor.name}
-                width={160}
-                height={64}
-                className="h-12 md:h-16 w-auto object-contain"
-                loading="lazy"
-              />
+              <div className="w-full h-20 flex items-center justify-center mb-3">
+                <Image
+                  src={sponsor.logo}
+                  alt={sponsor.name}
+                  width={160}
+                  height={64}
+                  className="max-h-16 w-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+              <span className="text-navy-700 text-sm font-medium">{sponsor.name}</span>
             </a>
           ))}
         </div>
