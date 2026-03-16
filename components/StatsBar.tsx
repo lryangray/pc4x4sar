@@ -60,7 +60,7 @@ export default function StatsBar() {
     <section
       ref={sectionRef}
       aria-label="Impact Statistics"
-      className="bg-navy-900 py-16 md:py-20 px-4 md:px-8"
+      className="section-padding bg-navy-900"
     >
       <div className="max-w-5xl mx-auto">
         <div

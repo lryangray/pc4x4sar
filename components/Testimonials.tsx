@@ -42,7 +42,7 @@ export default function Testimonials() {
             >
               {/* Quote mark */}
               <svg
-                className="w-10 h-10 text-rescue-orange/20 mb-4"
+                className="w-10 h-10 text-rescue-orange/40 mb-4"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 aria-hidden="true"
@@ -51,7 +51,7 @@ export default function Testimonials() {
               </svg>
 
               {/* Quote text */}
-              <blockquote className="text-navy-700 leading-relaxed mb-6">
+              <blockquote className="text-navy-700 leading-relaxed mb-6 italic">
                 &ldquo;{testimonial.quote}&rdquo;
               </blockquote>
 

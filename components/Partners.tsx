@@ -35,7 +35,7 @@ export default function Partners() {
             <div
               key={partner.name}
               className={`bg-white rounded-xl p-6 md:p-8 shadow-lg transition-all duration-500 ${
-                index % 2 === 1 ? 'md:ml-12' : 'md:mr-12'
+                index % 2 === 1 ? 'lg:ml-12' : 'lg:mr-12'
               } ${
                 isVisible
                   ? 'opacity-100 translate-x-0'
