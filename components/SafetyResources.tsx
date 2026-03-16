@@ -117,7 +117,7 @@ export default function SafetyResources() {
           {safetyTips.map((tip, index) => (
             <div
               key={tip.title}
-              className={`flex items-start space-x-4 p-6 bg-navy-50 rounded-xl transition-all duration-500 ${
+              className={`flex items-start space-x-4 p-6 bg-navy-50 rounded-xl shadow-sm transition-all duration-500 ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'

@@ -12,7 +12,7 @@ export default function Gallery() {
       id="gallery"
       ref={sectionRef}
       aria-label="Photo Gallery"
-      className="section-padding bg-white"
+      className="section-padding bg-navy-50"
     >
       <div className="container-custom">
         {/* Header */}
