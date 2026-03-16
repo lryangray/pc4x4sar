@@ -3,29 +3,71 @@
 import { useState, useEffect, useRef } from 'react'
 import { useScrollVisible } from '@/hooks/useScrollVisible'
 
+const SUBJECT_OPTIONS = [
+  { value: 'volunteer', label: 'Volunteer Inquiry' },
+  { value: 'training', label: 'Training Programs' },
+  { value: 'event', label: 'Event Standby Request' },
+  { value: 'donation', label: 'Donation Information' },
+  { value: 'general', label: 'General Question' },
+] as const
+
+const ALLOWED_SUBJECTS = new Set(SUBJECT_OPTIONS.map((option) => option.value))
+const MAX_NAME_LENGTH = 80
+const MAX_EMAIL_LENGTH = 254
+const MAX_MESSAGE_LENGTH = 2000
+
+function sanitizePrefillMessage(value: string | null) {
+  return typeof value === 'string'
+    ? value.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '').trim().slice(0, MAX_MESSAGE_LENGTH)
+    : ''
+}
+
+function normalizeSubject(value: string | null) {
+  return value && SUBJECT_OPTIONS.some((option) => option.value === value) ? value : ''
+}
+
 export default function Contact() {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.1)
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [formMessage, setFormMessage] = useState('')
   const subjectRef = useRef<HTMLSelectElement>(null)
   const messageRef = useRef<HTMLTextAreaElement>(null)
 
-  // Read pre-fill params from URL hash (e.g., #contact?subject=general&message=...)
   useEffect(() => {
-    const hash = window.location.hash
-    if (hash.startsWith('#contact?')) {
-      const params = new URLSearchParams(hash.replace('#contact?', ''))
-      const subject = params.get('subject')
-      const message = params.get('message')
-      if (subject && subjectRef.current) subjectRef.current.value = subject
-      if (message && messageRef.current) messageRef.current.value = message
-      // Clean up the hash
-      window.location.hash = 'contact'
+    const url = new URL(window.location.href)
+    const params =
+      url.pathname === '/contact'
+        ? url.searchParams
+        : url.hash.startsWith('#contact?')
+          ? new URLSearchParams(url.hash.replace('#contact?', ''))
+          : null
+
+    if (!params) {
+      return
+    }
+
+    const subject = normalizeSubject(params.get('subject'))
+    const message = sanitizePrefillMessage(params.get('message'))
+
+    if (subjectRef.current && subject) {
+      subjectRef.current.value = subject
+    }
+
+    if (messageRef.current && message) {
+      messageRef.current.value = message
+    }
+
+    if (url.pathname === '/contact') {
+      window.history.replaceState({}, '', '/contact')
+    } else if (url.hash.startsWith('#contact?')) {
+      window.history.replaceState({}, '', `${url.pathname}${url.search}#contact`)
     }
   }, [])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setFormStatus('submitting')
+    setFormMessage('')
 
     const form = e.target as HTMLFormElement
     const formData = new FormData(form)
@@ -36,15 +78,28 @@ export default function Contact() {
         body: formData,
       })
 
+      const payload = (await response.json().catch(() => null)) as
+        | { message?: string; error?: string }
+        | null
+
       if (response.ok) {
         setFormStatus('success')
+        setFormMessage(payload?.message || 'Thank you! Your message has been sent successfully.')
         form.reset()
-        setTimeout(() => setFormStatus('idle'), 5000)
+        if (subjectRef.current) subjectRef.current.value = ''
+        if (messageRef.current) messageRef.current.value = ''
+        setTimeout(() => {
+          setFormStatus('idle')
+          setFormMessage('')
+        }, 5000)
       } else {
         setFormStatus('error')
+        setFormMessage(payload?.error || 'Something went wrong. Please try again.')
       }
-    } catch {
+    } catch (error) {
+      console.error('[Contact] Failed to submit form', error)
       setFormStatus('error')
+      setFormMessage('Something went wrong. Please try again.')
     }
   }
 
@@ -95,6 +150,8 @@ export default function Contact() {
                       id="firstName"
                       name="firstName"
                       required
+                      maxLength={MAX_NAME_LENGTH}
+                      autoComplete="given-name"
                       className="w-full px-4 py-3 rounded-lg border border-navy-200 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all"
                       placeholder="John"
                     />
@@ -111,6 +168,8 @@ export default function Contact() {
                       id="lastName"
                       name="lastName"
                       required
+                      maxLength={MAX_NAME_LENGTH}
+                      autoComplete="family-name"
                       className="w-full px-4 py-3 rounded-lg border border-navy-200 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all"
                       placeholder="Doe"
                     />
@@ -128,6 +187,8 @@ export default function Contact() {
                     id="email"
                     name="email"
                     required
+                    maxLength={MAX_EMAIL_LENGTH}
+                    autoComplete="email"
                     className="w-full px-4 py-3 rounded-lg border border-navy-200 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all"
                     placeholder="john@example.com"
                   />
@@ -147,11 +208,11 @@ export default function Contact() {
                     className="w-full px-4 py-3 rounded-lg border border-navy-200 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all"
                   >
                     <option value="">Select a subject</option>
-                    <option value="volunteer">Volunteer Inquiry</option>
-                    <option value="training">Training Programs</option>
-                    <option value="event">Event Standby Request</option>
-                    <option value="donation">Donation Information</option>
-                    <option value="general">General Question</option>
+                    {SUBJECT_OPTIONS.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div>
@@ -167,9 +228,14 @@ export default function Contact() {
                     name="message"
                     required
                     rows={5}
+                    maxLength={MAX_MESSAGE_LENGTH}
                     className="w-full px-4 py-3 rounded-lg border border-navy-200 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all resize-none"
                     placeholder="Tell us how we can help..."
                   />
+                  <p className="mt-2 text-xs text-navy-500">
+                    For privacy, please avoid including sensitive medical or emergency
+                    details in this form.
+                  </p>
                 </div>
                 {/* Honeypot field — hidden from humans, filled by bots */}
                 <input
@@ -196,14 +262,18 @@ export default function Contact() {
                 </button>
                 {formStatus === 'success' && (
                   <p role="status" aria-live="polite" className="text-green-600 text-center font-medium">
-                    Thank you! Your message has been sent successfully.
+                    {formMessage}
                   </p>
                 )}
                 {formStatus === 'error' && (
                   <p role="alert" className="text-red-600 text-center font-medium">
-                    Something went wrong. Please try again.
+                    {formMessage}
                   </p>
                 )}
+                <p className="text-xs text-navy-500 text-center leading-relaxed">
+                  Contact submissions are retained for up to 90 days. For emergencies or
+                  time-sensitive incidents, call <strong>911</strong>.
+                </p>
               </form>
             </div>
           </div>
@@ -252,7 +322,7 @@ export default function Contact() {
                       <a href="mailto:info@piercecounty4x4sar.org" className="hover:text-rescue-orange transition-colors">info@piercecounty4x4sar.org</a>
                     </p>
                     <p className="text-navy-500 text-sm">
-                      We respond within 24-48 hours
+                      Use this form for non-emergency questions and requests.
                     </p>
                   </div>
                 </div>

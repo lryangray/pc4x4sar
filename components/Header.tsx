@@ -1,22 +1,15 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { usePathname } from 'next/navigation'
 import { scrollToSection } from '@/lib/scroll'
-
-const navItems = [
-  { name: 'Home', href: '#hero' },
-  { name: 'Mission', href: '#mission' },
-  { name: 'Services', href: '#services' },
-  { name: 'Safety', href: '#safety' },
-  { name: 'Partners', href: '#partners' },
-  { name: 'Sponsors', href: '#sponsors' },
-  { name: 'Gallery', href: '#gallery' },
-  { name: 'FAQ', href: '#faq' },
-  { name: 'Volunteer', href: '#volunteer' },
-  { name: 'Contact', href: '#contact' },
-]
+import {
+  navigationItems,
+  resolveNavigationHref,
+} from '@/lib/navigation'
 
 export default function Header() {
+  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -85,6 +78,9 @@ export default function Header() {
     setIsMobileMenuOpen(false)
   }
 
+  const logoHref = pathname === '/' ? '#hero' : '/'
+  const isLogoScrollLink = logoHref.startsWith('#')
+
   return (
     <header
       className={`fixed top-8 left-0 right-0 z-50 transition-all duration-300 ${
@@ -96,8 +92,8 @@ export default function Header() {
       <nav className="container-custom mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           <a
-            href="#hero"
-            onClick={(e) => handleNavClick(e, '#hero')}
+            href={logoHref}
+            onClick={isLogoScrollLink ? (e) => handleNavClick(e, logoHref) : undefined}
             className="flex items-center space-x-2"
           >
             <div className="w-10 h-10 md:w-12 md:h-12 bg-rescue-orange rounded-full flex items-center justify-center">
@@ -113,17 +109,22 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <ul className="hidden lg:flex items-center space-x-6">
-            {navItems.map((item) => (
-              <li key={item.name}>
-                <a
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className="text-white hover:text-rescue-orange focus-visible:text-rescue-orange transition-colors duration-200 font-medium focus-visible:outline-none"
-                >
-                  {item.name}
-                </a>
-              </li>
-            ))}
+            {navigationItems.map((item) => {
+              const href = resolveNavigationHref(item, pathname)
+              const isScrollLink = href.startsWith('#')
+
+              return (
+                <li key={item.name}>
+                  <a
+                    href={href}
+                    onClick={isScrollLink ? (e) => handleNavClick(e, href) : undefined}
+                    className="text-white hover:text-rescue-orange focus-visible:text-rescue-orange transition-colors duration-200 font-medium focus-visible:outline-none"
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              )
+            })}
           </ul>
 
           {/* Mobile Menu Button */}
@@ -174,17 +175,22 @@ export default function Header() {
           onKeyDown={isMobileMenuOpen ? handleMenuKeyDown : undefined}
         >
           <ul className="flex flex-col space-y-2 pt-4 border-t border-white/20">
-            {navItems.map((item) => (
-              <li key={item.name}>
-                <a
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className="block text-white hover:text-rescue-orange transition-colors duration-200 font-medium py-2"
-                >
-                  {item.name}
-                </a>
-              </li>
-            ))}
+            {navigationItems.map((item) => {
+              const href = resolveNavigationHref(item, pathname)
+              const isScrollLink = href.startsWith('#')
+
+              return (
+                <li key={item.name}>
+                  <a
+                    href={href}
+                    onClick={isScrollLink ? (e) => handleNavClick(e, href) : undefined}
+                    className="block text-white hover:text-rescue-orange transition-colors duration-200 font-medium py-2"
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </nav>

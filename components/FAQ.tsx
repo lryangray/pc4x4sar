@@ -5,20 +5,6 @@ import { useScrollVisible } from '@/hooks/useScrollVisible'
 import { scrollToSection } from '@/lib/scroll'
 import { faqs } from '@/lib/data/content'
 
-// Static schema — computed once at module load, not on every render
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((faq) => ({
-    '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer,
-    },
-  })),
-}
-
 export default function FAQ() {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.1)
   const [openIndex, setOpenIndex] = useState<number | null>(0)
@@ -30,12 +16,6 @@ export default function FAQ() {
       aria-label="Frequently Asked Questions"
       className="section-padding bg-white"
     >
-      {/* FAQ Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
       <div className="container-custom">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
@@ -53,12 +33,12 @@ export default function FAQ() {
 
         {/* FAQ Accordion */}
         <div className="max-w-3xl mx-auto">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className={`border-b border-navy-200 transition-all duration-500 ${
-                isVisible
-                  ? 'opacity-100 translate-y-0'
+            {faqs.map((faq, index) => (
+              <div
+                key={faq.question}
+                className={`border-b border-navy-200 transition-all duration-500 ${
+                  isVisible
+                    ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-5'
               }`}
               style={{ transitionDelay: `${Math.min(index * 75, 300)}ms` }}
@@ -101,7 +81,7 @@ export default function FAQ() {
                   openIndex === index ? 'max-h-96 pb-6' : 'max-h-0'
                 }`}
               >
-                <div className="border-l-3 border-rescue-orange pl-4 ml-1">
+                <div className="border-l-4 border-rescue-orange pl-4 ml-1">
                   <p className="text-navy-600 leading-relaxed">{faq.answer}</p>
                 </div>
               </div>

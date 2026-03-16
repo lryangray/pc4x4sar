@@ -1,7 +1,6 @@
 'use client'
 
 import { useScrollVisible } from '@/hooks/useScrollVisible'
-import { scrollToSection } from '@/lib/scroll'
 
 const safetyTips = [
   {
@@ -83,8 +82,7 @@ function requestResource(title: string) {
     subject: 'general',
     message: `I'd like to request a copy of the "${title}" resource. Thank you!`,
   })
-  window.location.hash = `contact?${params.toString()}`
-  scrollToSection('#contact')
+  window.location.assign(`/contact?${params.toString()}`)
 }
 
 export default function SafetyResources() {
@@ -149,8 +147,8 @@ export default function SafetyResources() {
               Safety Guides
             </h3>
             <p className="text-navy-200 max-w-2xl mx-auto">
-              Request free guides and checklists to help you prepare for your next outdoor adventure.
-              We&apos;ll send them directly to your email.
+              Request free guides and checklists to help you prepare for your next outdoor
+              adventure. Use the contact form to ask for the resources you need.
             </p>
           </div>
 

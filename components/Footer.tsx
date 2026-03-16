@@ -1,9 +1,17 @@
 'use client'
 
 import { handleScrollClick } from '@/lib/scroll'
+import { usePathname } from 'next/navigation'
+import {
+  navigationItems,
+  resolveNavigationHref,
+} from '@/lib/navigation'
 
 export default function Footer() {
+  const pathname = usePathname()
   const currentYear = new Date().getFullYear()
+  const capabilitiesHref = pathname === '/' ? '#capabilities' : '/#capabilities'
+  const isCapabilitiesScrollLink = capabilitiesHref.startsWith('#')
 
   return (
     <footer className="bg-navy-950 text-white bg-noise">
@@ -61,29 +69,31 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-bold mb-4">Quick Links</h4>
             <ul className="space-y-3">
-              {[
-                { name: 'Home', href: '#hero' },
-                { name: 'Mission', href: '#mission' },
-                { name: 'Services', href: '#services' },
-                { name: 'Safety Resources', href: '#safety' },
-                { name: 'Capabilities', href: '#capabilities' },
-                { name: 'Partners', href: '#partners' },
-                { name: 'Sponsors', href: '#sponsors' },
-                { name: 'Gallery', href: '#gallery' },
-                { name: 'FAQ', href: '#faq' },
-                { name: 'Volunteer', href: '#volunteer' },
-                { name: 'Contact', href: '#contact' },
-              ].map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => handleScrollClick(e, link.href)}
-                    className="text-navy-300 hover:text-rescue-orange transition-colors duration-200"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
+              {navigationItems.map((link) => {
+                const href = resolveNavigationHref(link, pathname, true)
+                const isScrollLink = href.startsWith('#')
+
+                return (
+                  <li key={link.name}>
+                    <a
+                      href={href}
+                      onClick={isScrollLink ? (e) => handleScrollClick(e, href) : undefined}
+                      className="text-navy-300 hover:text-rescue-orange transition-colors duration-200"
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                )
+              })}
+              <li>
+                <a
+                  href={capabilitiesHref}
+                  onClick={isCapabilitiesScrollLink ? (e) => handleScrollClick(e, capabilitiesHref) : undefined}
+                  className="text-navy-300 hover:text-rescue-orange transition-colors duration-200"
+                >
+                  Capabilities
+                </a>
+              </li>
             </ul>
           </div>
 
