@@ -1,26 +1,38 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import { handleScrollClick } from '@/lib/scroll'
 
 export default function Hero() {
+  const [heroImageFailed, setHeroImageFailed] = useState(false)
+
   return (
     <section
       id="hero"
       className="relative min-h-screen flex items-center justify-center pt-8 bg-noise"
     >
       {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="https://images.unsplash.com/photo-1434394354979-a235cd36269d?w=1920&h=1080&fit=crop&q=75&fm=auto"
-          alt="Mount Rainier, Washington - Pierce County 4x4 Search and Rescue service area"
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
+      <div className="absolute inset-0 z-0 bg-navy-900">
+        {!heroImageFailed && (
+          <Image
+            src="https://images.unsplash.com/photo-1434394354979-a235cd36269d?w=1920&h=1080&fit=crop&q=75&fm=auto"
+            alt="Mount Rainier, Washington - Pierce County 4x4 Search and Rescue service area"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+            onError={() => setHeroImageFailed(true)}
+          />
+        )}
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950/80 via-navy-900/70 to-navy-950/90" />
+        <div
+          className={`absolute inset-0 bg-gradient-to-b from-navy-950/80 via-navy-900/70 to-navy-950/90 ${
+            heroImageFailed
+              ? 'bg-[radial-gradient(circle_at_top,_rgba(255,107,53,0.25),_rgba(10,22,40,0.95)_55%)]'
+              : ''
+          }`}
+        />
       </div>
 
       {/* Content */}

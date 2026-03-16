@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, Bebas_Neue } from 'next/font/google'
 import './globals.css'
 import {
@@ -6,25 +6,39 @@ import {
   emergencyServiceSchema,
   localBusinessSchema,
   webSiteSchema,
-  breadcrumbSchema,
+  monthlyMeetingSchema,
+  joinActionSchema,
+  donateActionSchema,
 } from '@/lib/structured-data'
+import StructuredDataScript from '@/components/StructuredDataScript'
+import {
+  DEFAULT_OG_IMAGE,
+  SITE_SHORT_NAME,
+  SITE_URL,
+  THEME_COLOR,
+} from '@/lib/site'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'Pierce County 4x4 Search and Rescue | Volunteer SAR Team Tacoma WA',
   description: 'Pierce County 4x4 Search and Rescue provides FREE volunteer emergency search and rescue services 24/7/365. Serving Tacoma, Puyallup, Lakewood, Mt. Rainier foothills, and all Pierce County, Washington. Missing person searches, wilderness rescue, disaster response.',
   keywords: 'search and rescue, SAR, Pierce County, 4x4, emergency response, volunteer, wilderness rescue, Washington State, missing persons, disaster response, Tacoma, Puyallup, Lakewood, Mt Rainier, Bonney Lake, Buckley, Orting, Carbon River, off-road rescue, backcountry rescue',
   authors: [{ name: 'Pierce County 4x4 Search and Rescue' }],
   applicationName: 'Pierce County 4x4 SAR',
+  manifest: '/manifest.webmanifest',
+  appleWebApp: {
+    title: SITE_SHORT_NAME,
+  },
   openGraph: {
     title: 'Pierce County 4x4 Search and Rescue | Volunteer SAR Team',
     description: 'FREE 24/7 volunteer search and rescue serving Pierce County, WA. Wilderness rescue, missing person searches, disaster response. Working with Pierce County Sheriff and Emergency Management.',
-    url: 'https://piercecounty4x4sar.org',
+    url: SITE_URL,
     siteName: 'Pierce County 4x4 Search and Rescue',
     locale: 'en_US',
     type: 'website',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=630&fit=crop&q=75&fm=auto',
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
         alt: 'Pierce County 4x4 Search and Rescue Team in action',
@@ -49,7 +63,12 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://piercecounty4x4sar.org',
+    canonical: SITE_URL,
+    languages: {
+      en: SITE_URL,
+      'en-US': SITE_URL,
+      'x-default': SITE_URL,
+    },
   },
   other: {
     'geo.region': 'US-WA',
@@ -58,6 +77,10 @@ export const metadata: Metadata = {
     'ICBM': '47.0676, -122.1295',
     'format-detection': 'telephone=yes',
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: THEME_COLOR,
 }
 
 const inter = Inter({
@@ -81,31 +104,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${bebasNeue.variable}`}>
       <head>
-        <meta name="theme-color" content="#0a1628" />
-        <meta name="apple-mobile-web-app-title" content="PC4x4SAR" />
-        <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://images.unsplash.com" />
-        <link rel="canonical" href="https://piercecounty4x4sar.org" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(emergencyServiceSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-        />
+        <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
+        <StructuredDataScript data={organizationSchema} />
+        <StructuredDataScript data={emergencyServiceSchema} />
+        <StructuredDataScript data={localBusinessSchema} />
+        <StructuredDataScript data={webSiteSchema} />
+        <StructuredDataScript data={monthlyMeetingSchema} />
+        <StructuredDataScript data={joinActionSchema} />
+        <StructuredDataScript data={donateActionSchema} />
       </head>
       <body className="bg-white text-navy-900">
         <a
@@ -115,18 +122,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         {children}
-        {/* Service worker registration */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js')})}`,
-          }}
-        />
-        {/* Easter egg */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `console.log("%c" + "\\n    . .\\n   {   }\\n   {   }\\n  /{   }\\\\\\n ( /   \\\\ )\\n  |  o  |\\n  |  _  |\\n   \\\\   /\\n    | |\\n   /| |\\\\\\n  (_| |_)\\n","color:#ff6b35;font-family:monospace;font-size:12px");console.log("%cYou found Bigfoot! %cPC4x4SAR — 100% Volunteer, 100% Free, 24/7/365","color:#ff6b35;font-weight:bold;font-size:14px","color:#9fb3c8;font-size:12px");`,
-          }}
-        />
+        <script src="/site-init.js" defer />
         {/* Cloudflare Web Analytics — no cookies, no JS overhead, GDPR-friendly */}
         {process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN && (
           <script

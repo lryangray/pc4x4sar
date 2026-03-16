@@ -26,13 +26,6 @@ function useCountUp(target: number, isVisible: boolean, duration = 2000) {
   return count
 }
 
-const stats = [
-  { value: 40, suffix: '+', label: 'Active Members' },
-  { value: 200, suffix: '+', label: 'Annual Missions' },
-  { value: new Date().getFullYear() - 1985, suffix: '', label: 'Years of Service' },
-  { value: 24, suffix: '/7', label: 'Availability' },
-]
-
 function StatItem({ value, suffix, label, isVisible }: {
   value: number
   suffix: string
@@ -55,6 +48,13 @@ function StatItem({ value, suffix, label, isVisible }: {
 
 export default function StatsBar() {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.3)
+  const yearsOfService = new Date().getFullYear() - 1985
+  const statsWithYears = [
+    { value: 40, suffix: '+', label: 'Active Members' },
+    { value: 200, suffix: '+', label: 'Annual Missions' },
+    { value: yearsOfService, suffix: '', label: 'Years of Service' },
+    { value: 24, suffix: '/7', label: 'Availability' },
+  ]
 
   return (
     <section
@@ -68,7 +68,7 @@ export default function StatsBar() {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
-          {stats.map((stat) => (
+          {statsWithYears.map((stat) => (
             <StatItem
               key={stat.label}
               value={stat.value}

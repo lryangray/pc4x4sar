@@ -1,5 +1,3 @@
-import EmergencyBanner from '@/components/EmergencyBanner'
-import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import Mission from '@/components/Mission'
 import StatsBar from '@/components/StatsBar'
@@ -13,15 +11,16 @@ import Gallery from '@/components/Gallery'
 import FAQ from '@/components/FAQ'
 import VolunteerJourney from '@/components/VolunteerJourney'
 import Contact from '@/components/Contact'
-import Footer from '@/components/Footer'
 import ErrorBoundary from '@/components/ErrorBoundary'
+import SiteShell from '@/components/SiteShell'
+import StructuredDataScript from '@/components/StructuredDataScript'
+import { faqSchema } from '@/lib/structured-data'
 
 export default function Home() {
   return (
-    <>
-      <EmergencyBanner />
-      <Header />
-      <main id="main-content">
+    <SiteShell>
+      <StructuredDataScript data={faqSchema} />
+      <>
         <Hero />
         <ErrorBoundary>
           <Mission />
@@ -59,8 +58,7 @@ export default function Home() {
         <ErrorBoundary>
           <Contact />
         </ErrorBoundary>
-      </main>
-      <Footer />
-    </>
+      </>
+    </SiteShell>
   )
 }
