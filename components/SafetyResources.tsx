@@ -59,31 +59,23 @@ const safetyTips = [
   },
 ]
 
-const resources = [
+const guides = [
   {
     title: 'Trip Planning Checklist',
     description: 'A comprehensive checklist to prepare for your outdoor adventure.',
-    type: 'Guide',
+    file: '/guides/trip-planning-checklist.pdf',
   },
   {
     title: 'Ten Essentials Guide',
     description: 'Detailed guide on what to pack for any outdoor excursion.',
-    type: 'Guide',
+    file: '/guides/ten-essentials-guide.pdf',
   },
   {
     title: 'Emergency Signal Guide',
     description: 'Learn how to signal for help if you become lost or injured.',
-    type: 'Guide',
+    file: '/guides/emergency-signal-guide.pdf',
   },
 ]
-
-function requestResource(title: string) {
-  const params = new URLSearchParams({
-    subject: 'general',
-    message: `I'd like to request a copy of the "${title}" resource. Thank you!`,
-  })
-  window.location.assign(`/contact?${params.toString()}`)
-}
 
 export default function SafetyResources() {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.1)
@@ -135,7 +127,7 @@ export default function SafetyResources() {
           ))}
         </div>
 
-        {/* Downloadable Resources */}
+        {/* Downloadable Guides */}
         <div
           className={`bg-navy-900 rounded-2xl p-8 md:p-12 transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -144,24 +136,25 @@ export default function SafetyResources() {
         >
           <div className="text-center mb-8">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
-              Safety Guides
+              Free Safety Guides
             </h3>
             <p className="text-navy-200 max-w-2xl mx-auto">
-              Request free guides and checklists to help you prepare for your next outdoor
-              adventure. Use the contact form to ask for the resources you need.
+              Download our guides and checklists to help you prepare for your next
+              outdoor adventure in Pierce County.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {resources.map((resource) => (
-              <button
-                key={resource.title}
-                onClick={() => requestResource(resource.title)}
-                className="bg-navy-800 rounded-xl p-6 hover:bg-navy-700 transition-colors group cursor-pointer text-left"
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            {guides.map((guide) => (
+              <a
+                key={guide.title}
+                href={guide.file}
+                download
+                className="bg-navy-800 rounded-xl p-6 hover:bg-navy-700 transition-colors group block"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold text-rescue-orange bg-rescue-orange/10 px-2 py-1 rounded">
-                    {resource.type}
+                    PDF
                   </span>
                   <svg
                     className="w-5 h-5 text-navy-400 group-hover:text-rescue-orange transition-colors"
@@ -173,17 +166,56 @@ export default function SafetyResources() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                     />
                   </svg>
                 </div>
-                <h4 className="font-bold text-white mb-2">{resource.title}</h4>
-                <p className="text-navy-300 text-sm mb-3">{resource.description}</p>
+                <h4 className="font-bold text-white mb-2">{guide.title}</h4>
+                <p className="text-navy-300 text-sm mb-3">{guide.description}</p>
                 <span className="text-rescue-orange text-sm font-medium group-hover:underline">
-                  Request this resource →
+                  Download guide →
                 </span>
-              </button>
+              </a>
             ))}
+          </div>
+
+          {/* Optional email signup */}
+          <div className="border-t border-navy-700 pt-8 text-center">
+            <p className="text-navy-200 mb-2">
+              Want more safety tips and seasonal guides?
+            </p>
+            <p className="text-navy-400 text-sm mb-5">
+              Sign up and we&apos;ll occasionally send you useful outdoor safety content. No spam.
+            </p>
+            <form
+              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+              onSubmit={(e) => {
+                e.preventDefault()
+                const form = e.target as HTMLFormElement
+                const email = new FormData(form).get('email') as string
+                if (email) {
+                  const params = new URLSearchParams({
+                    subject: 'general',
+                    message: `I'd like to sign up for safety tips and guides. My email: ${email}`,
+                  })
+                  window.location.assign(`/contact?${params.toString()}`)
+                }
+              }}
+            >
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="your@email.com"
+                className="flex-1 px-4 py-3 rounded-lg bg-navy-800 border border-navy-600 text-white placeholder-navy-400 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all"
+              />
+              <button
+                type="submit"
+                className="btn-primary whitespace-nowrap"
+              >
+                Sign Up
+              </button>
+            </form>
           </div>
         </div>
       </div>

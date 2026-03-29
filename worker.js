@@ -50,7 +50,7 @@ function buildSecurityHeaders(nonce) {
       scriptDirective,
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self'",
-      "img-src 'self' https://images.unsplash.com data:",
+      "img-src 'self' data:",
       "connect-src 'self' https://cloudflareinsights.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
@@ -374,6 +374,42 @@ async function handleContactForm(request, env, origin, referrer) {
     await env.CONTACT_SUBMISSIONS.put(key, JSON.stringify(submission), {
       expirationTtl: 60 * 60 * 24 * 90,
     });
+
+    // Send email notification if email binding is configured
+    if (env.SEND_EMAIL) {
+      try {
+        const { EmailMessage } = await import('cloudflare:email');
+        const mimeEmail = [
+          'From: website@piercecounty4x4sar.org',
+          'To: pcsar4x4@gmail.com',
+          `Subject: [PC4x4SAR] New ${submission.subject} message from ${submission.firstName} ${submission.lastName}`,
+          'Content-Type: text/plain; charset=utf-8',
+          '',
+          `New contact form submission:`,
+          ``,
+          `Name: ${submission.firstName} ${submission.lastName}`,
+          `Email: ${submission.email}`,
+          `Subject: ${submission.subject}`,
+          `Submitted: ${submission.submittedAt}`,
+          ``,
+          `Message:`,
+          `${submission.message}`,
+          ``,
+          `---`,
+          `This message was sent from the piercecounty4x4sar.org contact form.`,
+        ].join('\r\n');
+
+        const msg = new EmailMessage(
+          'website@piercecounty4x4sar.org',
+          'pcsar4x4@gmail.com',
+          new TextEncoder().encode(mimeEmail),
+        );
+        await env.SEND_EMAIL.send(msg);
+      } catch (emailErr) {
+        // Email is best-effort — KV storage is the primary record
+        console.error('[contact-form] Email notification failed:', emailErr);
+      }
+    }
 
     return new Response(
       JSON.stringify({ success: true, message: 'Thank you! Your message has been received.' }),
