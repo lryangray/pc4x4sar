@@ -75,6 +75,11 @@ const guides = [
     description: 'Learn how to signal for help if you become lost or injured.',
     file: '/guides/emergency-signal-guide.pdf',
   },
+  {
+    title: 'Tech Preparedness Guide',
+    description: 'Apps, offline maps, battery tips, and satellite SOS for your phone.',
+    file: '/guides/tech-preparedness-guide.pdf',
+  },
 ]
 
 export default function SafetyResources() {
@@ -144,7 +149,7 @@ export default function SafetyResources() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
             {guides.map((guide) => (
               <a
                 key={guide.title}
