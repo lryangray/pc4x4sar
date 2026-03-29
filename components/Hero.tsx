@@ -57,13 +57,26 @@ export default function Hero() {
             across Pierce County, Washington. Ready to respond when you need us most.
           </p>
 
-          <p className="text-base md:text-lg text-gray-300 mb-10 max-w-2xl mx-auto">
-            Working alongside Pierce County Sheriff&apos;s Department, Tacoma Police Department,
-            and Pierce County Emergency Management.
-            <span className="block mt-2 text-rescue-orange font-semibold">
+          <div className="mb-10 max-w-2xl mx-auto">
+            <div className="flex items-center justify-center gap-4 mb-3">
+              <div className="w-12 h-12 md:w-14 md:h-14 relative flex-shrink-0 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">
+                <Image
+                  src="/images/logo-pcsar-sd.png"
+                  alt="Pierce County Sheriff Search and Rescue badge"
+                  fill
+                  className="object-contain"
+                  sizes="56px"
+                />
+              </div>
+              <p className="text-base md:text-lg text-gray-300 text-left">
+                Working alongside Pierce County Sheriff&apos;s Department, Tacoma Police Department,
+                and Pierce County Emergency Management.
+              </p>
+            </div>
+            <p className="text-rescue-orange font-semibold text-base md:text-lg">
               All services provided free of charge.
-            </span>
-          </p>
+            </p>
+          </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a

@@ -26,14 +26,15 @@ export default async function Icon() {
           height: '100%',
           background: '#0a1628',
           borderRadius: 36,
+          border: '6px solid rgba(255, 255, 255, 0.3)',
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={logoBase64}
           alt=""
-          width={170}
-          height={170}
+          width={160}
+          height={160}
           style={{ objectFit: 'contain' }}
         />
       </div>

@@ -26,14 +26,15 @@ export default async function AppleIcon() {
           height: '100%',
           background: '#0a1628',
           borderRadius: 32,
+          border: '5px solid rgba(255, 255, 255, 0.3)',
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={logoBase64}
           alt=""
-          width={158}
-          height={158}
+          width={150}
+          height={150}
           style={{ objectFit: 'contain' }}
         />
       </div>
