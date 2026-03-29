@@ -368,12 +368,14 @@ export default function Contact() {
               <div className="bg-navy-900 rounded-2xl p-6 text-white">
                 <h4 className="font-bold text-lg mb-3">Monthly Meetings</h4>
                 <p className="text-navy-200 mb-4">
-                  Join us for our monthly training meetings. New members and
-                  interested volunteers are always welcome!
+                  Join us for our general meeting. You&apos;ll have the opportunity
+                  to meet the members, hear about current activities, and learn
+                  about the opportunities ahead. New members and interested
+                  volunteers are always welcome!
                 </p>
-                <div className="flex items-center space-x-2 text-rescue-orange">
+                <div className="flex items-center space-x-2 text-rescue-orange mb-3">
                   <svg
-                    className="w-5 h-5"
+                    className="w-5 h-5 flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -386,7 +388,33 @@ export default function Contact() {
                     />
                   </svg>
                   <span className="font-medium">
-                    First Tuesday of every month, 7:00 PM
+                    Second Wednesday of every month, 7:00 PM
+                  </span>
+                </div>
+                <div className="flex items-start space-x-2 text-navy-200 text-sm">
+                  <svg
+                    className="w-5 h-5 flex-shrink-0 mt-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  <span>
+                    Pierce County Dept. of Emergency Management<br />
+                    2501 S. 35th St. Suite D<br />
+                    Tacoma, WA 98409
                   </span>
                 </div>
               </div>

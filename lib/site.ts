@@ -1,8 +1,7 @@
 export const SITE_URL = 'https://piercecounty4x4sar.org'
 export const SITE_NAME = 'Pierce County 4x4 Search and Rescue'
 export const SITE_SHORT_NAME = 'PC4x4SAR'
-export const DEFAULT_OG_IMAGE =
-  'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=630&fit=crop&q=75&fm=auto'
+export const DEFAULT_OG_IMAGE = '/images/hero-jeep-rainier.jpg'
 export const THEME_COLOR = '#0a1628'
 
 export const ALLOWED_CONTACT_ORIGINS = [

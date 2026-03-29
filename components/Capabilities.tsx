@@ -22,12 +22,12 @@ export default function Capabilities() {
             Our Resources
           </span>
           <h2 className="font-display uppercase tracking-wide text-4xl md:text-5xl lg:text-6xl mt-2 mb-6">
-            Capabilities & Equipment
+            Unit Resources
           </h2>
           <p className="text-navy-200 text-lg leading-relaxed">
-            Our team maintains a high level of readiness with specialized
-            equipment and continuous training to handle any search and rescue
-            scenario.
+            Using skills originally developed for ground SAR, our techniques
+            have been honed for the mobile SAR world. We use personal vehicles
+            and a mix of personally owned, county owned, and donated non-highway vehicles.
           </p>
         </div>
 
@@ -65,12 +65,17 @@ export default function Capabilities() {
 
               {/* Content */}
               <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                <h3 className="text-2xl md:text-3xl font-bold mb-6 flex items-center">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 flex items-center">
                   <span className="w-12 h-12 bg-rescue-orange rounded-lg flex items-center justify-center mr-4 text-lg">
                     {index + 1}
                   </span>
                   {cap.category}
                 </h3>
+                {'description' in cap && (
+                  <p className="text-navy-200 leading-relaxed mb-6">
+                    {cap.description}
+                  </p>
+                )}
                 <ul className="grid sm:grid-cols-2 gap-3">
                   {cap.items.map((item) => (
                     <li key={item} className="flex items-start">
