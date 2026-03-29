@@ -1,4 +1,6 @@
 import { ImageResponse } from 'next/og'
+import { readFile } from 'fs/promises'
+import { join } from 'path'
 
 export const dynamic = 'force-static'
 
@@ -9,7 +11,10 @@ export const size = {
 
 export const contentType = 'image/png'
 
-export default function AppleIcon() {
+export default async function AppleIcon() {
+  const logoData = await readFile(join(process.cwd(), 'public', 'images', 'logo-4x4-unit.png'))
+  const logoBase64 = `data:image/png;base64,${logoData.toString('base64')}`
+
   return new ImageResponse(
     (
       <div
@@ -19,16 +24,18 @@ export default function AppleIcon() {
           justifyContent: 'center',
           width: '100%',
           height: '100%',
-          background: 'linear-gradient(135deg, #0a1628 0%, #132542 100%)',
-          color: '#ffffff',
-          fontSize: 60,
-          fontWeight: 800,
-          letterSpacing: '-0.05em',
+          background: '#0a1628',
           borderRadius: 32,
-          border: '8px solid #ff6b35',
         }}
       >
-        4x4
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={logoBase64}
+          alt=""
+          width={158}
+          height={158}
+          style={{ objectFit: 'contain' }}
+        />
       </div>
     ),
     size
