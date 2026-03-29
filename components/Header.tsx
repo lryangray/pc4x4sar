@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 import { scrollToSection } from '@/lib/scroll'
 import {
   navigationItems,
@@ -96,8 +97,14 @@ export default function Header() {
             onClick={isLogoScrollLink ? (e) => handleNavClick(e, logoHref) : undefined}
             className="flex items-center space-x-2"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-rescue-orange rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm md:text-base">4x4</span>
+            <div className="w-10 h-10 md:w-12 md:h-12 relative flex-shrink-0">
+              <Image
+                src="/images/logo-4x4-unit.png"
+                alt="Pierce County 4x4 Search and Rescue unit badge"
+                fill
+                className="object-contain"
+                sizes="48px"
+              />
             </div>
             <div className="hidden sm:block">
               <span className="text-white font-bold text-lg">Pierce County</span>

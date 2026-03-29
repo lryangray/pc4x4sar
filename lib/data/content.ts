@@ -37,18 +37,21 @@ export const partners = [
     description:
       'Our primary coordinating agency for search and rescue operations throughout Pierce County.',
     type: 'Law Enforcement',
+    logo: '/images/partner-pcsd.png',
   },
   {
     name: 'Tacoma Police Department',
     description:
       'Partnering on urban search operations and missing person cases within Tacoma city limits.',
     type: 'Law Enforcement',
+    logo: '/images/partner-tpd.png',
   },
   {
     name: 'Pierce County Department of Emergency Management',
     description:
       'Coordinating disaster response and emergency preparedness across the county.',
     type: 'Emergency Management',
+    logo: '/images/partner-pcdem.png',
   },
 ]
 

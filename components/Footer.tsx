@@ -2,6 +2,7 @@
 
 import { handleScrollClick } from '@/lib/scroll'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 import {
   navigationItems,
   resolveNavigationHref,
@@ -20,8 +21,14 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-12 h-12 bg-rescue-orange rounded-full flex items-center justify-center">
-                <span className="text-white font-bold">4x4</span>
+              <div className="w-12 h-12 relative flex-shrink-0">
+                <Image
+                  src="/images/logo-4x4-unit.png"
+                  alt="Pierce County 4x4 Search and Rescue unit badge"
+                  fill
+                  className="object-contain"
+                  sizes="48px"
+                />
               </div>
               <div>
                 <span className="font-bold text-xl block">Pierce County</span>

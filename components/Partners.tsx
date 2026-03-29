@@ -3,6 +3,7 @@
 import { useScrollVisible } from '@/hooks/useScrollVisible'
 import { scrollToSection } from '@/lib/scroll'
 import { partners } from '@/lib/data/content'
+import Image from 'next/image'
 
 export default function Partners() {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.2)
@@ -44,30 +45,33 @@ export default function Partners() {
               style={{ transitionDelay: `${Math.min(index * 150, 300)}ms` }}
             >
               <div className="flex items-center gap-5 md:gap-8">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-navy-900 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <svg
-                    className="w-7 h-7 md:w-8 md:h-8 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    {partner.type === 'Law Enforcement' ? (
+                {partner.logo ? (
+                  <div className="w-16 h-16 md:w-20 md:h-20 relative flex-shrink-0">
+                    <Image
+                      src={partner.logo}
+                      alt={`${partner.name} logo`}
+                      fill
+                      className="object-contain"
+                      sizes="80px"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-14 h-14 md:w-16 md:h-16 bg-navy-900 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg
+                      className="w-7 h-7 md:w-8 md:h-8 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={1.5}
                         d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
                       />
-                    ) : (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                      />
-                    )}
-                  </svg>
-                </div>
+                    </svg>
+                  </div>
+                )}
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-3 mb-1">
                     <h3 className="text-lg md:text-xl font-bold text-navy-900">
