@@ -97,13 +97,15 @@ export default function Header() {
             onClick={isLogoScrollLink ? (e) => handleNavClick(e, logoHref) : undefined}
             className="flex items-center space-x-2"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 relative flex-shrink-0 drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]">
+            <div className={`relative flex-shrink-0 drop-shadow-[0_0_8px_rgba(255,255,255,0.7)] drop-shadow-[0_0_20px_rgba(255,255,255,0.25)] transition-all duration-300 ${
+              isScrolled ? 'w-10 h-10 md:w-12 md:h-12' : 'w-14 h-14 md:w-16 md:h-16'
+            }`}>
               <Image
                 src="/images/logo-4x4-unit.png"
                 alt="Pierce County 4x4 Search and Rescue unit badge"
                 fill
                 className="object-contain"
-                sizes="48px"
+                sizes="64px"
               />
             </div>
             <div className="hidden sm:block">
