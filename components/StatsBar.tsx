@@ -48,7 +48,7 @@ function StatItem({ value, suffix, label, isVisible }: {
 
 export default function StatsBar() {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.3)
-  const yearsOfService = new Date().getFullYear() - 1985
+  const yearsOfService = new Date().getFullYear() - 1984
   const statsWithYears = [
     { value: 40, suffix: '+', label: 'Active Members' },
     { value: 200, suffix: '+', label: 'Annual Missions' },

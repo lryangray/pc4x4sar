@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Pierce County 4x4 Search and Rescue',
     description: 'FREE 24/7 volunteer search and rescue serving Pierce County, Washington.',
-    images: ['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=630&fit=crop&q=75&fm=auto'],
+    images: ['/images/hero-jeep-rainier.jpg'],
   },
   robots: {
     index: true,
@@ -104,7 +104,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${bebasNeue.variable}`}>
       <head>
-        <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
         <StructuredDataScript data={organizationSchema} />
         <StructuredDataScript data={emergencyServiceSchema} />

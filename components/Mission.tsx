@@ -22,8 +22,8 @@ export default function Mission() {
             }`}
           >
             <Image
-              src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&h=600&fit=crop&q=75&fm=auto"
-              alt="Search and rescue team members preparing for a mission"
+              src="/images/mission-mountain-lookout.jpg"
+              alt="Two SAR members scanning misty mountain valley with binoculars during a search"
               fill
               loading="lazy"
               className="object-cover"
@@ -32,7 +32,7 @@ export default function Mission() {
             <div className="absolute inset-0 bg-gradient-to-t from-navy-900/50 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6">
               <span className="bg-rescue-orange text-white text-sm font-semibold px-4 py-2 rounded-full">
-                Serving Since 1985
+                Serving Since 1984
               </span>
             </div>
           </div>
@@ -51,25 +51,27 @@ export default function Mission() {
             </h2>
             <div className="space-y-4 text-navy-700 text-lg leading-relaxed">
               <p>
-                Pierce County 4x4 Search and Rescue is a volunteer organization
-                committed to providing professional emergency search and rescue
-                services throughout Pierce County, Washington. From the urban areas of
-                Tacoma, Lakewood, and Puyallup to the rugged wilderness of the
-                Mt. Rainier foothills, our team stands ready 24/7/365 to respond.
+                We are an all-volunteer mobile search and rescue unit based in
+                Pierce County, Washington. With a sea level coastline and the
+                highest point in the state, we cover a diversity of urban, rural,
+                and true wilderness across 1,800 square miles. We volunteer under
+                the direction of the Pierce County Sheriff&apos;s Department, but are
+                available to respond by request to any other county in the state.
               </p>
               <p>
-                Founded nearly four decades ago, we&apos;ve grown into a highly skilled
-                unit equipped with specialized 4x4 vehicles capable of reaching
-                the remote backcountry terrain of the Carbon River valley, Buckley,
-                Orting, and surrounding wilderness areas. Our members undergo rigorous
-                training in wilderness navigation, technical rescue, emergency
-                medical response, and incident command.
+                PCSAR4X4 was formed in 1984 by members of ground SAR who
+                recognized the need for a transportation and mobile SAR resource.
+                Since formation, we&apos;ve evolved skills and techniques, expanded
+                duties, and branched out our mobility. In recent years we&apos;ve expanded
+                beyond traditional street-legal four-wheel drive vehicles to include
+                ATV/UTV, dual sport motorcycles, snowmobiles, and a SnoCat.
               </p>
               <p>
-                We work closely with the Pierce County Sheriff&apos;s Department,
-                Tacoma Police Department, and Pierce County Department of Emergency
-                Management to ensure coordinated and effective rescue operations
-                across our service area.
+                Beyond search and rescue, we actively support Pierce County
+                Emergency Management with logistical support when needs arise.
+                As a non-profit 501(c)(3), our funding comes from donations,
+                grants, and our membership. We do not charge for our services,
+                nor do we receive tax dollars.
               </p>
             </div>
 

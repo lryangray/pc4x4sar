@@ -7,27 +7,27 @@ export const faqs = [
   {
     question: 'What areas does Pierce County 4x4 SAR cover?',
     answer:
-      'We serve all of Pierce County, Washington, including the Mt. Rainier foothills, Carbon River area, Puyallup, Tacoma, Lakewood, University Place, Bonney Lake, Buckley, Orting, and surrounding wilderness areas. We also provide mutual aid to neighboring counties when requested.',
+      'We cover all 1,800 square miles of Pierce County, Washington — from sea level on the Puget Sound to the summit of Mt. Rainier. This includes the urban areas of Tacoma, Puyallup, and Lakewood, the foothills communities of Bonney Lake, Buckley, and Orting, and the true wilderness of the Cascade Mountains and Carbon River valley. We also respond by request to any other county in the state to support law enforcement agencies.',
   },
   {
     question: 'How much does a search and rescue operation cost?',
     answer:
-      'Nothing. All of our services are provided completely free of charge. We are a 501(c)(3) non-profit organization staffed entirely by volunteers. Our operations are funded through donations and grants.',
+      'Nothing. We do not charge for our services, nor do we receive tax dollars. Pierce County 4x4 SAR is a 501(c)(3) non-profit organization staffed entirely by volunteers. All of our operational expenses are paid for by donations, grants, and our membership.',
   },
   {
     question: 'How can I become a volunteer?',
     answer:
-      "We welcome new volunteers! No prior experience is required - we provide all necessary training. Attend one of our monthly meetings held on the first Tuesday of each month at 7:00 PM. You'll need a reliable 4x4 vehicle, a commitment to training, and a desire to help your community. Contact us through our website to learn more.",
+      "We welcome new volunteers! No prior experience is required — we provide all necessary training. Join us on the second Wednesday of each month at 7:00 PM for our general meeting at the Pierce County Dept. of Emergency Management, 2501 S. 35th St. Suite D, Tacoma, WA 98409. You'll have the opportunity to meet the members, hear about current activities, and learn about the opportunities ahead. Contact us through our website to learn more.",
   },
   {
     question: 'What kind of training do volunteers receive?',
     answer:
-      'Volunteers receive comprehensive training including wilderness navigation, GPS and mapping, search techniques, emergency first aid, radio communications, off-road driving skills, and incident command system (ICS) protocols. Training is ongoing throughout your membership.',
+      'Volunteers receive comprehensive training starting with classroom and field instruction in SAR techniques, mapping, safe vehicle use, and communications. Once initial training is completed, members recertify within two years to stay current. Additional courses include Winter Driving for extreme weather conditions, Advanced First Aid, ATV/dual sport certification, and snowmobile operations. Training is ongoing throughout your membership.',
   },
   {
     question: 'How can I support Pierce County 4x4 SAR?',
     answer:
-      'You can support us by making a tax-deductible donation, becoming a corporate sponsor, volunteering your time, or simply spreading the word about outdoor safety. Every contribution helps us maintain our equipment and training programs.',
+      'Your financial assistance enhances our ability to be prepared when called upon. You can make a tax-deductible donation online or by mail to: Pierce County Dept. of Emergency Management, Attn: PC SAR 4x4, 2501 S. 35th St. Suite D, Tacoma, WA 98409. You can also become a corporate sponsor, volunteer your time, or simply spread the word about outdoor safety.',
   },
 ]
 
@@ -54,104 +54,86 @@ export const partners = [
 
 export const galleryImages = [
   {
-    src: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=600&fit=crop&q=75&fm=auto',
-    alt: 'Mount Rainier with lake reflection - Pierce County iconic landmark',
+    src: '/images/gallery-snowmobile-rainier.jpg',
+    alt: 'SAR member with snowmobile at mountain overlook with Mt. Rainier panorama',
     span: 'md:col-span-2',
   },
   {
-    src: 'https://images.unsplash.com/photo-1542332213-31f87348057f?w=400&h=400&fit=crop&q=75&fm=auto',
-    alt: 'Pacific Northwest forest trail near Puyallup',
+    src: '/images/gallery-atv-creek.jpg',
+    alt: 'SAR team navigating ATVs through rocky creek bed in backcountry terrain',
     span: '',
   },
   {
-    src: 'https://images.unsplash.com/photo-1509515837298-2c67a3933321?w=400&h=400&fit=crop&q=75&fm=auto',
-    alt: 'Puget Sound waterfront - Tacoma service area',
+    src: '/images/gallery-flood-response.jpg',
+    alt: 'Volunteers filling sandbags during nighttime flood response operations',
     span: '',
   },
   {
-    src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=400&fit=crop&q=75&fm=auto',
-    alt: 'Dense forest terrain typical of Carbon River valley searches',
+    src: '/images/gallery-forest-road-fog.jpg',
+    alt: 'Aerial view of SAR vehicle on remote forest road disappearing into mountain fog',
     span: '',
   },
   {
-    src: 'https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=600&h=400&fit=crop&q=75&fm=auto',
-    alt: 'Mt. Rainier National Park wilderness where rescue operations occur',
+    src: '/images/gallery-sheriff-snowmobiles.jpg',
+    alt: 'SAR team with Sheriff-branded snowmobiles in snowy mountain landscape',
     span: 'md:col-span-2',
   },
   {
-    src: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=400&fit=crop&q=75&fm=auto',
-    alt: 'Alpine terrain in the Mt. Rainier foothills',
+    src: '/images/gallery-team-thumbs-up.jpg',
+    alt: 'Three SAR team members giving thumbs up during field operations',
     span: '',
   },
 ]
 
 export const capabilities = [
   {
-    category: 'Vehicles & Equipment',
+    category: '4x4 Vehicles',
+    description:
+      "Our primary resource is members' use of their all-wheel drive vehicles for search and rescue missions. The mobility provided in a variety of conditions and road surfaces enhances our ability to assist law enforcement and other organizations. Training starts with classroom and field instruction in SAR techniques, mapping, safe vehicle use, and communications. The Winter Driving Course provides advanced skills for extreme weather conditions.",
     items: [
-      '12 specialized 4x4 rescue vehicles',
-      'ATVs and UTVs for trail access',
+      'Member all-wheel drive vehicles',
       'Command and communications trailer',
-      'Portable lighting systems',
-      'Rescue stretchers and litters',
-      'Technical rope rescue gear',
+      'SAR techniques & mapping training',
+      'Winter Driving Course',
+      'Radio communications',
+      'Advanced First Aid certification',
     ],
-    image:
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&q=75&fm=auto',
-    imageAlt: '4x4 rescue vehicle equipped for search and rescue operations',
+    image: '/images/cap-vehicles-aerial.jpg',
+    imageAlt: 'Aerial view of SAR 4x4 vehicles staged at a training exercise in Pierce County',
   },
   {
-    category: 'Training & Certifications',
+    category: 'ATV & Dual Sport',
+    description:
+      'When called to a search, all-terrain vehicles and dual sport motorcycles make it possible to gain access to more difficult terrain and remote locations. The unit provides training so members can assist with these auxiliary vehicles. Members may use their personal vehicles or those provided by the Pierce County Sheriff\u2019s Department upon completion of the course.',
     items: [
-      'NASAR certified search technicians',
-      'Wilderness First Responder (WFR)',
-      'Technical rope rescue Level II',
-      'ICS-100 through ICS-400',
-      'Swift water awareness',
-      'GPS navigation & mapping',
+      'ATVs and UTVs for trail access',
+      'Dual sport motorcycles',
+      'County-provided vehicles available',
+      'Specialized terrain access training',
+      'Backcountry navigation',
+      'Rider safety certification',
     ],
-    image:
-      'https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=600&h=400&fit=crop&q=75&fm=auto',
-    imageAlt:
-      'Search and rescue team training in wilderness setting',
+    image: '/images/cap-training-helo.jpg',
+    imageAlt: 'SAR team members approaching helicopter during advanced training exercise',
   },
   {
-    category: 'Search Capabilities',
+    category: 'Tracked Vehicles',
+    description:
+      'With much of Pierce County in the higher elevations of the Cascade Mountains, access is often limited to snowmobiles, tracked quads, or Snow Cats during winter. The unit is frequently called out on missions where these are put to use. Members may use personal vehicles or those available through the Pierce County Sheriff\u2019s Department, and recertify within two years to stay current on their skills.',
     items: [
-      'Grid search operations',
-      'Tracking and sign cutting',
-      'K-9 search team support',
-      'Night operations capability',
-      'Drone search assistance',
-      'Evidence search protocols',
+      'Snowmobiles for winter operations',
+      'Tracked quads for deep snow',
+      'SnoCat for extended operations',
+      'Cascade Mountain winter access',
+      'Biennial recertification',
+      'County equipment available',
     ],
-    image:
-      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&h=400&fit=crop&q=75&fm=auto',
-    imageAlt:
-      'Mountain terrain typical of search and rescue operations',
+    image: '/images/cap-search-railroad.jpg',
+    imageAlt: 'SAR team with search dog conducting a search along railroad tracks',
   },
 ]
 
-export const testimonials = [
-  {
-    quote: "PC4x4SAR is one of our most reliable volunteer resources. When we activate them for a mission, they respond quickly and professionally. Their 4x4 capabilities give us access to terrain that would otherwise be unreachable.",
-    name: 'Placeholder Name',
-    title: 'Search & Rescue Coordinator',
-    org: "Pierce County Sheriff's Department",
-  },
-  {
-    quote: "During the 2023 flooding events, PC4x4SAR was instrumental in our evacuation and damage assessment operations. Their volunteers are well-trained, well-equipped, and ready to serve at a moment's notice.",
-    name: 'Placeholder Name',
-    title: 'Emergency Manager',
-    org: 'Pierce County Dept. of Emergency Management',
-  },
-  {
-    quote: "I joined PC4x4SAR three years ago with zero SAR experience. The training program brought me from complete beginner to confidently deploying on real missions. It's the most rewarding thing I've ever done.",
-    name: 'Placeholder Name',
-    title: 'Active Volunteer Member',
-    org: 'Pierce County 4x4 SAR',
-  },
-]
+export const testimonials: Array<{ quote: string; name: string; title: string; org: string }> = []
 
 export const sponsors = [
   {

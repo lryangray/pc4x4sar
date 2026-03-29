@@ -12,7 +12,7 @@ const steps = [
   {
     number: 2,
     title: 'Attend a Meeting',
-    description: 'Join us on the first Tuesday of the month at 7:00 PM. Meet the team, learn about our mission, and ask questions.',
+    description: 'Join us on the second Wednesday of the month at 7:00 PM at the Pierce County Dept. of Emergency Management, 2501 S. 35th St. Suite D, Tacoma. Meet the team and ask questions.',
   },
   {
     number: 3,

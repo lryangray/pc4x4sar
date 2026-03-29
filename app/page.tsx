@@ -5,7 +5,6 @@ import Services from '@/components/Services'
 import SafetyResources from '@/components/SafetyResources'
 import Capabilities from '@/components/Capabilities'
 import Partners from '@/components/Partners'
-import Testimonials from '@/components/Testimonials'
 import Sponsors from '@/components/Sponsors'
 import Gallery from '@/components/Gallery'
 import FAQ from '@/components/FAQ'
@@ -39,9 +38,6 @@ export default function Home() {
         </ErrorBoundary>
         <ErrorBoundary>
           <Partners />
-        </ErrorBoundary>
-        <ErrorBoundary>
-          <Testimonials />
         </ErrorBoundary>
         <ErrorBoundary>
           <Sponsors />
