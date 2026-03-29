@@ -97,7 +97,7 @@ export default function Header() {
             onClick={isLogoScrollLink ? (e) => handleNavClick(e, logoHref) : undefined}
             className="flex items-center space-x-2"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 relative flex-shrink-0">
+            <div className="w-10 h-10 md:w-12 md:h-12 relative flex-shrink-0 drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]">
               <Image
                 src="/images/logo-4x4-unit.png"
                 alt="Pierce County 4x4 Search and Rescue unit badge"

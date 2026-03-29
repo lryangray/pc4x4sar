@@ -1,4 +1,6 @@
 import { ImageResponse } from 'next/og'
+import { readFile } from 'fs/promises'
+import { join } from 'path'
 
 export const dynamic = 'force-static'
 
@@ -9,7 +11,10 @@ export const size = {
 
 export const contentType = 'image/png'
 
-export default function Icon() {
+export default async function Icon() {
+  const logoData = await readFile(join(process.cwd(), 'public', 'images', 'logo-4x4-unit.png'))
+  const logoBase64 = `data:image/png;base64,${logoData.toString('base64')}`
+
   return new ImageResponse(
     (
       <div
@@ -19,16 +24,18 @@ export default function Icon() {
           justifyContent: 'center',
           width: '100%',
           height: '100%',
-          background: 'linear-gradient(135deg, #0a1628 0%, #132542 100%)',
-          color: '#ffffff',
-          fontSize: 66,
-          fontWeight: 800,
-          letterSpacing: '-0.05em',
+          background: '#0a1628',
           borderRadius: 36,
-          border: '10px solid #ff6b35',
         }}
       >
-        4x4
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={logoBase64}
+          alt=""
+          width={170}
+          height={170}
+          style={{ objectFit: 'contain' }}
+        />
       </div>
     ),
     size
