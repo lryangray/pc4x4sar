@@ -62,23 +62,60 @@ const safetyTips = [
 const guides = [
   {
     title: 'Trip Planning Checklist',
-    description: 'A comprehensive checklist to prepare for your outdoor adventure.',
+    description: 'Comprehensive pre-trip safety checklist.',
     file: '/guides/trip-planning-checklist.pdf',
+    tag: 'Guide',
   },
   {
     title: 'Ten Essentials Guide',
-    description: 'Detailed guide on what to pack for any outdoor excursion.',
+    description: 'The 10 gear systems you should always carry.',
     file: '/guides/ten-essentials-guide.pdf',
+    tag: 'Guide',
   },
   {
     title: 'Emergency Signal Guide',
-    description: 'Learn how to signal for help if you become lost or injured.',
+    description: 'How to signal for help when lost or injured.',
     file: '/guides/emergency-signal-guide.pdf',
+    tag: 'Guide',
   },
   {
-    title: 'Tech Preparedness Guide',
-    description: 'Apps, offline maps, battery tips, and satellite SOS for your phone.',
+    title: 'Tech Preparedness',
+    description: 'Apps, offline maps, battery tips, satellite SOS.',
     file: '/guides/tech-preparedness-guide.pdf',
+    tag: 'Guide',
+  },
+]
+
+const fieldCards = [
+  {
+    title: 'Trip Planning Card',
+    description: 'One-page quick reference to print and laminate.',
+    file: '/guides/field-card-trip-planning.pdf',
+    tag: 'Field Card',
+  },
+  {
+    title: 'Ten Essentials Card',
+    description: 'Printable checklist for your pack.',
+    file: '/guides/field-card-ten-essentials.pdf',
+    tag: 'Field Card',
+  },
+  {
+    title: 'Emergency Signals Card',
+    description: 'S.T.O.P. protocol and signaling quick reference.',
+    file: '/guides/field-card-emergency-signals.pdf',
+    tag: 'Field Card',
+  },
+  {
+    title: 'Tech Prep Card',
+    description: 'Apps, battery tips, and satellite SOS at a glance.',
+    file: '/guides/field-card-tech-prep.pdf',
+    tag: 'Field Card',
+  },
+  {
+    title: 'Trip Plan Form',
+    description: 'Fill out, leave with your emergency contact.',
+    file: '/guides/trip-plan-form.pdf',
+    tag: 'Form',
   },
 ]
 
@@ -149,17 +186,17 @@ export default function SafetyResources() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {guides.map((guide) => (
               <a
                 key={guide.title}
                 href={guide.file}
                 download
-                className="bg-navy-800 rounded-xl p-6 hover:bg-navy-700 transition-colors group block"
+                className="bg-navy-800 rounded-xl p-5 hover:bg-navy-700 transition-colors group block"
               >
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-semibold text-rescue-orange bg-rescue-orange/10 px-2 py-1 rounded">
-                    PDF
+                    {guide.tag}
                   </span>
                   <svg
                     className="w-5 h-5 text-navy-400 group-hover:text-rescue-orange transition-colors"
@@ -175,11 +212,52 @@ export default function SafetyResources() {
                     />
                   </svg>
                 </div>
-                <h4 className="font-bold text-white mb-2">{guide.title}</h4>
-                <p className="text-navy-300 text-sm mb-3">{guide.description}</p>
-                <span className="text-rescue-orange text-sm font-medium group-hover:underline">
-                  Download guide →
+                <h4 className="font-bold text-white mb-1 text-sm">{guide.title}</h4>
+                <p className="text-navy-300 text-xs mb-2">{guide.description}</p>
+                <span className="text-rescue-orange text-xs font-medium group-hover:underline">
+                  Download →
                 </span>
+              </a>
+            ))}
+          </div>
+
+          {/* Field Cards + Trip Plan Form */}
+          <div className="mb-4">
+            <h4 className="text-white font-semibold text-sm mb-3">
+              Printable Field Cards & Trip Plan
+            </h4>
+            <p className="text-navy-400 text-xs mb-3">
+              One-page quick references designed to print, laminate, and keep in your pack.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-10">
+            {fieldCards.map((card) => (
+              <a
+                key={card.title}
+                href={card.file}
+                download
+                className="bg-navy-800 rounded-lg px-4 py-3 hover:bg-navy-700 transition-colors group block"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[10px] font-semibold text-rescue-orange bg-rescue-orange/10 px-1.5 py-0.5 rounded">
+                    {card.tag}
+                  </span>
+                  <svg
+                    className="w-4 h-4 text-navy-400 group-hover:text-rescue-orange transition-colors"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    />
+                  </svg>
+                </div>
+                <h4 className="font-bold text-white text-xs">{card.title}</h4>
+                <p className="text-navy-400 text-[10px]">{card.description}</p>
               </a>
             ))}
           </div>
