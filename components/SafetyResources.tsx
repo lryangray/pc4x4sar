@@ -59,31 +59,51 @@ const safetyTips = [
   },
 ]
 
-const resources = [
+type Resource = { title: string; description: string; file: string; tag: string }
+
+const guideCategories: Array<{
+  heading: string
+  subtitle: string
+  columns: string
+  items: Resource[]
+}> = [
   {
-    title: 'Trip Planning Checklist',
-    description: 'A comprehensive checklist to prepare for your outdoor adventure.',
-    type: 'Guide',
+    heading: 'Safety Guides',
+    subtitle: 'In-depth guides to read before your trip.',
+    columns: 'sm:grid-cols-2 lg:grid-cols-4',
+    items: [
+      { title: 'Trip Planning Checklist', description: 'Comprehensive pre-trip safety checklist.', file: '/guides/trip-planning-checklist.pdf', tag: 'Guide' },
+      { title: 'Ten Essentials Guide', description: 'The 10 gear systems you should always carry.', file: '/guides/ten-essentials-guide.pdf', tag: 'Guide' },
+      { title: 'Emergency Signal Guide', description: 'How to signal for help when lost or injured.', file: '/guides/emergency-signal-guide.pdf', tag: 'Guide' },
+      { title: 'Tech Preparedness', description: 'Apps, offline maps, battery tips, satellite SOS.', file: '/guides/tech-preparedness-guide.pdf', tag: 'Guide' },
+    ],
   },
   {
-    title: 'Ten Essentials Guide',
-    description: 'Detailed guide on what to pack for any outdoor excursion.',
-    type: 'Guide',
+    heading: 'Activity Guides',
+    subtitle: 'Safety tips specific to your activity in Pierce County.',
+    columns: 'sm:grid-cols-2 lg:grid-cols-3',
+    items: [
+      { title: 'Hiking Safety', description: 'Trails, terrain, and hazards from sea level to Rainier.', file: '/guides/activity-hiking-safety.pdf', tag: 'Hiking' },
+      { title: 'Offroad & 4x4 Safety', description: 'Vehicle prep, recovery, and trail etiquette.', file: '/guides/activity-offroad-safety.pdf', tag: '4x4' },
+      { title: 'ATV, SxS & Dirt Bike', description: 'OHV laws, trail areas, and riding safety.', file: '/guides/activity-atv-sxs-safety.pdf', tag: 'OHV' },
+      { title: 'Water Recreation', description: 'Kayaking, paddleboarding, boating, and cold water.', file: '/guides/activity-water-safety.pdf', tag: 'Water' },
+      { title: 'Winter & Snowmobile', description: 'Avalanche, snowmobile, and snowshoe safety.', file: '/guides/activity-winter-safety.pdf', tag: 'Winter' },
+      { title: 'Hunting & Fishing', description: 'Solo safety, backcountry risks, and game processing.', file: '/guides/activity-hunting-fishing-safety.pdf', tag: 'Hunting' },
+    ],
   },
   {
-    title: 'Emergency Signal Guide',
-    description: 'Learn how to signal for help if you become lost or injured.',
-    type: 'Guide',
+    heading: 'Printable Field Cards',
+    subtitle: 'One-page quick references. Print, laminate, keep in your pack.',
+    columns: 'sm:grid-cols-2 lg:grid-cols-5',
+    items: [
+      { title: 'Trip Planning', description: 'Pre-trip checklist at a glance.', file: '/guides/field-card-trip-planning.pdf', tag: 'Card' },
+      { title: 'Ten Essentials', description: 'Gear checklist for your pack.', file: '/guides/field-card-ten-essentials.pdf', tag: 'Card' },
+      { title: 'Emergency Signals', description: 'S.T.O.P. and signaling reference.', file: '/guides/field-card-emergency-signals.pdf', tag: 'Card' },
+      { title: 'Tech Prep', description: 'Apps, battery, and satellite SOS.', file: '/guides/field-card-tech-prep.pdf', tag: 'Card' },
+      { title: 'Trip Plan Form', description: 'Leave with your emergency contact.', file: '/guides/trip-plan-form.pdf', tag: 'Form' },
+    ],
   },
 ]
-
-function requestResource(title: string) {
-  const params = new URLSearchParams({
-    subject: 'general',
-    message: `I'd like to request a copy of the "${title}" resource. Thank you!`,
-  })
-  window.location.assign(`/contact?${params.toString()}`)
-}
 
 export default function SafetyResources() {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.1)
@@ -135,55 +155,100 @@ export default function SafetyResources() {
           ))}
         </div>
 
-        {/* Downloadable Resources */}
+        {/* Downloadable Guides */}
         <div
           className={`bg-navy-900 rounded-2xl p-8 md:p-12 transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
           style={{ transitionDelay: '500ms' }}
         >
-          <div className="text-center mb-8">
+          <div className="text-center mb-10">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
-              Safety Guides
+              Free Safety Guides
             </h3>
             <p className="text-navy-200 max-w-2xl mx-auto">
-              Request free guides and checklists to help you prepare for your next outdoor
-              adventure. Use the contact form to ask for the resources you need.
+              Download our guides and checklists to help you prepare for your next
+              outdoor adventure in Pierce County. All free, all from our SAR team.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {resources.map((resource) => (
-              <button
-                key={resource.title}
-                onClick={() => requestResource(resource.title)}
-                className="bg-navy-800 rounded-xl p-6 hover:bg-navy-700 transition-colors group cursor-pointer text-left"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-semibold text-rescue-orange bg-rescue-orange/10 px-2 py-1 rounded">
-                    {resource.type}
-                  </span>
-                  <svg
-                    className="w-5 h-5 text-navy-400 group-hover:text-rescue-orange transition-colors"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+          {guideCategories.map((category) => (
+            <div key={category.heading} className="mb-8">
+              <div className="mb-3">
+                <h4 className="text-white font-semibold text-sm">{category.heading}</h4>
+                <p className="text-navy-400 text-xs">{category.subtitle}</p>
+              </div>
+              <div className={`grid ${category.columns} gap-3`}>
+                {category.items.map((item) => (
+                  <a
+                    key={item.title}
+                    href={item.file}
+                    download
+                    className="bg-navy-800 rounded-lg px-4 py-3 hover:bg-navy-700 transition-colors group block"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-                <h4 className="font-bold text-white mb-2">{resource.title}</h4>
-                <p className="text-navy-300 text-sm mb-3">{resource.description}</p>
-                <span className="text-rescue-orange text-sm font-medium group-hover:underline">
-                  Request this resource →
-                </span>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[10px] font-semibold text-rescue-orange bg-rescue-orange/10 px-1.5 py-0.5 rounded">
+                        {item.tag}
+                      </span>
+                      <svg
+                        className="w-4 h-4 text-navy-400 group-hover:text-rescue-orange transition-colors"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                        />
+                      </svg>
+                    </div>
+                    <h4 className="font-bold text-white text-xs">{item.title}</h4>
+                    <p className="text-navy-400 text-[10px]">{item.description}</p>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          {/* Optional email signup */}
+          <div className="border-t border-navy-700 pt-8 text-center">
+            <p className="text-navy-200 mb-2">
+              Want more safety tips and seasonal guides?
+            </p>
+            <p className="text-navy-400 text-sm mb-5">
+              Sign up and we&apos;ll occasionally send you useful outdoor safety content. No spam.
+            </p>
+            <form
+              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+              onSubmit={(e) => {
+                e.preventDefault()
+                const form = e.target as HTMLFormElement
+                const email = new FormData(form).get('email') as string
+                if (email) {
+                  const params = new URLSearchParams({
+                    subject: 'general',
+                    message: `I'd like to sign up for safety tips and guides. My email: ${email}`,
+                  })
+                  window.location.assign(`/contact?${params.toString()}`)
+                }
+              }}
+            >
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="your@email.com"
+                className="flex-1 px-4 py-3 rounded-lg bg-navy-800 border border-navy-600 text-white placeholder-navy-400 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all"
+              />
+              <button
+                type="submit"
+                className="btn-primary whitespace-nowrap"
+              >
+                Sign Up
               </button>
-            ))}
+            </form>
           </div>
         </div>
       </div>

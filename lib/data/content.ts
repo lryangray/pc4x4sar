@@ -59,32 +59,34 @@ export const galleryImages = [
   {
     src: '/images/gallery-snowmobile-rainier.jpg',
     alt: 'SAR member with snowmobile at mountain overlook with Mt. Rainier panorama',
-    span: 'md:col-span-2',
   },
   {
     src: '/images/gallery-atv-creek.jpg',
     alt: 'SAR team navigating ATVs through rocky creek bed in backcountry terrain',
-    span: '',
   },
   {
     src: '/images/gallery-flood-response.jpg',
     alt: 'Volunteers filling sandbags during nighttime flood response operations',
-    span: '',
   },
   {
     src: '/images/gallery-forest-road-fog.jpg',
     alt: 'Aerial view of SAR vehicle on remote forest road disappearing into mountain fog',
-    span: '',
   },
   {
     src: '/images/gallery-sheriff-snowmobiles.jpg',
     alt: 'SAR team with Sheriff-branded snowmobiles in snowy mountain landscape',
-    span: 'md:col-span-2',
   },
   {
     src: '/images/gallery-team-thumbs-up.jpg',
     alt: 'Three SAR team members giving thumbs up during field operations',
-    span: '',
+  },
+  {
+    src: '/images/helo-hoist-training.jpg',
+    alt: 'SAR member being hoisted by helicopter during advanced rescue training',
+  },
+  {
+    src: '/images/training-vehicle-recovery.jpg',
+    alt: 'Aerial view of vehicle recovery training exercise in forest clearing',
   },
 ]
 

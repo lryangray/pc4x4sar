@@ -35,9 +35,7 @@ export default function Gallery() {
           {galleryImages.map((image, index) => (
             <div
               key={image.src}
-              className={`relative overflow-hidden rounded-xl ${
-                image.span
-              } aspect-square group ${
+              className={`relative overflow-hidden rounded-xl aspect-square group ${
                 isVisible
                   ? 'opacity-100 scale-100'
                   : 'opacity-0 scale-95'
