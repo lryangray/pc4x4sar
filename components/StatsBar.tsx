@@ -51,7 +51,7 @@ export default function StatsBar() {
   const yearsOfService = new Date().getFullYear() - 1984
   const statsWithYears = [
     { value: 40, suffix: '+', label: 'Active Members' },
-    { value: 200, suffix: '+', label: 'Annual Missions' },
+    { value: 40, suffix: '+', label: 'Annual Missions' },
     { value: yearsOfService, suffix: '', label: 'Years of Service' },
     { value: 24, suffix: '/7', label: 'Availability' },
   ]
