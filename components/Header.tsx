@@ -109,8 +109,8 @@ export default function Header() {
                 sizes="64px"
               />
             </div>
-            <div className="hidden sm:block">
-              <span className="text-white font-bold text-lg">Pierce County 4x4</span>
+            <div className="hidden sm:block text-center">
+              <span className="text-white font-bold text-lg block">Pierce County 4x4</span>
               <span className="text-rescue-orange font-semibold text-sm block -mt-1">
                 Search & Rescue
               </span>
