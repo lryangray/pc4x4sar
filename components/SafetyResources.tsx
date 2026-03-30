@@ -59,63 +59,49 @@ const safetyTips = [
   },
 ]
 
-const guides = [
-  {
-    title: 'Trip Planning Checklist',
-    description: 'Comprehensive pre-trip safety checklist.',
-    file: '/guides/trip-planning-checklist.pdf',
-    tag: 'Guide',
-  },
-  {
-    title: 'Ten Essentials Guide',
-    description: 'The 10 gear systems you should always carry.',
-    file: '/guides/ten-essentials-guide.pdf',
-    tag: 'Guide',
-  },
-  {
-    title: 'Emergency Signal Guide',
-    description: 'How to signal for help when lost or injured.',
-    file: '/guides/emergency-signal-guide.pdf',
-    tag: 'Guide',
-  },
-  {
-    title: 'Tech Preparedness',
-    description: 'Apps, offline maps, battery tips, satellite SOS.',
-    file: '/guides/tech-preparedness-guide.pdf',
-    tag: 'Guide',
-  },
-]
+type Resource = { title: string; description: string; file: string; tag: string }
 
-const fieldCards = [
+const guideCategories: Array<{
+  heading: string
+  subtitle: string
+  columns: string
+  items: Resource[]
+}> = [
   {
-    title: 'Trip Planning Card',
-    description: 'One-page quick reference to print and laminate.',
-    file: '/guides/field-card-trip-planning.pdf',
-    tag: 'Field Card',
+    heading: 'Safety Guides',
+    subtitle: 'In-depth guides to read before your trip.',
+    columns: 'sm:grid-cols-2 lg:grid-cols-4',
+    items: [
+      { title: 'Trip Planning Checklist', description: 'Comprehensive pre-trip safety checklist.', file: '/guides/trip-planning-checklist.pdf', tag: 'Guide' },
+      { title: 'Ten Essentials Guide', description: 'The 10 gear systems you should always carry.', file: '/guides/ten-essentials-guide.pdf', tag: 'Guide' },
+      { title: 'Emergency Signal Guide', description: 'How to signal for help when lost or injured.', file: '/guides/emergency-signal-guide.pdf', tag: 'Guide' },
+      { title: 'Tech Preparedness', description: 'Apps, offline maps, battery tips, satellite SOS.', file: '/guides/tech-preparedness-guide.pdf', tag: 'Guide' },
+    ],
   },
   {
-    title: 'Ten Essentials Card',
-    description: 'Printable checklist for your pack.',
-    file: '/guides/field-card-ten-essentials.pdf',
-    tag: 'Field Card',
+    heading: 'Activity Guides',
+    subtitle: 'Safety tips specific to your activity in Pierce County.',
+    columns: 'sm:grid-cols-2 lg:grid-cols-3',
+    items: [
+      { title: 'Hiking Safety', description: 'Trails, terrain, and hazards from sea level to Rainier.', file: '/guides/activity-hiking-safety.pdf', tag: 'Hiking' },
+      { title: 'Offroad & 4x4 Safety', description: 'Vehicle prep, recovery, and trail etiquette.', file: '/guides/activity-offroad-safety.pdf', tag: '4x4' },
+      { title: 'ATV, SxS & Dirt Bike', description: 'OHV laws, trail areas, and riding safety.', file: '/guides/activity-atv-sxs-safety.pdf', tag: 'OHV' },
+      { title: 'Water Recreation', description: 'Kayaking, paddleboarding, boating, and cold water.', file: '/guides/activity-water-safety.pdf', tag: 'Water' },
+      { title: 'Winter & Snowmobile', description: 'Avalanche, snowmobile, and snowshoe safety.', file: '/guides/activity-winter-safety.pdf', tag: 'Winter' },
+      { title: 'Hunting & Fishing', description: 'Solo safety, backcountry risks, and game processing.', file: '/guides/activity-hunting-fishing-safety.pdf', tag: 'Hunting' },
+    ],
   },
   {
-    title: 'Emergency Signals Card',
-    description: 'S.T.O.P. protocol and signaling quick reference.',
-    file: '/guides/field-card-emergency-signals.pdf',
-    tag: 'Field Card',
-  },
-  {
-    title: 'Tech Prep Card',
-    description: 'Apps, battery tips, and satellite SOS at a glance.',
-    file: '/guides/field-card-tech-prep.pdf',
-    tag: 'Field Card',
-  },
-  {
-    title: 'Trip Plan Form',
-    description: 'Fill out, leave with your emergency contact.',
-    file: '/guides/trip-plan-form.pdf',
-    tag: 'Form',
+    heading: 'Printable Field Cards',
+    subtitle: 'One-page quick references. Print, laminate, keep in your pack.',
+    columns: 'sm:grid-cols-2 lg:grid-cols-5',
+    items: [
+      { title: 'Trip Planning', description: 'Pre-trip checklist at a glance.', file: '/guides/field-card-trip-planning.pdf', tag: 'Card' },
+      { title: 'Ten Essentials', description: 'Gear checklist for your pack.', file: '/guides/field-card-ten-essentials.pdf', tag: 'Card' },
+      { title: 'Emergency Signals', description: 'S.T.O.P. and signaling reference.', file: '/guides/field-card-emergency-signals.pdf', tag: 'Card' },
+      { title: 'Tech Prep', description: 'Apps, battery, and satellite SOS.', file: '/guides/field-card-tech-prep.pdf', tag: 'Card' },
+      { title: 'Trip Plan Form', description: 'Leave with your emergency contact.', file: '/guides/trip-plan-form.pdf', tag: 'Form' },
+    ],
   },
 ]
 
@@ -176,91 +162,55 @@ export default function SafetyResources() {
           }`}
           style={{ transitionDelay: '500ms' }}
         >
-          <div className="text-center mb-8">
+          <div className="text-center mb-10">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
               Free Safety Guides
             </h3>
             <p className="text-navy-200 max-w-2xl mx-auto">
               Download our guides and checklists to help you prepare for your next
-              outdoor adventure in Pierce County.
+              outdoor adventure in Pierce County. All free, all from our SAR team.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            {guides.map((guide) => (
-              <a
-                key={guide.title}
-                href={guide.file}
-                download
-                className="bg-navy-800 rounded-xl p-5 hover:bg-navy-700 transition-colors group block"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-rescue-orange bg-rescue-orange/10 px-2 py-1 rounded">
-                    {guide.tag}
-                  </span>
-                  <svg
-                    className="w-5 h-5 text-navy-400 group-hover:text-rescue-orange transition-colors"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+          {guideCategories.map((category) => (
+            <div key={category.heading} className="mb-8">
+              <div className="mb-3">
+                <h4 className="text-white font-semibold text-sm">{category.heading}</h4>
+                <p className="text-navy-400 text-xs">{category.subtitle}</p>
+              </div>
+              <div className={`grid ${category.columns} gap-3`}>
+                {category.items.map((item) => (
+                  <a
+                    key={item.title}
+                    href={item.file}
+                    download
+                    className="bg-navy-800 rounded-lg px-4 py-3 hover:bg-navy-700 transition-colors group block"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                </div>
-                <h4 className="font-bold text-white mb-1 text-sm">{guide.title}</h4>
-                <p className="text-navy-300 text-xs mb-2">{guide.description}</p>
-                <span className="text-rescue-orange text-xs font-medium group-hover:underline">
-                  Download →
-                </span>
-              </a>
-            ))}
-          </div>
-
-          {/* Field Cards + Trip Plan Form */}
-          <div className="mb-4">
-            <h4 className="text-white font-semibold text-sm mb-3">
-              Printable Field Cards & Trip Plan
-            </h4>
-            <p className="text-navy-400 text-xs mb-3">
-              One-page quick references designed to print, laminate, and keep in your pack.
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-10">
-            {fieldCards.map((card) => (
-              <a
-                key={card.title}
-                href={card.file}
-                download
-                className="bg-navy-800 rounded-lg px-4 py-3 hover:bg-navy-700 transition-colors group block"
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[10px] font-semibold text-rescue-orange bg-rescue-orange/10 px-1.5 py-0.5 rounded">
-                    {card.tag}
-                  </span>
-                  <svg
-                    className="w-4 h-4 text-navy-400 group-hover:text-rescue-orange transition-colors"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                </div>
-                <h4 className="font-bold text-white text-xs">{card.title}</h4>
-                <p className="text-navy-400 text-[10px]">{card.description}</p>
-              </a>
-            ))}
-          </div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[10px] font-semibold text-rescue-orange bg-rescue-orange/10 px-1.5 py-0.5 rounded">
+                        {item.tag}
+                      </span>
+                      <svg
+                        className="w-4 h-4 text-navy-400 group-hover:text-rescue-orange transition-colors"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                        />
+                      </svg>
+                    </div>
+                    <h4 className="font-bold text-white text-xs">{item.title}</h4>
+                    <p className="text-navy-400 text-[10px]">{item.description}</p>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
 
           {/* Optional email signup */}
           <div className="border-t border-navy-700 pt-8 text-center">
