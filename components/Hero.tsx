@@ -48,8 +48,8 @@ export default function Hero() {
           </div>
 
           <h1 className="font-display uppercase tracking-wide text-5xl md:text-7xl lg:text-8xl text-white mb-6 text-shadow leading-none">
-            Pierce County
-            <span className="block text-rescue-orange">4x4 Search & Rescue</span>
+            Pierce County 4x4
+            <span className="block text-rescue-orange">Search & Rescue</span>
           </h1>
 
           <p className="text-lg md:text-xl lg:text-2xl text-gray-200 mb-4 max-w-3xl mx-auto leading-relaxed">
@@ -57,26 +57,13 @@ export default function Hero() {
             across Pierce County, Washington. Ready to respond when you need us most.
           </p>
 
-          <div className="mb-10 max-w-2xl mx-auto">
-            <div className="flex items-center justify-center gap-4 mb-3">
-              <div className="w-12 h-12 md:w-14 md:h-14 relative flex-shrink-0 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">
-                <Image
-                  src="/images/logo-pcsar-sd.png"
-                  alt="Pierce County Sheriff Search and Rescue badge"
-                  fill
-                  className="object-contain"
-                  sizes="56px"
-                />
-              </div>
-              <p className="text-base md:text-lg text-gray-300 text-left">
-                Working alongside Pierce County Sheriff&apos;s Department, Tacoma Police Department,
-                and Pierce County Emergency Management.
-              </p>
-            </div>
-            <p className="text-rescue-orange font-semibold text-base md:text-lg">
+          <p className="text-base md:text-lg text-gray-300 mb-10 max-w-2xl mx-auto">
+            Working alongside Pierce County Sheriff&apos;s Department, Tacoma Police Department,
+            and Pierce County Emergency Management.
+            <span className="block mt-2 text-rescue-orange font-semibold">
               All services provided free of charge.
-            </p>
-          </div>
+            </span>
+          </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
