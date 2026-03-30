@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useScrollVisible } from '@/hooks/useScrollVisible'
 
 const safetyTips = [
@@ -107,6 +108,7 @@ const guideCategories: Array<{
 
 export default function SafetyResources() {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.1)
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({})
 
   return (
     <section
@@ -172,45 +174,72 @@ export default function SafetyResources() {
             </p>
           </div>
 
-          {guideCategories.map((category) => (
-            <div key={category.heading} className="mb-8">
-              <div className="mb-3">
-                <h4 className="text-white font-semibold text-sm">{category.heading}</h4>
-                <p className="text-navy-400 text-xs">{category.subtitle}</p>
-              </div>
-              <div className={`grid ${category.columns} gap-3`}>
-                {category.items.map((item) => (
-                  <a
-                    key={item.title}
-                    href={item.file}
-                    download
-                    className="bg-navy-800 rounded-lg px-4 py-3 hover:bg-navy-700 transition-colors group block"
+          {guideCategories.map((category) => {
+            const isOpen = expanded[category.heading] ?? false
+            return (
+              <div key={category.heading} className="mb-4">
+                <button
+                  onClick={() => setExpanded((prev) => ({ ...prev, [category.heading]: !prev[category.heading] }))}
+                  className="w-full flex items-center justify-between bg-navy-800 hover:bg-navy-700 rounded-lg px-5 py-4 transition-colors cursor-pointer"
+                  aria-expanded={isOpen}
+                >
+                  <div className="text-left">
+                    <h4 className="text-white font-semibold text-sm">{category.heading}</h4>
+                    <p className="text-navy-400 text-xs">
+                      {category.subtitle} <span className="text-navy-500">({category.items.length})</span>
+                    </p>
+                  </div>
+                  <svg
+                    className={`w-5 h-5 text-rescue-orange transition-transform duration-300 flex-shrink-0 ml-4 ${
+                      isOpen ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] font-semibold text-rescue-orange bg-rescue-orange/10 px-1.5 py-0.5 rounded">
-                        {item.tag}
-                      </span>
-                      <svg
-                        className="w-4 h-4 text-navy-400 group-hover:text-rescue-orange transition-colors"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    isOpen ? 'max-h-[800px] opacity-100 mt-3' : 'max-h-0 opacity-0'
+                  }`}
+                >
+                  <div className={`grid ${category.columns} gap-3`}>
+                    {category.items.map((item) => (
+                      <a
+                        key={item.title}
+                        href={item.file}
+                        download
+                        className="bg-navy-800 rounded-lg px-4 py-3 hover:bg-navy-700 transition-colors group block"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="font-bold text-white text-xs">{item.title}</h4>
-                    <p className="text-navy-400 text-[10px]">{item.description}</p>
-                  </a>
-                ))}
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-[10px] font-semibold text-rescue-orange bg-rescue-orange/10 px-1.5 py-0.5 rounded">
+                            {item.tag}
+                          </span>
+                          <svg
+                            className="w-4 h-4 text-navy-400 group-hover:text-rescue-orange transition-colors"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                            />
+                          </svg>
+                        </div>
+                        <h4 className="font-bold text-white text-xs">{item.title}</h4>
+                        <p className="text-navy-400 text-[10px]">{item.description}</p>
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
 
           {/* Optional email signup */}
           <div className="border-t border-navy-700 pt-8 text-center">

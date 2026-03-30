@@ -22,7 +22,7 @@ export const organizationSchema = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
-    email: 'info@piercecounty4x4sar.org',
+    email: 'pcsar4x4@gmail.com',
     url: `${SITE_URL}/contact`,
     areaServed: 'Pierce County, Washington',
     availableLanguage: ['English'],
@@ -201,7 +201,7 @@ export const localBusinessSchema = {
   description:
     'Volunteer search and rescue organization serving Pierce County, Washington. Free 24/7/365 emergency search and rescue services.',
   url: SITE_URL,
-  email: 'info@piercecounty4x4sar.org',
+  email: 'pcsar4x4@gmail.com',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '2501 S. 35th St. Suite D',
