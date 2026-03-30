@@ -59,12 +59,13 @@ export default function Hero() {
 
           <div className="mb-10 max-w-2xl mx-auto">
             <div className="flex items-center justify-center gap-4 mb-3">
-              <div className="w-12 h-12 md:w-14 md:h-14 relative flex-shrink-0 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">
+              <div className="w-12 h-12 md:w-14 md:h-14 relative flex-shrink-0">
+                <div className="absolute inset-[6%] rounded-full bg-white/90" />
                 <Image
                   src="/images/logo-pcsar-sd.png"
                   alt="Pierce County Sheriff Search and Rescue badge"
                   fill
-                  className="object-contain"
+                  className="object-contain relative"
                   sizes="56px"
                 />
               </div>

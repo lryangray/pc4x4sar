@@ -21,12 +21,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-12 h-12 relative flex-shrink-0 drop-shadow-[0_0_8px_rgba(255,255,255,0.7)] drop-shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+              <div className="w-12 h-12 relative flex-shrink-0">
+                <div className="absolute inset-[6%] rounded-full bg-white/90" />
                 <Image
                   src="/images/logo-4x4-unit.png"
                   alt="Pierce County 4x4 Search and Rescue unit badge"
                   fill
-                  className="object-contain"
+                  className="object-contain relative"
                   sizes="48px"
                 />
               </div>
