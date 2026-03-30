@@ -108,7 +108,7 @@ export default function Contact() {
       id="contact"
       ref={sectionRef}
       aria-label="Contact Us"
-      className="section-padding bg-navy-50"
+      className="section-padding bg-white"
     >
       <div className="container-custom">
         {/* Header */}
@@ -319,7 +319,7 @@ export default function Contact() {
                   <div>
                     <h4 className="text-navy-900 font-bold text-lg">Email</h4>
                     <p className="text-navy-600">
-                      <a href="mailto:info@piercecounty4x4sar.org" className="hover:text-rescue-orange transition-colors">info@piercecounty4x4sar.org</a>
+                      <a href="mailto:pcsar4x4@gmail.com" className="hover:text-rescue-orange transition-colors">pcsar4x4@gmail.com</a>
                     </p>
                     <p className="text-navy-500 text-sm">
                       Use this form for non-emergency questions and requests.

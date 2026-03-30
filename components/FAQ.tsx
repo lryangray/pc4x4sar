@@ -14,7 +14,7 @@ export default function FAQ() {
       id="faq"
       ref={sectionRef}
       aria-label="Frequently Asked Questions"
-      className="section-padding bg-white"
+      className="section-padding bg-navy-50"
     >
       <div className="container-custom">
         {/* Header */}

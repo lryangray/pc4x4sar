@@ -13,7 +13,7 @@ export default function Partners() {
       id="partners"
       ref={sectionRef}
       aria-label="Our Partners"
-      className="section-padding bg-navy-50"
+      className="section-padding bg-white"
     >
       <div className="container-custom">
         {/* Header */}
