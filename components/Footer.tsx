@@ -31,9 +31,9 @@ export default function Footer() {
                   sizes="48px"
                 />
               </div>
-              <div>
+              <div className="text-center">
                 <span className="font-bold text-xl block">Pierce County 4x4</span>
-                <span className="text-rescue-orange font-semibold text-sm">
+                <span className="text-rescue-orange font-semibold text-sm block">
                   Search & Rescue
                 </span>
               </div>
