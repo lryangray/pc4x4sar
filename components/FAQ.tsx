@@ -5,7 +5,7 @@ import { useScrollVisible } from '@/hooks/useScrollVisible'
 import { scrollToSection } from '@/lib/scroll'
 import { faqs } from '@/lib/data/content'
 
-export default function FAQ() {
+export default function FAQ({ preview }: { preview?: boolean }) {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.1)
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
@@ -40,7 +40,7 @@ export default function FAQ() {
                   isVisible
                     ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-5'
-              }`}
+              } ${preview && index >= 3 ? 'hidden md:block' : ''}`}
               style={{ transitionDelay: `${Math.min(index * 75, 300)}ms` }}
             >
               <button
@@ -89,11 +89,25 @@ export default function FAQ() {
           ))}
         </div>
 
+        {preview && (
+          <div className="md:hidden text-center mt-8">
+            <a
+              href="/faq"
+              className="inline-flex items-center gap-1.5 bg-rescue-orange/10 text-rescue-orange font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-rescue-orange/20 transition-colors"
+            >
+              All {faqs.length} questions answered
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        )}
+
         {/* Additional Help */}
         <div
           className={`mt-12 text-center transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
+          } ${preview ? 'hidden md:block' : ''}`}
           style={{ transitionDelay: '500ms' }}
         >
           <p className="text-navy-600 mb-4">

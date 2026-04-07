@@ -12,6 +12,7 @@ import VolunteerJourney from '@/components/VolunteerJourney'
 import Contact from '@/components/Contact'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import SiteShell from '@/components/SiteShell'
+import MobileSectionNav from '@/components/MobileSectionNav'
 import StructuredDataScript from '@/components/StructuredDataScript'
 import { faqSchema } from '@/lib/structured-data'
 
@@ -28,13 +29,13 @@ export default function Home() {
           <StatsBar />
         </ErrorBoundary>
         <ErrorBoundary>
-          <Services />
+          <Services preview />
         </ErrorBoundary>
         <ErrorBoundary>
-          <SafetyResources />
+          <SafetyResources preview />
         </ErrorBoundary>
         <ErrorBoundary>
-          <Capabilities />
+          <Capabilities preview />
         </ErrorBoundary>
         <ErrorBoundary>
           <Partners />
@@ -46,7 +47,7 @@ export default function Home() {
           <Gallery />
         </ErrorBoundary>
         <ErrorBoundary>
-          <FAQ />
+          <FAQ preview />
         </ErrorBoundary>
         <ErrorBoundary>
           <VolunteerJourney />
@@ -55,6 +56,9 @@ export default function Home() {
           <Contact />
         </ErrorBoundary>
       </>
+      <MobileSectionNav />
+      {/* Spacer so fixed bottom nav doesn't cover footer content on mobile */}
+      <div className="h-14 md:hidden" aria-hidden="true" />
     </SiteShell>
   )
 }

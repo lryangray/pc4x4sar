@@ -93,6 +93,11 @@
     z-index: 1;
   }
 
+  /* Safe area bottom padding for iOS notch/home indicator */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
   .animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out forwards;
   }
