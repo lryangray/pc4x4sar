@@ -5,7 +5,7 @@ import { scrollToSection } from '@/lib/scroll'
 import { capabilities } from '@/lib/data/content'
 import Image from 'next/image'
 
-export default function Capabilities() {
+export default function Capabilities({ preview }: { preview?: boolean }) {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.2)
 
   return (
@@ -40,7 +40,7 @@ export default function Capabilities() {
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'
-              }`}
+              } ${preview && index >= 1 ? 'hidden md:grid' : ''}`}
               style={{
                 transition: 'all 0.6s ease-out',
                 transitionDelay: `${Math.min(index * 150, 300)}ms`,
@@ -99,11 +99,25 @@ export default function Capabilities() {
           ))}
         </div>
 
+        {preview && (
+          <div className="md:hidden text-center mt-10">
+            <a
+              href="/services"
+              className="inline-flex items-center gap-1.5 bg-white/10 text-white font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-white/20 transition-colors"
+            >
+              See all {capabilities.length} unit resources
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        )}
+
         {/* Call to Action */}
         <div
           className={`mt-16 text-center transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
+          } ${preview ? 'hidden md:block' : ''}`}
           style={{ transitionDelay: '600ms' }}
         >
           <div className="bg-navy-800 rounded-2xl p-8 md:p-12 max-w-4xl mx-auto">

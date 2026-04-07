@@ -69,7 +69,7 @@ const services = [
   },
 ]
 
-export default function Services() {
+export default function Services({ preview }: { preview?: boolean }) {
   const { ref: sectionRef, isVisible } = useScrollVisible(0.1)
 
   return (
@@ -129,7 +129,7 @@ export default function Services() {
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'
-              }`}
+              } ${preview && index >= 2 ? 'hidden md:block' : ''}`}
               style={{ transitionDelay: `${Math.min((index + 1) * 100, 300)}ms` }}
             >
               <div className="w-14 h-14 bg-rescue-orange/10 rounded-xl flex items-center justify-center text-rescue-orange mb-5">
@@ -144,6 +144,20 @@ export default function Services() {
             </div>
           ))}
         </div>
+
+        {preview && (
+          <div className="md:hidden text-center mt-8">
+            <a
+              href="/services"
+              className="inline-flex items-center gap-1.5 bg-rescue-orange/10 text-rescue-orange font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-rescue-orange/20 transition-colors"
+            >
+              View all {services.length} services
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        )}
       </div>
     </section>
   )
