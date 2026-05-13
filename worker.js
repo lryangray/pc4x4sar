@@ -1,24 +1,15 @@
+import {
+  ALLOWED_SUBJECTS,
+  MAX_FIELD_LENGTHS,
+  isValidEmail,
+  sanitizeContactInput,
+} from './lib/contact-schema';
+
 const ALLOWED_ORIGINS = new Set([
   'https://piercecounty4x4sar.org',
   'https://www.piercecounty4x4sar.org',
   'https://pc4x4sar-preview.ryan-gray-210.workers.dev',
 ]);
-
-const ALLOWED_SUBJECTS = new Set([
-  'volunteer',
-  'training',
-  'event',
-  'donation',
-  'general',
-]);
-
-const MAX_FIELD_LENGTHS = {
-  firstName: 80,
-  lastName: 80,
-  email: 254,
-  subject: 32,
-  message: 2000,
-};
 
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_SECONDS = 300;
@@ -48,6 +39,8 @@ function buildSecurityHeaders(nonce) {
     'Content-Security-Policy': [
       "default-src 'self'",
       scriptDirective,
+      // Tailwind ships some inline styles; 'unsafe-inline' is required for
+      // utility-class runtime style generation.
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self'",
       "img-src 'self' data:",
@@ -55,6 +48,10 @@ function buildSecurityHeaders(nonce) {
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
+      "object-src 'none'",
+      "worker-src 'self'",
+      "manifest-src 'self'",
+      'upgrade-insecure-requests',
     ].join('; '),
   };
 }
@@ -144,66 +141,13 @@ function withSecurityHeaders(response) {
   return cloneResponse(response, headers);
 }
 
-function sanitizeInput(value, maxLength) {
-  if (typeof value !== 'string') {
-    return '';
-  }
-
-  return value
-    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
-    .trim()
-    .slice(0, maxLength);
-}
-
-function isValidEmail(email) {
-  if (!email || email.length > MAX_FIELD_LENGTHS.email) {
-    return false;
-  }
-
-  const parts = email.split('@');
-  if (parts.length !== 2) {
-    return false;
-  }
-
-  const [localPart, domain] = parts;
-
-  if (
-    !localPart
-    || !domain
-    || localPart.length > 64
-    || localPart.startsWith('.')
-    || localPart.endsWith('.')
-    || localPart.includes('..')
-    || domain.startsWith('.')
-    || domain.endsWith('.')
-    || domain.includes('..')
-  ) {
-    return false;
-  }
-
-  if (!/^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+$/.test(localPart)) {
-    return false;
-  }
-
-  const labels = domain.split('.');
-  if (labels.length < 2) {
-    return false;
-  }
-
-  return labels.every((label) => (
-    /^[A-Za-z0-9-]{1,63}$/.test(label)
-    && !label.startsWith('-')
-    && !label.endsWith('-')
-  ));
-}
-
 function parseSubmission(formData) {
   return {
-    firstName: sanitizeInput(formData.get('firstName'), MAX_FIELD_LENGTHS.firstName),
-    lastName: sanitizeInput(formData.get('lastName'), MAX_FIELD_LENGTHS.lastName),
-    email: sanitizeInput(formData.get('email'), MAX_FIELD_LENGTHS.email),
-    subject: sanitizeInput(formData.get('subject'), MAX_FIELD_LENGTHS.subject),
-    message: sanitizeInput(formData.get('message'), MAX_FIELD_LENGTHS.message),
+    firstName: sanitizeContactInput(formData.get('firstName'), MAX_FIELD_LENGTHS.firstName),
+    lastName: sanitizeContactInput(formData.get('lastName'), MAX_FIELD_LENGTHS.lastName),
+    email: sanitizeContactInput(formData.get('email'), MAX_FIELD_LENGTHS.email),
+    subject: sanitizeContactInput(formData.get('subject'), MAX_FIELD_LENGTHS.subject),
+    message: sanitizeContactInput(formData.get('message'), MAX_FIELD_LENGTHS.message),
     submittedAt: new Date().toISOString(),
   };
 }
@@ -262,6 +206,16 @@ const worker = {
 };
 
 export default worker;
+
+// Named exports for unit testing. Bundler tree-shakes these out of the
+// deployed Worker since the default export is the entrypoint.
+export {
+  buildSecurityHeaders,
+  isAllowedOrigin,
+  corsHeaders,
+  isTrustedContactRequest,
+  parseSubmission,
+};
 
 async function checkRateLimit(ip, env) {
   const cooldownKey = `ratelimit:block:${ip}`;
