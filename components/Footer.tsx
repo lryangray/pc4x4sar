@@ -162,6 +162,11 @@ export default function Footer() {
               A 501(c)(3) non-profit volunteer organization
             </p>
           </div>
+          {/* TODO: convert to a real link once pc4x4sar.org goes live. */}
+          <p className="text-center text-navy-500 text-xs mt-6">
+            Coming soon to a shorter address —{' '}
+            <span className="font-medium text-navy-300">pc4x4sar.org</span>
+          </p>
         </div>
       </div>
     </footer>

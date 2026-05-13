@@ -67,14 +67,18 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            {/* CTAs prioritize recruitment first, donation second — easy to
-                swap if the team wants a different conversion focus. */}
+            {/* Primary CTA prioritizes volunteer recruitment — easy to swap
+                if the team wants a different conversion focus. */}
             <Link href="/volunteer" className="btn-primary text-lg">
               Volunteer With Us <span className="btn-arrow">→</span>
             </Link>
-            <Link href="/donate" className="btn-secondary text-lg">
-              Make a Donation
-            </Link>
+            <a
+              href="#mission"
+              onClick={(e) => handleScrollClick(e, '#mission')}
+              className="btn-secondary text-lg"
+            >
+              Learn More
+            </a>
           </div>
         </div>
       </div>

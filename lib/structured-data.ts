@@ -367,7 +367,7 @@ export const donateActionSchema = {
   recipient: { '@id': ORGANIZATION_ID },
   target: {
     '@type': 'EntryPoint',
-    urlTemplate: `${SITE_URL}/donate`,
+    urlTemplate: `${SITE_URL}/contact?subject=donation`,
     actionPlatform: [
       'https://schema.org/DesktopWebPlatform',
       'https://schema.org/MobileWebPlatform',

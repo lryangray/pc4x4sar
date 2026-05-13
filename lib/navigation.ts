@@ -15,7 +15,6 @@ export const navigationItems: NavigationItem[] = [
   { name: 'Gallery', homeHash: '#gallery' },
   { name: 'FAQ', homeHash: '#faq', routePath: '/faq' },
   { name: 'Volunteer', homeHash: '#volunteer', routePath: '/volunteer' },
-  { name: 'Donate', routePath: '/donate' },
   { name: 'Contact', homeHash: '#contact', routePath: '/contact' },
 ]
 
