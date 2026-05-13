@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useScrollVisible } from '@/hooks/useScrollVisible'
 import { scrollToSection } from '@/lib/scroll'
 import { capabilities } from '@/lib/data/content'
@@ -101,7 +102,7 @@ export default function Capabilities({ preview }: { preview?: boolean }) {
 
         {preview && (
           <div className="md:hidden text-center mt-10">
-            <a
+            <Link
               href="/services"
               className="inline-flex items-center gap-1.5 bg-white/10 text-white font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-white/20 transition-colors"
             >
@@ -109,7 +110,7 @@ export default function Capabilities({ preview }: { preview?: boolean }) {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </a>
+            </Link>
           </div>
         )}
 

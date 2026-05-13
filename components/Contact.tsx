@@ -2,28 +2,16 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useScrollVisible } from '@/hooks/useScrollVisible'
-
-const SUBJECT_OPTIONS = [
-  { value: 'volunteer', label: 'Volunteer Inquiry' },
-  { value: 'training', label: 'Training Programs' },
-  { value: 'event', label: 'Event Standby Request' },
-  { value: 'donation', label: 'Donation Information' },
-  { value: 'general', label: 'General Question' },
-] as const
-
-const ALLOWED_SUBJECTS = new Set(SUBJECT_OPTIONS.map((option) => option.value))
-const MAX_NAME_LENGTH = 80
-const MAX_EMAIL_LENGTH = 254
-const MAX_MESSAGE_LENGTH = 2000
-
-function sanitizePrefillMessage(value: string | null) {
-  return typeof value === 'string'
-    ? value.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '').trim().slice(0, MAX_MESSAGE_LENGTH)
-    : ''
-}
+import {
+  ALLOWED_SUBJECTS,
+  CONTACT_FORM_RETENTION_DAYS,
+  MAX_FIELD_LENGTHS,
+  SUBJECT_OPTIONS,
+  sanitizeContactInput,
+} from '@/lib/contact-schema'
 
 function normalizeSubject(value: string | null) {
-  return value && SUBJECT_OPTIONS.some((option) => option.value === value) ? value : ''
+  return value && ALLOWED_SUBJECTS.has(value) ? value : ''
 }
 
 export default function Contact() {
@@ -47,7 +35,7 @@ export default function Contact() {
     }
 
     const subject = normalizeSubject(params.get('subject'))
-    const message = sanitizePrefillMessage(params.get('message'))
+    const message = sanitizeContactInput(params.get('message'), MAX_FIELD_LENGTHS.message)
 
     if (subjectRef.current && subject) {
       subjectRef.current.value = subject
@@ -150,7 +138,7 @@ export default function Contact() {
                       id="firstName"
                       name="firstName"
                       required
-                      maxLength={MAX_NAME_LENGTH}
+                      maxLength={MAX_FIELD_LENGTHS.firstName}
                       autoComplete="given-name"
                       className="w-full px-4 py-3 rounded-lg border border-navy-200 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all"
                       placeholder="John"
@@ -168,7 +156,7 @@ export default function Contact() {
                       id="lastName"
                       name="lastName"
                       required
-                      maxLength={MAX_NAME_LENGTH}
+                      maxLength={MAX_FIELD_LENGTHS.lastName}
                       autoComplete="family-name"
                       className="w-full px-4 py-3 rounded-lg border border-navy-200 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all"
                       placeholder="Doe"
@@ -187,7 +175,7 @@ export default function Contact() {
                     id="email"
                     name="email"
                     required
-                    maxLength={MAX_EMAIL_LENGTH}
+                    maxLength={MAX_FIELD_LENGTHS.email}
                     autoComplete="email"
                     className="w-full px-4 py-3 rounded-lg border border-navy-200 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all"
                     placeholder="john@example.com"
@@ -228,11 +216,11 @@ export default function Contact() {
                     name="message"
                     required
                     rows={5}
-                    maxLength={MAX_MESSAGE_LENGTH}
+                    maxLength={MAX_FIELD_LENGTHS.message}
                     className="w-full px-4 py-3 rounded-lg border border-navy-200 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all resize-none"
                     placeholder="Tell us how we can help..."
                   />
-                  <p className="mt-2 text-xs text-navy-500">
+                  <p className="mt-2 text-xs text-navy-600">
                     For privacy, please avoid including sensitive medical or emergency
                     details in this form.
                   </p>
@@ -270,9 +258,9 @@ export default function Contact() {
                     {formMessage}
                   </p>
                 )}
-                <p className="text-xs text-navy-500 text-center leading-relaxed">
-                  Contact submissions are retained for up to 90 days. For emergencies or
-                  time-sensitive incidents, call <strong>911</strong>.
+                <p className="text-xs text-navy-600 text-center leading-relaxed">
+                  Contact submissions are retained for up to {CONTACT_FORM_RETENTION_DAYS} days.
+                  For emergencies or time-sensitive incidents, call <strong>911</strong>.
                 </p>
               </form>
             </div>
@@ -321,7 +309,7 @@ export default function Contact() {
                     <p className="text-navy-600">
                       <a href="mailto:pcsar4x4@gmail.com" className="hover:text-rescue-orange transition-colors">pcsar4x4@gmail.com</a>
                     </p>
-                    <p className="text-navy-500 text-sm">
+                    <p className="text-navy-600 text-sm">
                       Use this form for non-emergency questions and requests.
                     </p>
                   </div>
@@ -357,7 +345,7 @@ export default function Contact() {
                       Service Area
                     </h4>
                     <p className="text-navy-600">Pierce County, Washington</p>
-                    <p className="text-navy-500 text-sm">
+                    <p className="text-navy-600 text-sm">
                       Including Mt. Rainier foothills region
                     </p>
                   </div>
@@ -379,6 +367,7 @@ export default function Contact() {
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"
@@ -391,12 +380,19 @@ export default function Contact() {
                     Second Wednesday of every month, 7:00 PM
                   </span>
                 </div>
-                <div className="flex items-start space-x-2 text-navy-200 text-sm">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Pierce+County+Dept.+of+Emergency+Management%2C+2501+S.+35th+St.+Suite+D%2C+Tacoma%2C+WA+98409"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start space-x-2 text-navy-200 hover:text-rescue-orange text-sm transition-colors group"
+                  aria-label="Open meeting location in Google Maps"
+                >
                   <svg
                     className="w-5 h-5 flex-shrink-0 mt-0.5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"
@@ -411,12 +407,25 @@ export default function Contact() {
                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <span>
+                  <span className="leading-snug">
                     Pierce County Dept. of Emergency Management<br />
                     2501 S. 35th St. Suite D<br />
                     Tacoma, WA 98409
+                    <span className="block mt-1 text-xs underline underline-offset-2 group-hover:no-underline">
+                      Get directions →
+                    </span>
                   </span>
-                </div>
+                </a>
+                <a
+                  href="/meetings.ics"
+                  download
+                  className="inline-flex items-center gap-2 mt-4 text-sm text-rescue-orange hover:underline font-medium"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  Add monthly meetings to calendar
+                </a>
               </div>
             </div>
           </div>

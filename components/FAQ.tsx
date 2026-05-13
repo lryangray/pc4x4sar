@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useScrollVisible } from '@/hooks/useScrollVisible'
 import { scrollToSection } from '@/lib/scroll'
 import { faqs } from '@/lib/data/content'
@@ -77,6 +78,7 @@ export default function FAQ({ preview }: { preview?: boolean }) {
                 id={`faq-answer-${index}`}
                 role="region"
                 aria-labelledby={`faq-question-${index}`}
+                inert={openIndex !== index ? true : undefined}
                 className={`overflow-hidden transition-all duration-300 ${
                   openIndex === index ? 'max-h-96 pb-6' : 'max-h-0'
                 }`}
@@ -91,7 +93,7 @@ export default function FAQ({ preview }: { preview?: boolean }) {
 
         {preview && (
           <div className="md:hidden text-center mt-8">
-            <a
+            <Link
               href="/faq"
               className="inline-flex items-center gap-1.5 bg-rescue-orange/10 text-rescue-orange font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-rescue-orange/20 transition-colors"
             >
@@ -99,7 +101,7 @@ export default function FAQ({ preview }: { preview?: boolean }) {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </a>
+            </Link>
           </div>
         )}
 

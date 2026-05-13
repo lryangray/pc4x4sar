@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { handleScrollClick } from '@/lib/scroll'
 
 export default function Hero() {
@@ -10,7 +11,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center pt-8 bg-noise"
+      className="relative min-h-dvh flex items-center justify-center pt-8 bg-noise"
     >
       {/* Background Image */}
       <div className="absolute inset-0 z-0 bg-navy-900">
@@ -66,20 +67,14 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="#contact"
-              onClick={(e) => handleScrollClick(e, "#contact")}
-              className="btn-primary text-lg"
-            >
-              Get In Touch <span className="btn-arrow">→</span>
-            </a>
-            <a
-              href="#mission"
-              onClick={(e) => handleScrollClick(e, "#mission")}
-              className="btn-secondary text-lg"
-            >
-              Learn More
-            </a>
+            {/* CTAs prioritize recruitment first, donation second — easy to
+                swap if the team wants a different conversion focus. */}
+            <Link href="/volunteer" className="btn-primary text-lg">
+              Volunteer With Us <span className="btn-arrow">→</span>
+            </Link>
+            <Link href="/donate" className="btn-secondary text-lg">
+              Make a Donation
+            </Link>
           </div>
         </div>
       </div>
