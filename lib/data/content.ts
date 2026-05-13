@@ -138,8 +138,6 @@ export const capabilities = [
   },
 ]
 
-export const testimonials: Array<{ quote: string; name: string; title: string; org: string }> = []
-
 export const sponsors = [
   {
     name: 'Bonney Lake 911 Driving School',
