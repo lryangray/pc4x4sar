@@ -3,6 +3,60 @@ import { SITE_NAME, SITE_URL } from '@/lib/site'
 
 const ORGANIZATION_ID = `${SITE_URL}/#organization`
 
+/**
+ * Returns the next 2nd-Wednesday-of-the-month meeting time as ISO strings
+ * with explicit America/Los_Angeles offset. Runs at build time, so the
+ * schema's primary occurrence is always in the future for any fresh deploy.
+ */
+function getNextMonthlyMeeting(now: Date = new Date()): {
+  startDate: string
+  endDate: string
+} {
+  const pad = (n: number) => String(n).padStart(2, '0')
+
+  // Get current PT calendar date so the "is the meeting in the future" check
+  // matches what the user sees on their clock.
+  const ptDate = new Date(
+    now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }),
+  )
+
+  for (let offset = 0; offset <= 1; offset++) {
+    const monthZero = ptDate.getMonth() + offset
+    const year = ptDate.getFullYear() + Math.floor(monthZero / 12)
+    const month = (monthZero % 12) + 1 // 1–12
+
+    const firstOfMonth = new Date(Date.UTC(year, month - 1, 1))
+    const firstDow = firstOfMonth.getUTCDay() // 0=Sun … 3=Wed
+    const daysToFirstWednesday = (3 - firstDow + 7) % 7
+    const secondWednesdayDay = 1 + daysToFirstWednesday + 7
+
+    const offsetStr = isPacificDST(year, month, secondWednesdayDay) ? '-07:00' : '-08:00'
+    const startDate = `${year}-${pad(month)}-${pad(secondWednesdayDay)}T19:00:00${offsetStr}`
+    const endDate = `${year}-${pad(month)}-${pad(secondWednesdayDay)}T21:00:00${offsetStr}`
+
+    if (new Date(startDate).getTime() >= now.getTime()) {
+      return { startDate, endDate }
+    }
+  }
+
+  // Shouldn't happen — the second iteration always finds a future date.
+  throw new Error('Could not compute next monthly meeting date')
+}
+
+/** True if the given Pacific calendar date is within US Daylight Saving Time. */
+function isPacificDST(year: number, month: number, day: number): boolean {
+  if (month > 3 && month < 11) return true
+  if (month < 3 || month > 11) return false
+
+  const firstOfMonth = new Date(Date.UTC(year, month - 1, 1))
+  const firstDow = firstOfMonth.getUTCDay()
+  const firstSunday = firstDow === 0 ? 1 : 8 - firstDow
+
+  // March: DST starts on the 2nd Sunday.
+  // November: DST ends on the 1st Sunday.
+  return month === 3 ? day >= firstSunday + 7 : day < firstSunday
+}
+
 export const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -26,20 +80,8 @@ export const organizationSchema = {
     url: `${SITE_URL}/contact`,
     areaServed: 'Pierce County, Washington',
     availableLanguage: ['English'],
-    hoursAvailable: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday',
-      ],
-      opens: '00:00',
-      closes: '23:59',
-    },
+    // No hoursAvailable here on purpose: the org has no scheduled "customer
+    // service" hours; 24/7 belongs on EmergencyService, not on a contact form.
   },
   address: {
     '@type': 'PostalAddress',
@@ -215,20 +257,8 @@ export const localBusinessSchema = {
     latitude: 47.0676,
     longitude: -122.1295,
   },
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday',
-    ],
-    opens: '00:00',
-    closes: '23:59',
-  },
+  // No openingHoursSpecification: PCSAR4X4 has no physical office hours.
+  // 24/7 availability is captured on EmergencyService.
   priceRange: 'Free',
   currenciesAccepted: 'USD',
   paymentAccepted: 'Donations accepted',
@@ -270,6 +300,8 @@ export const faqSchema = {
   })),
 }
 
+const nextMeeting = getNextMonthlyMeeting()
+
 export const monthlyMeetingSchema = {
   '@context': 'https://schema.org',
   '@type': 'Event',
@@ -293,8 +325,8 @@ export const monthlyMeetingSchema = {
     },
   },
   organizer: { '@id': ORGANIZATION_ID },
-  startDate: '2026-04-08T19:00:00-07:00',
-  endDate: '2026-04-08T21:00:00-07:00',
+  startDate: nextMeeting.startDate,
+  endDate: nextMeeting.endDate,
   eventSchedule: {
     '@type': 'Schedule',
     repeatFrequency: 'P1M',
@@ -335,7 +367,7 @@ export const donateActionSchema = {
   recipient: { '@id': ORGANIZATION_ID },
   target: {
     '@type': 'EntryPoint',
-    urlTemplate: `${SITE_URL}/contact?subject=donation`,
+    urlTemplate: `${SITE_URL}/donate`,
     actionPlatform: [
       'https://schema.org/DesktopWebPlatform',
       'https://schema.org/MobileWebPlatform',

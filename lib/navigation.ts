@@ -1,6 +1,7 @@
 export type NavigationItem = {
   name: string
-  homeHash: `#${string}`
+  /** Anchor on the home page. Omit for items that have no home-page section. */
+  homeHash?: `#${string}`
   routePath?: `/${string}` | '/'
 }
 
@@ -14,23 +15,25 @@ export const navigationItems: NavigationItem[] = [
   { name: 'Gallery', homeHash: '#gallery' },
   { name: 'FAQ', homeHash: '#faq', routePath: '/faq' },
   { name: 'Volunteer', homeHash: '#volunteer', routePath: '/volunteer' },
+  { name: 'Donate', routePath: '/donate' },
   { name: 'Contact', homeHash: '#contact', routePath: '/contact' },
 ]
 
 export function resolveNavigationHref(
   item: NavigationItem,
   pathname: string,
-  preferRouteOnHome = false
-) {
+  preferRouteOnHome = false,
+): string {
   if (pathname === '/') {
     if (preferRouteOnHome && item.routePath && item.routePath !== '/') {
       return item.routePath
     }
-
-    return item.homeHash
+    if (item.homeHash) return item.homeHash
+    if (item.routePath) return item.routePath
+    return '/'
   }
 
-  if (item.routePath && pathname === item.routePath) {
+  if (item.routePath && pathname === item.routePath && item.homeHash) {
     return item.homeHash
   }
 
@@ -38,5 +41,5 @@ export function resolveNavigationHref(
     return item.routePath
   }
 
-  return `/${item.homeHash}`
+  return item.homeHash ? `/${item.homeHash}` : '/'
 }

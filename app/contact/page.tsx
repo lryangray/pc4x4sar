@@ -32,8 +32,8 @@ export default function ContactPage() {
         eyebrow="Get In Touch"
         title="Contact Our Volunteer Team"
         description="Reach out with questions about volunteering, training, donations, or event support. For urgent emergencies, call 911 so dispatch can coordinate the appropriate responders."
-        primaryHref="/"
-        primaryLabel="Back to Home"
+        primaryHref="/donate"
+        primaryLabel="Make a Donation"
         secondaryHref="/volunteer"
         secondaryLabel="Explore Volunteering"
       />
