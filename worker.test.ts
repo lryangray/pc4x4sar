@@ -9,8 +9,8 @@ import {
 
 describe('isAllowedOrigin', () => {
   it.each([
-    'https://piercecounty4x4sar.org',
-    'https://www.piercecounty4x4sar.org',
+    'https://pcsar4x4.org',
+    'https://pc4x4sar.org',
     'https://pc4x4sar-preview.ryan-gray-210.workers.dev',
   ])('allows production/preview origin: %s', (origin) => {
     expect(isAllowedOrigin(origin)).toBe(true)
@@ -20,9 +20,10 @@ describe('isAllowedOrigin', () => {
     '',
     null,
     undefined,
-    'http://piercecounty4x4sar.org', // wrong scheme
+    'http://pcsar4x4.org', // wrong scheme
+    'https://www.pcsar4x4.org', // we don't own a www subdomain
     'https://evil.example.com',
-    'https://piercecounty4x4sar.org.evil.com',
+    'https://pcsar4x4.org.evil.com',
     'not a url',
   ])('rejects bad origin: %s', (origin) => {
     expect(isAllowedOrigin(origin as string)).toBe(false)
@@ -31,12 +32,16 @@ describe('isAllowedOrigin', () => {
 
 describe('isTrustedContactRequest', () => {
   it('trusts when Origin matches', () => {
-    expect(isTrustedContactRequest('https://piercecounty4x4sar.org', '')).toBe(true)
+    expect(isTrustedContactRequest('https://pcsar4x4.org', '')).toBe(true)
+  })
+
+  it('trusts the new pc4x4sar.org domain too', () => {
+    expect(isTrustedContactRequest('https://pc4x4sar.org', '')).toBe(true)
   })
 
   it('falls back to Referer when Origin is absent', () => {
     expect(
-      isTrustedContactRequest('', 'https://piercecounty4x4sar.org/contact'),
+      isTrustedContactRequest('', 'https://pcsar4x4.org/contact'),
     ).toBe(true)
   })
 
@@ -48,7 +53,7 @@ describe('isTrustedContactRequest', () => {
     expect(
       isTrustedContactRequest(
         'https://evil.com',
-        'https://piercecounty4x4sar.org/contact',
+        'https://pcsar4x4.org/contact',
       ),
     ).toBe(false)
   })
@@ -56,8 +61,8 @@ describe('isTrustedContactRequest', () => {
 
 describe('corsHeaders', () => {
   it('echoes allowed origin', () => {
-    const h = corsHeaders('https://piercecounty4x4sar.org') as Record<string, string>
-    expect(h['Access-Control-Allow-Origin']).toBe('https://piercecounty4x4sar.org')
+    const h = corsHeaders('https://pcsar4x4.org') as Record<string, string>
+    expect(h['Access-Control-Allow-Origin']).toBe('https://pcsar4x4.org')
     expect(h['Vary']).toBe('Origin')
   })
 

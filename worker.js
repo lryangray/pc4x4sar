@@ -5,9 +5,11 @@ import {
   sanitizeContactInput,
 } from './lib/contact-schema';
 
+// Includes pc4x4sar.org for forward-compat — the new domain is coming
+// online soon and submissions should be accepted the moment DNS flips.
 const ALLOWED_ORIGINS = new Set([
-  'https://piercecounty4x4sar.org',
-  'https://www.piercecounty4x4sar.org',
+  'https://pcsar4x4.org',
+  'https://pc4x4sar.org',
   'https://pc4x4sar-preview.ryan-gray-210.workers.dev',
 ]);
 
@@ -334,7 +336,7 @@ async function handleContactForm(request, env, origin, referrer) {
       try {
         const { EmailMessage } = await import('cloudflare:email');
         const mimeEmail = [
-          'From: website@piercecounty4x4sar.org',
+          'From: website@pcsar4x4.org',
           'To: pcsar4x4@gmail.com',
           `Subject: [PC4x4SAR] New ${submission.subject} message from ${submission.firstName} ${submission.lastName}`,
           'Content-Type: text/plain; charset=utf-8',
@@ -350,11 +352,11 @@ async function handleContactForm(request, env, origin, referrer) {
           `${submission.message}`,
           ``,
           `---`,
-          `This message was sent from the piercecounty4x4sar.org contact form.`,
+          `This message was sent from the pcsar4x4.org contact form.`,
         ].join('\r\n');
 
         const msg = new EmailMessage(
-          'website@piercecounty4x4sar.org',
+          'website@pcsar4x4.org',
           'pcsar4x4@gmail.com',
           new TextEncoder().encode(mimeEmail),
         );

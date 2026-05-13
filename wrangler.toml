@@ -10,8 +10,10 @@ binding = "CONTACT_SUBMISSIONS"
 id = "c46cf36749f0404eb1f1b2f29e64487f"
 
 # Email notification for contact form submissions (PRODUCTION)
-# Requires: Enable Email Routing on piercecounty4x4sar.org in Cloudflare dashboard
+# Requires: Enable Email Routing on pcsar4x4.org in Cloudflare dashboard
 # Then add a destination address (pcsar4x4@gmail.com) under Email > Email Routing
+# Note: once pc4x4sar.org goes live, enable Email Routing on it too if
+# you want website@pc4x4sar.org as the From address.
 [[send_email]]
 name = "SEND_EMAIL"
 destination_address = "pcsar4x4@gmail.com"

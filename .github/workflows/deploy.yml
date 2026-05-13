@@ -110,7 +110,7 @@ jobs:
         continue-on-error: true
         run: |
           sleep 15
-          for URL in "https://pc4x4sar.ryan-gray-210.workers.dev/api/health" "https://piercecounty4x4sar.org/api/health"; do
+          for URL in "https://pc4x4sar.ryan-gray-210.workers.dev/api/health" "https://pcsar4x4.org/api/health"; do
             STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$URL" 2>/dev/null || echo "000")
             if [ "$STATUS" = "200" ]; then
               echo "Health check passed: $URL (HTTP $STATUS)"
