@@ -164,7 +164,7 @@ export default function Footer() {
           </div>
           {/* TODO: convert to a real link once pc4x4sar.org goes live. */}
           <p className="text-center text-navy-500 text-xs mt-6">
-            Coming soon to a shorter address —{' '}
+            New web address coming online soon —{' '}
             <span className="font-medium text-navy-300">pc4x4sar.org</span>
           </p>
         </div>
