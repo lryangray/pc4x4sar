@@ -1,0 +1,56 @@
+Tech Preparedness Quick Reference                                                                                                                     EMERGENCY
+
+Pierce County 4x4 Search & Rescue | pcsar4x4.org                                                                                             CALL 911
+
+NAVIGATION APPS (scan QR to download)
+
+AllTrails+ ($36/yr)                                 Trail discovery + offline maps. Best for regular hikers.
+iOS                          Android
+
+Gaia GPS ($40/yr)                                   Serious backcountry topo maps. Used by SAR teams nationwide.
+iOS                          Android
+
+onX Backcountry ($30/yr)                            Land ownership + hunting. Great offline topo maps.
+iOS                          Android
+
+CalTopo ($50/yr)                                    Trip planning + custom maps. Best for route analysis.
+iOS                          Android
+
+Organic Maps (FREE)                                 Open-source offline maps. No account, no ads, no tracking.
+iOS                          Android
+
+FREE OFFLINE MAPS (already on your phone)
+
+❑ Google Maps: Search area > menu > Download offline map. Expires in 30 days.
+
+❑ Apple Maps (iOS 17+): Profile > Offline Maps > Download New Map.
+
+❑ Organic Maps: Open app, zoom to area, auto-downloads. Free forever.
+
+BATTERY + POWER
+
+❑ Low Power Mode: Enable at trailhead. iPhone: Settings > Battery. Android: Battery Saver.
+
+❑ Screen brightness: Reduce to 30-40%. #1 battery drain on any phone.
+
+❑ Close apps: Swipe away social media and unused background apps.
+
+❑ Airplane mode: ONLY if you have a separate satellite communicator. Otherwise leave cellular ON.
+
+❑ Power bank: Day: 5K mAh (1 charge). Overnight: 10K. Multi-day: 20K mAh.
+
+❑ Cold weather: Keep phone + bank in inside pockets near body. Cold cuts capacity 20-40%.
+
+SATELLITE EMERGENCY + COVERAGE
+
+❑ Satellite 911 texting: FREE for all carriers via T-Mobile/Starlink (emergency 911 only). Full messaging: $10/mo.
+
+❑ iPhone 14+ SOS: Built-in satellite SOS, no subscription. Practice in Settings > Emergency SOS.
+
+❑ Garmin inReach: Two-way satellite texts + SOS with 24/7 monitoring. ~$15/mo. Best for backcountry.
+
+Satellite 911 Signup (free)                      T-Mobile Coverage                                  AT&T Coverage                               Verizon Coverage
+t-mobile.com/satellite-911 (QR/link opens full signup page)
+https://www.t-mobile.com/coverage/coverage-map https://www.att.com/maps/wireless-coverage.html https://www.verizon.com/coverage-map
+
+Coverage maps are estimates. Actual signal varies with terrain, weather, and foliage. Most Cascade backcountry has NO cell service.

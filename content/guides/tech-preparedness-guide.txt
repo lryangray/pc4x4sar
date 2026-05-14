@@ -1,0 +1,232 @@
+Your smartphone is one of the most powerful safety tools you can carry into the backcountry — but only if it's prepared. As a search
+and rescue unit, we've responded to calls where a fully charged phone with offline maps could have prevented the emergency
+entirely. This guide covers the apps, settings, and devices that can keep you safe when cell service disappears.
+
+CRITICAL REMINDER
+Technology is a supplement to — not a replacement for — the Ten Essentials. Always carry a physical map and compass.
+Batteries die, screens crack, and satellites lose signal. But a well-prepared phone dramatically improves your safety margin.
+
+Recommended Navigation Apps
+
+AllTrails
+The most popular hiking app with 400,000+ trail guides, detailed maps, user reviews, photos, and elevation profiles. Great for
+discovering and planning hikes. Best for casual to regular hikers.
+
+Free: Trail discovery, basic maps. AllTrails+ ($35.99/yr): Offline maps, wrong-turn alerts.
+
+iOS:     App Store                                             Android:    Google Play
+
+https://www.alltrails.com
+
+Gaia GPS
+The gold standard for serious backcountry navigation. USGS topo maps, satellite imagery, slope-angle shading, public/private land
+boundaries. This is what many SAR teams use.
+
+Free: Basic maps + GPS tracking. Premium ($39.99/yr): Full offline topos, weather, slope analysis.
+
+iOS:     App Store                                             Android:    Google Play
+
+https://www.gaiagps.com
+
+SAR PRO TIP:
+Gaia GPS is widely used by search and rescue teams nationwide because of its detailed topo layers and ability to share GPS coordinates
+precisely. If you call 911 with Gaia coordinates, we can find you faster.
+
+onX Backcountry
+Excellent for understanding land ownership (public vs. private), hunting units, and backcountry access. Best for hunters, anglers, and
+mixed public/private land.
+
+Premium ($29.99/yr): Full offline maps, 3D terrain, weather, land ownership layers.
+
+iOS:     App Store                                             Android:    Google Play
+
+https://www.onxmaps.com/backcountry
+
+CalTopo
+The best tool for trip planning. Create and print custom topo maps, plan routes with elevation profiles. Exceptionally powerful web
+interface for pre-trip research.
+
+Free: Full web planning. Pro ($50/yr): Mobile app with offline maps + slope shading.
+
+iOS:     App Store                                             Android:    Google Play
+
+https://caltopo.com
+
+Free Offline Maps (Already on Your Phone)
+
+Google Maps — Download Offline Areas
+Google Maps lets you download large map areas for offline use. While it doesn't show trails in detail, it's excellent for road navigation
+to trailheads and as a backup.
+
+How to download (iOS & Android):
+1. Open Google Maps while connected to WiFi
+2. Search for your destination area
+3. Tap the location name at the bottom
+4. Tap the three-dot menu > 'Download offline map'
+5. Adjust the blue rectangle to cover your area
+6. Tap 'Download'
+
+Note: Offline maps expire after 30 days. Download fresh maps before each trip.
+
+Apple Maps — Download Offline Maps (iOS 17+)
+Apple Maps now supports offline maps with turn-by-turn navigation, place info, and ETA — all without cell service.
+
+How to download:
+1. Open Apple Maps
+2. Tap your profile icon (bottom right)
+3. Tap 'Offline Maps' > 'Download New Map'
+4. Search for the area or zoom/pan to select it
+5. Adjust the region and tap 'Download'
+
+Tip: Apple Maps integrates with iPhone's crash detection and Emergency SOS via satellite.
+
+Organic Maps
+Completely free, open-source, privacy-focused offline maps built on OpenStreetMap. Hiking trails, elevation contours, cycling routes.
+No account, no ads, no tracking. Open the app, zoom to your area, and it auto-downloads.
+
+100% free. No subscription. No account required.
+
+iOS:     App Store                                             Android:    Google Play
+
+https://organicmaps.app
+
+SAR PRO TIP:
+Download maps for your ENTIRE route, not just the trailhead. Include surrounding areas in case you need to navigate to a different exit point.
+Download at home on WiFi — don't rely on trailhead cell service.
+
+Phone Preparation Checklist
+
+Before You Leave Home
+❑      Charge to 100%: Start every trip with a full battery. Charge overnight before your trip.
+❑      Update your OS: Make sure iOS or Android is up to date — especially before relying on satellite SOS features.
+❑      Download offline maps: Download maps for your entire route area in ALL the map apps you use.
+❑      Update Medical ID: On iPhone: Health app > Medical ID. On Android: Settings > Safety & Emergency. Include allergies,
+medications, blood type, and emergency contacts.
+❑      Set up emergency contacts: Add ICE (In Case of Emergency) contacts to your phone. These are shared automatically
+during SOS calls.
+❑      Enable location services: Turn on GPS/Location Services. In an emergency, this lets 911 dispatchers and SAR teams
+locate you.
+❑      Test your apps: Open each navigation app and verify your offline maps load correctly without cell service (turn on airplane
+mode to test).
+
+Battery Conservation on the Trail
+❑      Low Power Mode: Enable immediately when you start hiking. iPhone: Settings > Battery. Android: Settings > Battery >
+Battery Saver.
+❑      Reduce screen brightness: Set to 30-40%. The screen is the biggest battery drain.
+❑      Close background apps: Swipe away apps you aren't using. Social media apps drain battery even in the background.
+❑      Limit camera use: Each photo session wakes the screen and processor. Take photos in batches, then lock your phone.
+❑      Airplane mode (use carefully): Saves significant battery but disables cell and satellite connections. Only use if you have a
+separate satellite communicator. Otherwise, leave cellular ON so 911 can reach you.
+
+IMPORTANT: AIRPLANE MODE WARNING
+Turning on Airplane Mode disables your phone's ability to connect to cell towers AND satellites. If you have no other emergency
+communication device, DO NOT use Airplane Mode. A dead phone found at your location is more useful to rescuers than a
+charged phone that was invisible to the network. Only use Airplane Mode as a last resort to preserve battery for a critical 911 call.
+
+Power Banks & Charging
+A portable power bank is essential for any trip longer than a few hours. Cold weather, GPS use, and photography drain batteries fast.
+
+Sizing Guide
+Day hike (2-8 hours): 5,000 mAh — one full phone recharge, weighs 4-5 oz.
+Overnight (1-2 days): 10,000 mAh — 2-3 full recharges, weighs 6-8 oz.
+Multi-day (3-5 days): 20,000 mAh — 4-5 full recharges, weighs 12-14 oz.
+
+Look for: USB-C Power Delivery (PD) for fast charging, and an IP rating (IP67+) for water/dust resistance if you'll be in wet conditions.
+
+Cold Weather Tips
+Lithium batteries lose 20-40% capacity in cold temps. In winter:
+
+- Keep your phone and power bank in an inside pocket, close to your body
+- At night, put both in your sleeping bag near your core
+- Charge devices in the evening while you still have body warmth
+- A phone showing 0% in extreme cold may recover capacity when warmed up
+
+Emergency Communication Devices
+
+iPhone Emergency SOS via Satellite (iPhone 14+)
+If you have an iPhone 14 or newer, you have satellite SOS built in — no subscription required. When you try to call 911 with no cell
+service, your iPhone will offer to connect via satellite.
+
+How it works:
+1. Try calling 911 normally — if no service, iPhone prompts satellite SOS
+2. Point your phone toward the sky (follow on-screen direction indicator)
+3. Answer the emergency questionnaire (injury type, number of people, etc.)
+4. Your location, Medical ID, and battery level are sent to emergency services
+5. Stay still — rescuers are coming to the coordinates your phone transmitted
+
+Requirements: Clear view of the sky. May not work under dense tree canopy or in deep canyons. Works in the US, Canada, UK,
+Europe, Australia, and Japan.
+
+SAR PRO TIP:
+Practice the satellite SOS demo BEFORE you need it: iPhone Settings > Emergency SOS > Try Demo. This lets you experience the connection
+process without sending an actual alert. Also update your Medical ID — SAR teams receive this information automatically.
+
+Android Satellite SOS (Pixel 9+, Samsung Galaxy S25+)
+Select Android phones now support satellite emergency messaging. On supported devices, when you have no cell signal and try to
+contact 911, the phone will offer satellite connectivity. Setup and usage varies by device — check your phone's settings under Safety
+& Emergency.
+
+T-Mobile Satellite via Starlink
+T-Mobile offers satellite connectivity via Starlink on 60+ phone models (iPhone 13+, Galaxy S21+, Pixel 9+). Satellite 911 texting is
+FREE for all carriers — AT&T, Verizon, anyone — for emergency use only. Full satellite messaging (non-emergency texts, apps, data)
+is $10/month add-on, or included with Go5G Next and Experience Beyond plans. Sign up BEFORE your trip:
+
+Sign Up for Free Satellite 911 Texting
+t-mobile.com/coverage/satellite-phone-service/911-texting-signup
+
+Dedicated Satellite Communicators
+For regular backcountry users, a dedicated satellite communicator is the gold standard. Unlike phone-based satellite SOS, these
+allow two-way messaging and work under tree canopy.
+
+Garmin inReach Mini 2 (~$400, plans from $14.95/mo) — Two-way satellite texting, SOS with 24/7 GEOS monitoring, GPS tracking
+family can follow, 14-day battery.
+
+Garmin inReach Mini 2
+garmin.com/en-US/p/765374
+
+Zoleo Satellite Communicator (~$200, plans from $20/mo) — Two-way messaging via satellite/cell/WiFi, SOS with GEOS monitoring,
+check-in button.
+
+Zoleo Satellite Communicator
+zoleo.com
+
+ACR Bivy Stick (~$350, plans from $19.99/mo) — Two-way Iridium messaging, SOS alerting, weather forecasts, location sharing.
+
+ACR Bivy Stick
+acrartex.com/products/bivy-stick
+
+SAR PRO TIP:
+If you hike regularly in areas without cell service — including much of the Cascade Mountains and Mt. Rainier foothills — a Garmin inReach pays
+for itself the first time you need it. Two-way messaging means we can coordinate with you during a rescue, ask about injuries, and give you
+instructions. That's not possible with a PLB or phone SOS.
+
+Quick Reference: Pre-Trip Tech Checklist
+❑       Phone charged to 100%
+❑       Portable power bank charged to 100%
+❑       Offline maps downloaded for entire route area
+❑       Navigation app tested in airplane mode
+❑       Medical ID updated (allergies, meds, emergency contacts)
+❑       Emergency contacts set up on phone
+❑       Location services enabled (GPS on)
+❑       Latest OS update installed
+❑       Satellite SOS demo practiced (iPhone 14+ / Pixel 9+)
+❑       Weather forecast checked in app
+❑       Trip plan shared with emergency contact
+❑       Physical map and compass packed as backup
+
+Check Cell Coverage Before Your Trip
+Most Cascade mountain trails and Mt. Rainier backcountry have NO cell service. Check your carrier's coverage map before your trip:
+
+T-Mobile Coverage Map
+t-mobile.com/coverage/coverage-map
+
+AT&T Coverage Map
+att.com/maps/wireless-coverage.html
+
+Verizon Coverage Map
+verizon.com/coverage-map
+
+FROM OUR TEAM TO YOU
+We've responded to emergencies where a prepared phone saved a life, and emergencies where a dead phone made everything
+harder. The 15 minutes you spend preparing your tech before a trip is the easiest safety investment you'll ever make. Download
+the maps. Charge the battery. Tell someone your plans. Come home safe.
