@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   buildSecurityHeaders,
   corsHeaders,
+  getCanonicalRedirectUrl,
   isAllowedOrigin,
   isTrustedContactRequest,
   parseSubmission,
@@ -56,6 +57,18 @@ describe('isTrustedContactRequest', () => {
         'https://pcsar4x4.org/contact',
       ),
     ).toBe(false)
+  })
+})
+
+describe('getCanonicalRedirectUrl', () => {
+  it('redirects www to the apex domain while preserving path and query', () => {
+    expect(
+      getCanonicalRedirectUrl(new URL('https://www.pcsar4x4.org/contact?source=nav')),
+    ).toBe('https://pcsar4x4.org/contact?source=nav')
+  })
+
+  it('does not redirect the apex domain', () => {
+    expect(getCanonicalRedirectUrl(new URL('https://pcsar4x4.org/contact'))).toBeNull()
   })
 })
 

@@ -3,6 +3,14 @@ main = "worker.js"
 compatibility_date = "2025-10-01"
 workers_dev = true
 
+[[routes]]
+pattern = "pcsar4x4.org/*"
+zone_name = "pcsar4x4.org"
+
+[[routes]]
+pattern = "www.pcsar4x4.org/*"
+zone_name = "pcsar4x4.org"
+
 # KV namespace for contact form submissions (PRODUCTION)
 # Run: wrangler kv namespace create CONTACT_SUBMISSIONS
 # Then paste the returned id below
@@ -33,6 +41,7 @@ run_worker_first = true
 # Then paste the returned id into env.preview.kv_namespaces below.
 [env.preview]
 name = "pc4x4sar-preview"
+routes = []
 
 [[env.preview.kv_namespaces]]
 binding = "CONTACT_SUBMISSIONS"
