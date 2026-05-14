@@ -70,7 +70,7 @@ jobs:
           path: out/
 
       - name: Deploy Preview
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           command: deploy --env preview
@@ -102,7 +102,7 @@ jobs:
           path: out/
 
       - name: Deploy Production
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
