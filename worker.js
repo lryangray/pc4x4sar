@@ -105,6 +105,16 @@ function isTrustedContactRequest(origin, referrer) {
   return isAllowedReferrer(referrer);
 }
 
+function getCanonicalRedirectUrl(url) {
+  if (url.hostname !== 'www.pcsar4x4.org') {
+    return null;
+  }
+
+  const canonicalUrl = new URL(url);
+  canonicalUrl.hostname = 'pcsar4x4.org';
+  return canonicalUrl.toString();
+}
+
 function createNonce() {
   const values = crypto.getRandomValues(new Uint8Array(16));
   return Array.from(values, (value) => value.toString(16).padStart(2, '0')).join('');
@@ -159,6 +169,11 @@ const worker = {
     const url = new URL(request.url);
     const origin = request.headers.get('Origin') || '';
     const referrer = request.headers.get('Referer') || '';
+    const canonicalRedirectUrl = getCanonicalRedirectUrl(url);
+
+    if (canonicalRedirectUrl) {
+      return withSecurityHeaders(Response.redirect(canonicalRedirectUrl, 301));
+    }
 
     if (request.method === 'OPTIONS' && url.pathname === '/api/contact') {
       if (!isAllowedOrigin(origin)) {
@@ -215,6 +230,7 @@ export {
   buildSecurityHeaders,
   isAllowedOrigin,
   corsHeaders,
+  getCanonicalRedirectUrl,
   isTrustedContactRequest,
   parseSubmission,
 };
