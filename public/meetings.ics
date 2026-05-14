@@ -1,0 +1,34 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Pierce County 4x4 SAR//Monthly Meeting//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VTIMEZONE
+TZID:America/Los_Angeles
+BEGIN:STANDARD
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+TZOFFSETFROM:-0700
+TZOFFSETTO:-0800
+TZNAME:PST
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+TZOFFSETFROM:-0800
+TZOFFSETTO:-0700
+TZNAME:PDT
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:monthly-meeting@pcsar4x4.org
+SUMMARY:Pierce County 4x4 SAR Monthly Meeting
+DESCRIPTION:General meeting for current and prospective members. Meet the team\, hear about current activities\, and learn about volunteer opportunities.\n\nMore info: https://pcsar4x4.org/volunteer
+LOCATION:Pierce County Dept. of Emergency Management\, 2501 S. 35th St. Suite D\, Tacoma\, WA 98409
+DTSTART;TZID=America/Los_Angeles:20240110T190000
+DTEND;TZID=America/Los_Angeles:20240110T210000
+RRULE:FREQ=MONTHLY;BYDAY=2WE
+STATUS:CONFIRMED
+URL:https://pcsar4x4.org/contact
+END:VEVENT
+END:VCALENDAR

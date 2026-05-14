@@ -3,7 +3,7 @@
 ## Project
 - Next.js 16 App Router + Tailwind CSS, static export (`output: 'export'`) to Cloudflare Pages
 - Cloudflare Worker handles contact form API (`worker.js`) with KV storage
-- Domain: piercecounty4x4sar.org | Preview: pc4x4sar-preview.ryan-gray-210.workers.dev
+- Domain: pcsar4x4.org (current) | pc4x4sar.org coming online soon | Preview: pc4x4sar-preview.ryan-gray-210.workers.dev
 - GitHub: lryangray/pc4x4sar
 
 ## Commands

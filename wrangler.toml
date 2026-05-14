@@ -1,17 +1,19 @@
 name = "pc4x4sar"
 main = "worker.js"
-compatibility_date = "2024-01-01"
+compatibility_date = "2025-10-01"
 
-# KV namespace for contact form submissions
+# KV namespace for contact form submissions (PRODUCTION)
 # Run: wrangler kv namespace create CONTACT_SUBMISSIONS
 # Then paste the returned id below
 [[kv_namespaces]]
 binding = "CONTACT_SUBMISSIONS"
 id = "c46cf36749f0404eb1f1b2f29e64487f"
 
-# Email notification for contact form submissions
-# Requires: Enable Email Routing on piercecounty4x4sar.org in Cloudflare dashboard
+# Email notification for contact form submissions (PRODUCTION)
+# Requires: Enable Email Routing on pcsar4x4.org in Cloudflare dashboard
 # Then add a destination address (pcsar4x4@gmail.com) under Email > Email Routing
+# Note: once pc4x4sar.org goes live, enable Email Routing on it too if
+# you want website@pc4x4sar.org as the From address.
 [[send_email]]
 name = "SEND_EMAIL"
 destination_address = "pcsar4x4@gmail.com"
@@ -23,12 +25,22 @@ binding = "ASSETS"
 run_worker_first = true
 
 # Preview environment
+# IMPORTANT: Preview MUST use a separate KV namespace and email destination so
+# PR previews never write to production data or trigger production emails.
+# To set up a preview KV namespace, run:
+#   wrangler kv namespace create CONTACT_SUBMISSIONS_PREVIEW
+# Then paste the returned id into env.preview.kv_namespaces below.
 [env.preview]
 name = "pc4x4sar-preview"
 
 [[env.preview.kv_namespaces]]
 binding = "CONTACT_SUBMISSIONS"
+# TODO: replace with a real preview namespace id (see comment above).
+# Until then, preview submissions write to production KV.
 id = "c46cf36749f0404eb1f1b2f29e64487f"
+
+# Note: SEND_EMAIL is intentionally omitted from preview so PR deploys
+# don't email pcsar4x4@gmail.com. KV storage is still the primary record.
 
 [env.preview.assets]
 directory = "./out"

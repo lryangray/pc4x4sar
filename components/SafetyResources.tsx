@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useScrollVisible } from '@/hooks/useScrollVisible'
 
 const safetyTips = [
@@ -159,7 +160,7 @@ export default function SafetyResources({ preview }: { preview?: boolean }) {
 
         {preview && (
           <div className="md:hidden text-center mt-8 -mb-8">
-            <a
+            <Link
               href="/safety"
               className="inline-flex items-center gap-1.5 bg-rescue-orange/10 text-rescue-orange font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-rescue-orange/20 transition-colors"
             >
@@ -167,7 +168,7 @@ export default function SafetyResources({ preview }: { preview?: boolean }) {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </a>
+            </Link>
           </div>
         )}
 
@@ -188,14 +189,16 @@ export default function SafetyResources({ preview }: { preview?: boolean }) {
             </p>
           </div>
 
-          {guideCategories.map((category) => {
+          {guideCategories.map((category, categoryIndex) => {
             const isOpen = expanded[category.heading] ?? false
+            const panelId = `safety-guide-panel-${categoryIndex}`
             return (
               <div key={category.heading} className="mb-4">
                 <button
                   onClick={() => setExpanded((prev) => ({ ...prev, [category.heading]: !prev[category.heading] }))}
                   className="w-full flex items-center justify-between bg-navy-800 hover:bg-navy-700 rounded-lg px-5 py-4 transition-colors cursor-pointer"
                   aria-expanded={isOpen}
+                  aria-controls={panelId}
                 >
                   <div className="text-left">
                     <h4 className="text-white font-semibold text-sm">{category.heading}</h4>
@@ -210,11 +213,15 @@ export default function SafetyResources({ preview }: { preview?: boolean }) {
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
                 <div
+                  id={panelId}
+                  role="region"
+                  inert={!isOpen ? true : undefined}
                   className={`overflow-hidden transition-all duration-300 ease-in-out ${
                     isOpen ? 'max-h-[800px] opacity-100 mt-3' : 'max-h-0 opacity-0'
                   }`}
@@ -255,13 +262,17 @@ export default function SafetyResources({ preview }: { preview?: boolean }) {
             )
           })}
 
-          {/* Optional email signup */}
+          {/* Optional outreach for seasonal safety content. Sends the user to
+              the contact form with their email pre-filled in the message.
+              Not a real mailing list — change to a real provider (Buttondown,
+              Mailchimp, Cloudflare Mailing Lists) before promising "subscribe". */}
           <div className="border-t border-navy-700 pt-8 text-center">
             <p className="text-navy-200 mb-2">
-              Want more safety tips and seasonal guides?
+              Want seasonal safety tips and guides?
             </p>
             <p className="text-navy-400 text-sm mb-5">
-              Sign up and we&apos;ll occasionally send you useful outdoor safety content. No spam.
+              Send your email and we&apos;ll reach out occasionally with useful
+              outdoor safety content. No spam.
             </p>
             <form
               className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
@@ -272,24 +283,29 @@ export default function SafetyResources({ preview }: { preview?: boolean }) {
                 if (email) {
                   const params = new URLSearchParams({
                     subject: 'general',
-                    message: `I'd like to sign up for safety tips and guides. My email: ${email}`,
+                    message: `I'd like to receive safety tips and guides. My email: ${email}`,
                   })
                   window.location.assign(`/contact?${params.toString()}`)
                 }
               }}
             >
+              <label htmlFor="safety-signup-email" className="sr-only">
+                Email address
+              </label>
               <input
+                id="safety-signup-email"
                 type="email"
                 name="email"
                 required
                 placeholder="your@email.com"
+                autoComplete="email"
                 className="flex-1 px-4 py-3 rounded-lg bg-navy-800 border border-navy-600 text-white placeholder-navy-400 focus:border-rescue-orange focus:ring-2 focus:ring-rescue-orange/20 outline-none transition-all"
               />
               <button
                 type="submit"
                 className="btn-primary whitespace-nowrap"
               >
-                Sign Up
+                Send Email
               </button>
             </form>
           </div>

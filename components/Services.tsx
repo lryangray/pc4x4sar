@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useScrollVisible } from '@/hooks/useScrollVisible'
 
 const services = [
@@ -147,7 +148,7 @@ export default function Services({ preview }: { preview?: boolean }) {
 
         {preview && (
           <div className="md:hidden text-center mt-8">
-            <a
+            <Link
               href="/services"
               className="inline-flex items-center gap-1.5 bg-rescue-orange/10 text-rescue-orange font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-rescue-orange/20 transition-colors"
             >
@@ -155,7 +156,7 @@ export default function Services({ preview }: { preview?: boolean }) {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </a>
+            </Link>
           </div>
         )}
       </div>

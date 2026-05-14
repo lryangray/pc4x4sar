@@ -44,26 +44,33 @@ function getObserverBucket(threshold: number) {
 }
 
 /**
- * Custom hook for scroll-triggered visibility animations.
- * Returns a ref to attach to the target element and a boolean
- * indicating whether the element has scrolled into view.
+ * Returns a ref + isVisible flag for scroll-triggered animations.
  *
- * Falls back to visible=true if IntersectionObserver is unavailable.
+ * Always initializes isVisible=false to match SSR output (no IntersectionObserver
+ * server-side). The effect then promotes to true immediately for reduced-motion
+ * users or browsers without IntersectionObserver, or observes the element otherwise.
  */
 export function useScrollVisible(threshold = 0.2) {
   const ref = useRef<HTMLElement>(null)
-  const supportsObserver = typeof window !== 'undefined'
-    && typeof IntersectionObserver !== 'undefined'
-  const prefersReducedMotion = typeof window !== 'undefined'
-    && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const [isVisible, setIsVisible] = useState(!supportsObserver || prefersReducedMotion)
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    if (!supportsObserver || prefersReducedMotion || isVisible || !ref.current) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const hasObserver = typeof IntersectionObserver !== 'undefined'
+
+    if (!hasObserver || reducedMotion) {
+      // Intentional: promoting from false→true on mount avoids the hydration
+      // mismatch that occurs if we initialize state based on browser-only APIs.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsVisible(true)
       return
     }
 
     const element = ref.current
+    if (!element) {
+      return
+    }
+
     const bucket = getObserverBucket(threshold)
     bucket.callbacks.set(element, () => setIsVisible(true))
     bucket.observer.observe(element)
@@ -72,7 +79,7 @@ export function useScrollVisible(threshold = 0.2) {
       bucket.callbacks.delete(element)
       bucket.observer.unobserve(element)
     }
-  }, [threshold, supportsObserver, prefersReducedMotion, isVisible])
+  }, [threshold])
 
   return { ref, isVisible }
 }

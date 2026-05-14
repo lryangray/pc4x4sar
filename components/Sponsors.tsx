@@ -70,7 +70,7 @@ export default function Sponsors() {
           }`}
           style={{ transitionDelay: '400ms' }}
         >
-          <p className="text-navy-500 text-sm">
+          <p className="text-navy-600 text-sm">
             Interested in sponsoring Pierce County 4x4 SAR?{' '}
             <a
               href="#contact"
