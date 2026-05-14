@@ -24,6 +24,15 @@ const eslintConfig = [
     },
   },
   {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+      sourceType: 'module',
+    },
+  },
+  {
     rules: {
       // False positive in App Router — fonts in layout.tsx apply globally
       '@next/next/no-page-custom-font': 'off',
