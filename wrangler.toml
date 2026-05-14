@@ -1,6 +1,7 @@
 name = "pc4x4sar"
 main = "worker.js"
 compatibility_date = "2025-10-01"
+workers_dev = true
 
 # KV namespace for contact form submissions (PRODUCTION)
 # Run: wrangler kv namespace create CONTACT_SUBMISSIONS
