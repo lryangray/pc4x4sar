@@ -41,6 +41,7 @@ run_worker_first = true
 # Then paste the returned id into env.preview.kv_namespaces below.
 [env.preview]
 name = "pc4x4sar-preview"
+routes = []
 
 [[env.preview.kv_namespaces]]
 binding = "CONTACT_SUBMISSIONS"
