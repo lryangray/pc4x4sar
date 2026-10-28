@@ -14,7 +14,7 @@ Open salt water with tidal currents, ferry traffic, cargo ships, and wind chop. 
 paddlers only for routes from Steilacoom, Ruston, and Owen Beach. Watch for ferries — they cannot stop or maneuver to avoid you.
 Tidal current charts are essential.
 
-Rivers: Puyallup, Carbon, Nisqually, White
+## Rivers: Puyallup, Carbon, Nisqually, White
 Glacial-fed rivers that are COLD, silty, and can rise rapidly during warm afternoons as snowmelt increases. Log jams are deadly —
 water flows under them but you don't. Never float unfamiliar river sections without scouting. The Puyallup River through Orting and
 Sumner has swift current and limited access points.
@@ -23,11 +23,11 @@ SAR PRO TIP:
 River levels in Pierce County can change dramatically in a single day. A calm morning float can become a dangerous afternoon torrent as
 glacial melt peaks. Check USGS river gauges (waterdata.usgs.gov) before and during your trip. If the level is rising, get off the water.
 
-Lakes: Spanaway, American, Kapowsin, Tanwax
+## Lakes: Spanaway, American, Kapowsin, Tanwax
 Lowland lakes offer the most accessible paddling in Pierce County. Warmer water (60-70°F in summer), protected from wind, and
 close to services. Great for beginners and families. Still carry a life jacket — even calm lakes claim lives every year.
 
-Alpine Lakes: Mowich, Eunice, others
+## Alpine Lakes: Mowich, Eunice, others
 Mountain lakes above 4,000 ft are spectacularly beautiful and extremely cold (40-55°F even in August). Remote, with no rescue
 services nearby. A capsize here is a life-threatening emergency. Only for experienced, well-prepared paddlers.
 

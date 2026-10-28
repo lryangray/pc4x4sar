@@ -14,7 +14,7 @@ discovering and planning hikes. Best for casual to regular hikers.
 
 Free: Trail discovery, basic maps. AllTrails+ ($35.99/yr): Offline maps, wrong-turn alerts.
 
-iOS:     App Store                                             Android:    Google Play
+Available for iOS and Android.
 
 https://www.alltrails.com
 
@@ -24,7 +24,7 @@ boundaries. This is what many SAR teams use.
 
 Free: Basic maps + GPS tracking. Premium ($39.99/yr): Full offline topos, weather, slope analysis.
 
-iOS:     App Store                                             Android:    Google Play
+Available for iOS and Android.
 
 https://www.gaiagps.com
 
@@ -38,7 +38,7 @@ mixed public/private land.
 
 Premium ($29.99/yr): Full offline maps, 3D terrain, weather, land ownership layers.
 
-iOS:     App Store                                             Android:    Google Play
+Available for iOS and Android.
 
 https://www.onxmaps.com/backcountry
 
@@ -48,7 +48,7 @@ interface for pre-trip research.
 
 Free: Full web planning. Pro ($50/yr): Mobile app with offline maps + slope shading.
 
-iOS:     App Store                                             Android:    Google Play
+Available for iOS and Android.
 
 https://caltopo.com
 
@@ -86,7 +86,7 @@ No account, no ads, no tracking. Open the app, zoom to your area, and it auto-do
 
 100% free. No subscription. No account required.
 
-iOS:     App Store                                             Android:    Google Play
+Available for iOS and Android.
 
 https://organicmaps.app
 
@@ -127,9 +127,9 @@ Power Banks & Charging
 A portable power bank is essential for any trip longer than a few hours. Cold weather, GPS use, and photography drain batteries fast.
 
 Sizing Guide
-Day hike (2-8 hours): 5,000 mAh — one full phone recharge, weighs 4-5 oz.
-Overnight (1-2 days): 10,000 mAh — 2-3 full recharges, weighs 6-8 oz.
-Multi-day (3-5 days): 20,000 mAh — 4-5 full recharges, weighs 12-14 oz.
+- Day hike (2-8 hours): 5,000 mAh — one full phone recharge, weighs 4-5 oz.
+- Overnight (1-2 days): 10,000 mAh — 2-3 full recharges, weighs 6-8 oz.
+- Multi-day (3-5 days): 20,000 mAh — 4-5 full recharges, weighs 12-14 oz.
 
 Look for: USB-C Power Delivery (PD) for fast charging, and an IP rating (IP67+) for water/dust resistance if you'll be in wet conditions.
 
@@ -181,18 +181,15 @@ allow two-way messaging and work under tree canopy.
 Garmin inReach Mini 2 (~$400, plans from $14.95/mo) — Two-way satellite texting, SOS with 24/7 GEOS monitoring, GPS tracking
 family can follow, 14-day battery.
 
-Garmin inReach Mini 2
 garmin.com/en-US/p/765374
 
 Zoleo Satellite Communicator (~$200, plans from $20/mo) — Two-way messaging via satellite/cell/WiFi, SOS with GEOS monitoring,
 check-in button.
 
-Zoleo Satellite Communicator
 zoleo.com
 
 ACR Bivy Stick (~$350, plans from $19.99/mo) — Two-way Iridium messaging, SOS alerting, weather forecasts, location sharing.
 
-ACR Bivy Stick
 acrartex.com/products/bivy-stick
 
 SAR PRO TIP:
@@ -200,7 +197,7 @@ If you hike regularly in areas without cell service — including much of the Ca
 for itself the first time you need it. Two-way messaging means we can coordinate with you during a rescue, ask about injuries, and give you
 instructions. That's not possible with a PLB or phone SOS.
 
-Quick Reference: Pre-Trip Tech Checklist
+## Quick Reference: Pre-Trip Tech Checklist
 ❑       Phone charged to 100%
 ❑       Portable power bank charged to 100%
 ❑       Offline maps downloaded for entire route area

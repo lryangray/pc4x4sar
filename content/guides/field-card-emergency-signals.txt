@@ -2,7 +2,7 @@ Emergency Signal Quick Reference                                                
 
 Pierce County 4x4 Search & Rescue | pcsar4x4.org                                                                                       CALL 911
 
-IF YOU'RE LOST: S.T.O.P.
+## IF YOU'RE LOST: S.T.O.P.
 
 S — SIT DOWN
 Stop moving. Panic is your enemy. Every wrong step takes you farther from where rescuers will look.
@@ -48,6 +48,3 @@ ELECTRONIC + SATELLITE
 ❑ Garmin inReach: Two-way satellite texting + SOS with 24/7 monitoring center. ~$15/mo subscription.
 
 ❑ Battery saving: Airplane mode between 911 attempts. Reduce brightness. Texting uses less power than calls.
-
-FREE Satellite 911 (all carriers)                                                                         Garmin inReach Mini 2
-https://www.t-mobile.com/coverage/satellite-phone-servi                                                   https://www.garmin.com/en-US/p/765374

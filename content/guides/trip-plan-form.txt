@@ -1,55 +1,56 @@
-TRIP PLAN                                                                                                                    IF OVERDUE, CALL
+If you don't return on time, your emergency contact should call 911 with this information.
 
-Pierce County 4x4 Search & Rescue | pcsar4x4.org                                                                             911
+## PERSONAL INFORMATION
 
-Fill out before your trip. Leave a copy with your emergency contact. If you don't return on time, they should call 911 with this information.
+@ Full Name: | Phone Number:
 
-PERSONAL INFORMATION
+@ Number of People in Group: | Ages of Group Members:
 
-Full Name:                                                                               Phone Number:
+@ Names of All Group Members:
 
-Number of People in Group:                                                               Ages of Group Members:
+@ Medical Conditions / Medications / Allergies:
 
-Names of All Group Members:
+## TRIP DETAILS
 
-Medical Conditions / Medications / Allergies:
+@ Destination / Trail Name: | Date of Trip:
 
-TRIP DETAILS
+@ Planned Route (trailhead, trail names, junctions, turnaround point):
 
-Destination / Trail Name:                                                                Date of Trip:
+@ Alternate Route / Backup Plan:
 
-Planned Route (trailhead, trail names, junctions, turnaround point):
+@ Departure Time: | Expected Return Time:
 
-Alternate Route / Backup Plan:
+@ Trailhead Parking Location: | Latest Return Before Overdue:
 
-Departure Time:                                                                          Expected Return Time:
+## VEHICLE INFORMATION
 
-Trailhead Parking Location:                                                              Latest Return Before Overdue:
+@ Vehicle Make / Model / Color: | License Plate:
 
-VEHICLE INFORMATION
+@ Where Vehicle Will Be Parked:
 
-Vehicle Make / Model / Color:                                                            License Plate:
+## GEAR & EQUIPMENT CARRIED
 
-Where Vehicle Will Be Parked:
+❑ Map & compass
+❑ GPS / phone w/ offline maps
+❑ Headlamp
+❑ First aid kit
+❑ Emergency shelter
+❑ Fire starting
+❑ Extra food (__ days)
+❑ Extra water + filter
+❑ Warm layers
+❑ Rain gear
+❑ Whistle
+❑ Satellite communicator
 
-GEAR & EQUIPMENT CARRIED
+@ Other Gear / Notes:
 
-❑   Map & compass                                         ❑   GPS / phone w/ offline maps                           ❑   Headlamp
+## EMERGENCY CONTACT (person NOT on this trip)
 
-❑   First aid kit                                         ❑   Emergency shelter                                     ❑   Fire starting
+@ Contact Name: | Contact Phone:
 
-❑   Extra food (__ days)                                  ❑   Extra water + filter                                  ❑   Warm layers
-
-❑   Rain gear                                             ❑   Whistle                                               ❑   Satellite communicator
-
-Other Gear / Notes:
-
-EMERGENCY CONTACT (person NOT on this trip)
-
-Contact Name:                                                                            Contact Phone:
-
-Overdue Instructions (e.g., 'If I haven't called by 8 PM Sunday, call 911 and give them this form'):
-
-Pierce County 4x4 Search & Rescue | 501(c)(3) | pcsar4x4.org                                                                            Satellite 911 Signup
+@ Overdue Instructions (e.g., 'If I haven't called by 8 PM Sunday, call 911 and give them this form'):
 
 Free satellite 911 texting: all carriers. Full messaging: $10/mo add-on.
+
+Satellite 911 signup: https://www.t-mobile.com/coverage/satellite-phone-service/911-texting-signup

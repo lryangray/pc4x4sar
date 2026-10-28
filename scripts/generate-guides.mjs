@@ -12,11 +12,11 @@ const outputDir = path.join(repoRoot, 'public', 'guides')
 const SITE_DOMAIN = 'pcsar4x4.org'
 const SITE_URL = `https://${SITE_DOMAIN}`
 const ORG_NAME = 'Pierce County 4x4 Search & Rescue'
-const ADDRESS = '2501 S. 35th St. Suite D, Tacoma, WA 98409'
+const logoPath = path.join(repoRoot, 'public', 'images', 'logo-4x4-unit.png')
 
 const colors = {
-  navy: '#0a1628',
-  orange: '#e8651a',
+  navy: '#102a43',
+  orange: '#ff6b35',
   tan: '#f6efe6',
   lightBlue: '#eaf1f8',
   gray: '#4b5563',
@@ -26,15 +26,22 @@ const colors = {
 const page = {
   width: 612,
   height: 792,
-  left: 48,
-  right: 48,
-  top: 70,
+  left: 36,
+  right: 36,
+  top: 82,
   bottom: 58,
-  headerHeight: 48,
-  footerHeight: 42,
+  headerHeight: 64,
+  footerHeight: 38,
 }
 
-const documents = [
+export const spacing = {
+  section: 8,
+  headingToBody: 5,
+  calloutPadding: 10,
+  formHeadingPadding: 3,
+}
+
+export const documents = [
   {
     slug: 'trip-planning-checklist',
     title: 'Trip Planning Checklist',
@@ -154,24 +161,33 @@ const calloutHeadings = new Set([
   'KEY TAKEAWAYS',
   'PACK IT EVERY TIME',
   'FROM OUR TEAM TO YOU',
+  'SAR PRO TIP',
+  'IMPORTANT: AIRPLANE MODE WARNING',
+  'LAHAR WARNING',
+  'IF SOMEONE IS INJURED',
+  'MOST RESCUES INVOLVE DAY HIKERS',
 ])
 
-function normalizeText(text) {
+export function normalizeText(text) {
   return text
-    .replace(/ {2,}/g, ' ')
+    .replace(/\s+/g, ' ')
     .replace(/\s+([,.;:])/g, '$1')
-    .replace(/\bTip:\s+/g, '')
     .trim()
+    .replace(/^Tip:\s+/, '')
 }
 
 function isHeading(text) {
-  if (calloutHeadings.has(text)) return true
-  if (text.endsWith(':') && text.length < 32) return true
-  const letters = text.replace(/[^A-Za-z]/g, '')
-  return letters.length > 3 && text === text.toUpperCase() && text.length < 70
+  if (/^#{1,3}\s/.test(text)) return true
+  if (/^[❑•*-]\s|^\d+[.)]\s|https?:|\.com\b|\.org\b|\.app\b|\.us\b/.test(text)) return false
+  if (calloutHeadings.has(text.replace(/:$/, ''))) return true
+  return text.length < 88 && /[A-Za-z]/.test(text)
+    && !/[.!?,;]$/.test(text) && !text.includes(': ')
 }
 
-function parseSource(source) {
+/** @typedef {{type: string, text: string, title?: string, marker?: string}} Block */
+
+/** @returns {Block[]} */
+export function parseSource(source) {
   const rawBlocks = source
     .replace(/\r/g, '')
     .split(/\n\s*\n/g)
@@ -179,64 +195,57 @@ function parseSource(source) {
     .filter((block) => block.length > 0)
 
   const blocks = []
-  for (let index = 0; index < rawBlocks.length; index += 1) {
-    const lines = rawBlocks[index]
-    const text = normalizeText(lines.join(' '))
-
-    if (!text) continue
-
-    if (isHeading(text)) {
-      const nextLines = rawBlocks[index + 1] ?? []
-      const nextText = normalizeText(nextLines.join(' '))
-      if (
-        (calloutHeadings.has(text) || text === 'SAR PRO TIP:' || text.startsWith('CRITICAL'))
-        && nextText
-        && !isHeading(nextText)
-      ) {
-        blocks.push({ type: 'callout', title: text.replace(/:$/, ''), text: nextText })
-        index += 1
-      } else {
-        blocks.push({ type: 'heading', text: text.replace(/:$/, '') })
-      }
+  for (const originalLines of rawBlocks) {
+    const lines = [...originalLines]
+    if (lines[0].startsWith('@ ')) {
+      blocks.push({ type: 'field', text: normalizeText(lines.join(' ').slice(2)) })
       continue
     }
-
-    if (lines.some((line) => /^[❑•-]\s+/.test(line.trim()))) {
-      const items = []
-      let current = ''
-      for (const line of lines) {
-        if (/^[❑•-]\s+/.test(line)) {
-          if (current) items.push(normalizeText(current))
-          current = line.replace(/^[❑•-]\s+/, '')
-        } else {
-          current = `${current} ${line}`.trim()
+    // Extracted PDF text often puts a heading and its body in the same block.
+    if (isHeading(lines[0])) {
+      const text = normalizeText(lines.shift().replace(/^#{1,3}\s+/, '')).replace(/:$/, '')
+      blocks.push({ type: 'heading', text })
+    }
+    let current = null
+    const flush = () => {
+      if (current) blocks.push({ ...current, text: normalizeText(current.text) })
+      current = null
+    }
+    for (const line of lines) {
+      const marker = line.match(/^([❑•*-]|\d+[.)])\s+(.*)$/)
+      if (marker) {
+        flush()
+        current = {
+          type: 'item',
+          marker: /^\d/.test(marker[1]) ? marker[1] : (marker[1] === '❑' ? 'check' : 'bullet'),
+          text: marker[2],
         }
+      } else {
+        if (!current) current = { type: 'paragraph', text: '' }
+        current.text += ` ${line}`
       }
-      if (current) items.push(normalizeText(current))
-      blocks.push({ type: 'list', items })
-      continue
     }
-
-    blocks.push({ type: 'paragraph', text })
+    flush()
   }
-
+  for (let index = 0; index < blocks.length - 1; index += 1) {
+    const block = blocks[index]
+    if (block.type === 'heading' && calloutHeadings.has(block.text)
+      && blocks[index + 1].type === 'paragraph') {
+      blocks.splice(index, 2, { type: 'callout', title: block.text, text: blocks[index + 1].text })
+    }
+  }
   return blocks
 }
 
-function removeExtractedBoilerplate(blocks, document) {
-  return blocks.filter((block) => {
-    const text = block.text ?? block.title ?? ''
-    if (!text) return true
-    if (text === document.title || text === document.subtitle) return false
-    if (text.startsWith(`${document.title} EMERGENCY`)) return false
-    if (text.startsWith(`${ORG_NAME} | ${SITE_DOMAIN}`)) return false
-    if (text.startsWith(`${ORG_NAME} | 501(c)(3)`)) return false
-    if (text.startsWith('TRIP PLAN IF OVERDUE')) return false
-    return true
-  })
+export function cleanSource(source, document) {
+  return source.split(/\r?\n/).filter((line) => {
+    const text = normalizeText(line)
+    return !text.startsWith(`${document.title} EMERGENCY`)
+      && !text.startsWith(`${ORG_NAME} |`)
+  }).join('\n')
 }
 
-function createDocument() {
+export function createDocument(document) {
   return new PDFDocument({
     size: 'LETTER',
     autoFirstPage: false,
@@ -248,25 +257,26 @@ function createDocument() {
       right: page.right,
     },
     info: {
+      Title: document.title,
       Author: ORG_NAME,
-      Subject: 'Outdoor safety guide',
+      Subject: document.subtitle,
       Keywords: 'search and rescue, Pierce County, outdoor safety',
+      Creator: `${ORG_NAME} | ${SITE_DOMAIN}`,
+      // Stable metadata keeps regeneration reproducible.
+      CreationDate: new Date('2026-10-07T00:00:00Z'),
+      ModDate: new Date('2026-10-07T00:00:00Z'),
     },
   })
 }
 
-function drawLogo(doc, x, y, size) {
-  doc.circle(x + size / 2, y + size / 2, size / 2).fill(colors.navy)
-  doc.circle(x + size / 2, y + size / 2 - 2, size * 0.32).fill(colors.orange)
-  doc.fillColor('white').font('Helvetica-Bold').fontSize(size * 0.24)
-  doc.text('4x4', x, y + size * 0.34, { width: size, align: 'center' })
-  doc.fillColor('white').fontSize(size * 0.08)
-  doc.text('SAR', x, y + size * 0.62, { width: size, align: 'center' })
-}
-
-function addPage(doc) {
+function addPage(doc, document) {
   doc.addPage()
   doc.y = page.top
+  if (doc.bufferedPageRange().count > 1) {
+    doc.fillColor(colors.gray).font('Helvetica-Bold').fontSize(9)
+    doc.text(document.title, page.left, page.top, { width: contentWidth(), lineGap: 1 })
+    doc.y += 12
+  }
 }
 
 function contentWidth() {
@@ -274,404 +284,437 @@ function contentWidth() {
 }
 
 function bottomLimit() {
-  return page.height - page.bottom - page.footerHeight
+  return page.height - page.bottom
 }
 
-function ensureSpace(doc, height, options = {}) {
-  const limit = options.bottomLimit ?? bottomLimit()
-  if (doc.y + height <= limit) return
-  if (options.disableBreak) return
-  addPage(doc)
+function measure(doc, text, width, size, bold = false, lineGap = 1) {
+  return doc.font(bold ? 'Helvetica-Bold' : 'Helvetica').fontSize(size)
+    .heightOfString(text, { width, lineGap })
 }
 
-function textHeight(doc, text, options = {}) {
-  return doc.heightOfString(text, {
-    width: options.width ?? contentWidth(),
-    lineGap: options.lineGap ?? 2,
-  })
+function fontMetrics(doc) {
+  // PDFKit exposes line height publicly, but cap/ascender metrics only on the active font.
+  const scale = doc._fontSize / 1000
+  return {
+    ascent: doc._font.ascender * scale,
+    capHeight: doc._font.capHeight * scale,
+    lineHeight: doc.currentLineHeight(true),
+  }
+}
+
+function centeredHeading(doc, text, x, y, options) {
+  const { capHeight, lineHeight } = fontMetrics(doc)
+  // Center the cap-height band, not the font's asymmetric ascender/descender box.
+  // One baseline per font size keeps capitals, lowercase and descenders on the same grid.
+  doc.text(text, x, y + (lineHeight + capHeight) / 2, { ...options, baseline: 'alphabetic' })
+}
+
+function drawMarker(doc, marker, x, y, indent, lineGap = 0) {
+  const { ascent, capHeight } = fontMetrics(doc)
+  const centerY = y + ascent - capHeight / 2
+  if (marker === 'check') {
+    doc.rect(x, centerY - 3.5, 7, 7).lineWidth(0.7).strokeColor(colors.gray).stroke()
+  } else if (marker === 'bullet') {
+    doc.circle(x + 3, centerY, 2).fill(colors.orange)
+  } else if (marker) {
+    doc.font('Helvetica-Bold').fillColor(colors.navy)
+    doc.text(marker, x, y + ascent, { width: indent, lineGap, baseline: 'alphabetic' })
+  }
 }
 
 function renderTitleBlock(doc, document) {
   const width = contentWidth()
-  if (document.type === 'form') {
-    doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(18)
-    doc.text(document.title, page.left, doc.y, { width, align: 'center' })
-    doc.moveDown(0.15)
-    doc.fillColor(colors.gray).font('Helvetica').fontSize(8.2)
-    doc.text(document.subtitle, page.left + 35, doc.y, { width: width - 70, align: 'center', lineGap: 1 })
-    doc.moveDown(0.35)
-    doc
-      .strokeColor(colors.orange)
-      .lineWidth(1.4)
-      .moveTo(page.left + 120, doc.y)
-      .lineTo(page.width - page.right - 120, doc.y)
-      .stroke()
-    doc.moveDown(0.45)
-    return
-  }
-
-  const logoSize = document.type === 'form' ? 34 : 44
-  drawLogo(doc, page.left + width / 2 - logoSize / 2, doc.y, logoSize)
-  doc.moveDown(document.type === 'form' ? 2.1 : 2.9)
-  doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(document.type === 'guide' ? 24 : 20)
-  doc.text(document.title, page.left, doc.y, { width, align: 'center' })
-  doc.moveDown(0.2)
-  doc.fillColor(colors.gray).font('Helvetica').fontSize(document.type === 'form' ? 8.5 : 10)
-  doc.text(document.subtitle, page.left + 35, doc.y, { width: width - 70, align: 'center', lineGap: 2 })
-  doc.moveDown(document.type === 'form' ? 0.45 : 0.8)
-  doc
-    .strokeColor(colors.orange)
-    .lineWidth(2)
-    .moveTo(page.left + 120, doc.y)
-    .lineTo(page.width - page.right - 120, doc.y)
-    .stroke()
-  doc.moveDown(0.7)
-}
-
-function renderHeading(doc, block, options = {}) {
-  const width = options.width ?? contentWidth()
-  const fontSize = options.fontSize ?? 12
-  const height = textHeight(doc.font('Helvetica-Bold').fontSize(fontSize), block.text, { width }) + 12
-  ensureSpace(doc, height, options)
-  doc.moveDown(0.25)
-  doc.fillColor(colors.orange).font('Helvetica-Bold').fontSize(fontSize)
-  doc.text(block.text.toUpperCase(), options.x ?? page.left, doc.y, { width, lineGap: 1 })
-  doc.moveDown(0.15)
-  doc
-    .strokeColor(colors.orange)
-    .lineWidth(1)
-    .moveTo(options.x ?? page.left, doc.y)
-    .lineTo((options.x ?? page.left) + Math.min(width, 160), doc.y)
-    .stroke()
-  doc.moveDown(0.25)
-}
-
-function renderParagraph(doc, block, options = {}) {
-  const width = options.width ?? contentWidth()
-  const fontSize = options.fontSize ?? 9.7
-  const x = options.x ?? page.left
-  doc.font('Helvetica').fontSize(fontSize)
-  const height = textHeight(doc, block.text, { width, lineGap: options.lineGap ?? 1.3 }) + 5
-  ensureSpace(doc, height, options)
-  doc.fillColor(colors.navy)
-  doc.text(block.text, x, doc.y, { width, lineGap: options.lineGap ?? 1.3 })
-  doc.moveDown(0.28)
-}
-
-function renderList(doc, block, options = {}) {
-  const width = options.width ?? contentWidth()
-  const fontSize = options.fontSize ?? 9.2
-  const x = options.x ?? page.left
-  for (const item of block.items) {
-    doc.font('Helvetica').fontSize(fontSize)
-    const height = Math.max(10, textHeight(doc, item, { width: width - 15, lineGap: options.lineGap ?? 0.6 })) + 3
-    ensureSpace(doc, height, options)
-    const startY = doc.y + 2
-    doc.rect(x, startY + 2, 4, 4).fill(colors.orange)
-    doc.fillColor(colors.navy).text(item, x + 13, doc.y, { width: width - 13, lineGap: options.lineGap ?? 0.6 })
-    doc.moveDown(0.12)
-  }
-  doc.moveDown(0.12)
-}
-
-function renderCallout(doc, block, options = {}) {
-  const width = options.width ?? contentWidth()
-  const x = options.x ?? page.left
-  const critical = /CRITICAL|911|STAY PUT|REMEMBER|KEY TAKEAWAYS|PACK IT|FROM OUR TEAM/i.test(block.title)
-  const bodyFontSize = options.fontSize ?? 9.2
-  const titleHeight = 14
-  doc.font('Helvetica').fontSize(bodyFontSize)
-  const bodyHeight = textHeight(doc, block.text, { width: width - 22, lineGap: options.lineGap ?? 1 })
-  const height = titleHeight + bodyHeight + 20
-  ensureSpace(doc, height + 5, options)
-  const y = doc.y
-  doc.roundedRect(x, y, width, height, 4).fill(critical ? colors.navy : colors.tan)
-  doc.rect(x, y, 5, height).fill(colors.orange)
-  doc.fillColor(critical ? 'white' : colors.navy).font('Helvetica-Bold').fontSize(10)
-  doc.text(block.title.toUpperCase(), x + 14, y + 10, { width: width - 28 })
-  doc.fillColor(critical ? 'white' : colors.navy).font('Helvetica').fontSize(bodyFontSize)
-  doc.text(block.text, x + 14, y + 27, { width: width - 28, lineGap: options.lineGap ?? 1 })
-  doc.y = y + height + 6
-}
-
-function renderBlock(doc, block, options = {}) {
-  if (block.type === 'heading') renderHeading(doc, block, options)
-  if (block.type === 'paragraph') renderParagraph(doc, block, options)
-  if (block.type === 'list') renderList(doc, block, options)
-  if (block.type === 'callout') renderCallout(doc, block, options)
-}
-
-async function qrDataUrl(url) {
-  return QRCode.toDataURL(url, {
-    errorCorrectionLevel: 'M',
-    margin: 1,
-    width: 128,
-    color: {
-      dark: colors.navy,
-      light: '#ffffff',
-    },
-  })
-}
-
-async function renderQrLinks(doc, links) {
-  if (!links?.length) return
-  const width = contentWidth()
-  const gap = 10
-  const columnWidth = (width - gap * (links.length - 1)) / links.length
-  const boxHeight = 76
-  ensureSpace(doc, boxHeight + 10)
-  const y = doc.y
-
-  for (const [index, [label, url]] of links.entries()) {
-    const x = page.left + index * (columnWidth + gap)
-    const dataUrl = await qrDataUrl(url)
-    const image = Buffer.from(dataUrl.split(',')[1], 'base64')
-    doc.roundedRect(x, y, columnWidth, boxHeight, 4).strokeColor(colors.border).stroke()
-    doc.image(image, x + 8, y + 10, { width: 42, height: 42 })
-    doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(7.5)
-    doc.text(label, x + 55, y + 12, { width: columnWidth - 62, lineGap: 1 })
-    doc.fillColor(colors.gray).font('Helvetica').fontSize(6.5)
-    doc.text(shortenUrl(url), x + 55, y + 31, { width: columnWidth - 62, lineGap: 1 })
-  }
-  doc.y = y + boxHeight + 10
-}
-
-function estimateBlockHeight(doc, block, options = {}) {
-  const width = options.width ?? contentWidth()
-  const fontSize = options.fontSize ?? 9
-  const lineGap = options.lineGap ?? 1
-  if (block.type === 'heading') {
-    doc.font('Helvetica-Bold').fontSize(fontSize)
-    return textHeight(doc, block.text, { width, lineGap }) + 15
-  }
-  if (block.type === 'list') {
-    doc.font('Helvetica').fontSize(fontSize)
-    return block.items.reduce((total, item) => (
-      total + Math.max(10, textHeight(doc, item, { width: width - 13, lineGap })) + 3
-    ), 5)
-  }
-  if (block.type === 'callout') {
-    doc.font('Helvetica').fontSize(fontSize)
-    return textHeight(doc, block.text, { width: width - 28, lineGap }) + 38
-  }
-  doc.font('Helvetica').fontSize(fontSize)
-  return textHeight(doc, block.text, { width, lineGap }) + 8
-}
-
-function flowColumns(doc, blocks, options) {
-  const columnGap = options.columnGap ?? 18
-  const columnCount = options.columnCount ?? 2
-  const columnWidth = (contentWidth() - columnGap * (columnCount - 1)) / columnCount
-  const startY = doc.y
-  const columns = Array.from({ length: columnCount }, (_, index) => ({
-    x: page.left + index * (columnWidth + columnGap),
-    y: startY,
-  }))
-  let column = 0
-  let columnBottom = options.bottomLimit ?? bottomLimit()
-  doc.y = columns[column].y
-
-  for (const block of blocks) {
-    const renderOptions = {
-      x: columns[column].x,
-      width: columnWidth,
-      fontSize: block.type === 'heading' ? options.headingSize : options.fontSize,
-      lineGap: options.lineGap,
-      bottomLimit: columnBottom,
-      disableBreak: true,
-    }
-    const estimatedHeight = estimateBlockHeight(doc, block, renderOptions)
-    if (doc.y + estimatedHeight > columnBottom) {
-      if (column < columnCount - 1) {
-        column += 1
-        doc.y = columns[column].y
-      } else {
-        addPage(doc)
-        column = 0
-        columnBottom = options.bottomLimit ?? bottomLimit()
-        for (const item of columns) item.y = page.top
-        doc.y = page.top
+  const compact = document.type !== 'guide'
+  const start = doc.y
+  doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(compact ? 21 : 26)
+  let title = document.title
+  if (doc.widthOfString(title) > width) {
+    const words = title.split(' ')
+    let best = Infinity
+    for (let index = 1; index < words.length; index += 1) {
+      const left = words.slice(0, index).join(' ')
+      const right = words.slice(index).join(' ')
+      const widths = [doc.widthOfString(left), doc.widthOfString(right)]
+      const difference = Math.abs(widths[0] - widths[1])
+      if (Math.max(...widths) <= width && difference < best) {
+        title = `${left}\n${right}`
+        best = difference
       }
     }
-    renderBlock(doc, block, {
-      x: columns[column].x,
-      width: columnWidth,
-      fontSize: block.type === 'heading' ? options.headingSize : options.fontSize,
-      lineGap: options.lineGap,
-      bottomLimit: columnBottom,
-      disableBreak: true,
-    })
+  }
+  doc.text(title, page.left, start, { width, lineGap: 2 })
+  const subtitleY = doc.y + 5
+  doc.fillColor(colors.gray).font('Helvetica').fontSize(compact ? 9 : 10.5)
+  doc.text(document.subtitle, page.left, subtitleY, { width, lineGap: 1.5 })
+  doc.y += compact ? 12 : 18
+}
+
+/** @param {Block | null | undefined} [previousBlock] */
+export function blockMetrics(doc, block, options, previousBlock = null) {
+  const { width, fontSize, headingSize, lineGap, gap } = options
+  // Callouts already separate their heading from the preceding text with panel padding.
+  const before = block.type === 'heading' && previousBlock && previousBlock.type !== 'heading'
+    ? spacing.section : 0
+  if (block.type === 'heading') {
+    // The last line has no following line: do not include its interline gap in the accent.
+    const titleHeight = measure(doc, block.text, width - 9, headingSize, true, lineGap) - lineGap
+    return { height: before + titleHeight + spacing.headingToBody, titleHeight, before }
+  }
+  if (block.type === 'callout') {
+    const titleHeight = measure(doc, block.title, width - 24, headingSize, true, lineGap) - lineGap
+    const bodyHeight = measure(doc, block.text, width - 24, fontSize, false, lineGap)
+    const boxHeight = spacing.calloutPadding * 2 + titleHeight + spacing.headingToBody + bodyHeight
+    return { height: before + boxHeight + gap, titleHeight, boxHeight, before }
+  }
+  const indent = block.type === 'item' ? 14 : 0
+  return { height: measure(doc, block.text, width - indent, fontSize, false, lineGap) + gap, before }
+}
+
+const urlPattern = /\b(?:https?:\/\/)?(?:[a-z0-9-]+\.)+(?:com|org|gov|us|app)(?:\/[^\s<>]*)?/gi
+
+function linkedText(doc, text, x, y, options) {
+  const segments = []
+  let offset = 0
+  for (const match of text.matchAll(urlPattern)) {
+    const raw = match[0].replace(/[).,;]+$/, '')
+    if (match.index > offset) segments.push({ text: text.slice(offset, match.index) })
+    segments.push({ text: raw, link: raw.startsWith('http') ? raw : `https://${raw}` })
+    offset = match.index + raw.length
+  }
+  if (offset < text.length) segments.push({ text: text.slice(offset) })
+  for (const [index, segment] of segments.entries()) {
+    const settings = {
+      ...options, continued: index < segments.length - 1,
+      link: segment.link ?? null, underline: Boolean(segment.link),
+    }
+    if (index === 0) doc.text(segment.text, x, y, settings)
+    else doc.text(segment.text, settings)
   }
 }
 
-function shortenUrl(url) {
-  return url
-    .replace(/^https?:\/\/(www\.)?/, '')
-    .replace('t-mobile.com/coverage/satellite-phone-service/911-texting-signup', 't-mobile.com/satellite-911')
+/**
+ * @param {any} doc
+ * @param {Block} block
+ * @param {any} options
+ * @param {number} x
+ * @param {number} y
+ * @param {Block | null | undefined} [previousBlock]
+ */
+export function renderBlock(doc, block, options, x, y, previousBlock = null) {
+  const { width, fontSize, headingSize, lineGap } = options
+  const { height, titleHeight, boxHeight, before } = blockMetrics(doc, block, options, previousBlock)
+  const start = y
+  y += before
+  if (block.type === 'heading') {
+    doc.rect(x, y, 3, titleHeight).fill(colors.orange)
+    doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(headingSize)
+    centeredHeading(doc, block.text, x + 9, y, { width: width - 9, lineGap })
+  } else if (block.type === 'callout') {
+    doc.rect(x, y, width, boxHeight).fill(colors.lightBlue)
+    doc.rect(x, y, 3, boxHeight).fill(colors.orange)
+    doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(headingSize)
+    const titleY = y + spacing.calloutPadding
+    centeredHeading(doc, block.title, x + 12, titleY, { width: width - 24, lineGap })
+    doc.font('Helvetica').fontSize(fontSize)
+    linkedText(doc, block.text, x + 12, titleY + titleHeight + spacing.headingToBody, { width: width - 24, lineGap })
+  } else {
+    const indent = block.type === 'item' ? 14 : 0
+    if (block.type === 'item') {
+      doc.font('Helvetica').fontSize(fontSize)
+      drawMarker(doc, block.marker, x, y, indent, lineGap)
+    }
+    doc.fillColor(colors.navy).font('Helvetica').fontSize(fontSize)
+    linkedText(doc, block.text, x + indent, y, { width: width - indent, lineGap })
+  }
+  doc.y = start + height
+}
+
+export function splitBlock(doc, block, options, available) {
+  if (block.type === 'heading') return null
+  const words = block.text.split(' ')
+  // Split only at word boundaries and keep at least two lines on each side.
+  let low = 1
+  let high = words.length - 1
+  let fit = 0
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2)
+    if (blockMetrics(doc, { ...block, text: words.slice(0, mid).join(' ') }, options).height <= available) {
+      fit = mid
+      low = mid + 1
+    } else high = mid - 1
+  }
+  if (!fit) return null
+  const first = { ...block, text: words.slice(0, fit).join(' ') }
+  const rest = { ...block, text: words.slice(fit).join(' ') }
+  if (block.type === 'callout') rest.title = `${block.title} (continued)`
+  if (block.type === 'item') rest.marker = ''
+  const minimum = 2 * (options.fontSize + options.lineGap)
+  if (blockMetrics(doc, first, options).height < minimum
+    || blockMetrics(doc, rest, options).height < minimum) return null
+  return [first, rest]
+}
+
+export function balancedSplit(doc, blocks, options, available) {
+  const metrics = blocks.map((block, index) => blockMetrics(doc, block, options, blocks[index - 1]))
+  const heights = metrics.map(({ height }) => height)
+  const total = heights.reduce((sum, height) => sum + height, 0)
+  let split = null
+  let score = Infinity
+  let left = 0
+  for (let index = 0; index < blocks.length - 1; index += 1) {
+    left += heights[index]
+    if (blocks[index].type === 'heading') continue
+    if (/^\d/.test(blocks[index].marker) && /^\d/.test(blocks[index + 1].marker)) continue
+    const right = total - left - metrics[index + 1].before
+    if (Math.max(left, right) > available) continue
+    // Prefer section boundaries over perfectly equal column lengths.
+    const candidate = Math.abs(left - right) + (blocks[index + 1].type === 'heading' ? 0 : 100)
+    if (candidate < score) {
+      score = candidate
+      split = index + 1
+    }
+  }
+  return split
+}
+
+/** @returns {{top: number, columns: {type: string, text: string, title?: string, marker?: string}[][]}[]} */
+export function planColumns(doc, blocks, options) {
+  const queue = blocks.map((block) => ({ ...block }))
+  const pages = [{ top: options.firstTop, columns: [[], []] }]
+  let column = 0
+  let currentPage = pages[0]
+  let startY = currentPage.top
+  let y = startY
+  const nextColumn = () => {
+    if (column === 0) column = 1
+    else {
+      currentPage = { top: options.nextTop, columns: [[], []] }
+      pages.push(currentPage)
+      startY = currentPage.top
+      column = 0
+    }
+    y = startY
+  }
+  for (let index = 0; index < queue.length; index += 1) {
+    const block = queue[index]
+    let previous = currentPage.columns[column].at(-1)
+    let height = blockMetrics(doc, block, options, previous).height
+    let keepHeight = height
+    if (block.type === 'heading') {
+      // Keep consecutive headings with at least the beginning of their content.
+      for (let next = index + 1; next < queue.length; next += 1) {
+        const following = queue[next]
+        let h = blockMetrics(doc, following, options, queue[next - 1]).height
+        if (/^\d/.test(following.marker)) {
+          let procedureHeight = h
+          for (let step = next + 1; step < queue.length && /^\d/.test(queue[step].marker); step += 1) {
+            procedureHeight += blockMetrics(doc, queue[step], options, queue[step - 1]).height
+          }
+          // Keep a short procedure with its heading; long procedures may still flow normally.
+          const topHeight = blockMetrics(doc, block, options).height
+          if (keepHeight - height + topHeight + procedureHeight <= options.bottom - startY) h = procedureHeight
+        }
+        keepHeight += following.type === 'heading' ? h
+          : Math.min(h, options.bottom - startY - keepHeight)
+        if (following.type !== 'heading') break
+      }
+    }
+    if (y + keepHeight > options.bottom) {
+      if (y > startY && currentPage.columns[column].at(-1)?.type !== 'heading') nextColumn()
+      previous = currentPage.columns[column].at(-1)
+      height = blockMetrics(doc, block, options, previous).height
+    }
+    if (y + height > options.bottom) {
+      const parts = splitBlock(doc, block, options, options.bottom - y)
+      if (!parts) throw new Error(`Block cannot fit safely: ${block.text.slice(0, 70)}`)
+      queue.splice(index, 1, ...parts)
+      index -= 1
+      continue
+    }
+    currentPage.columns[column].push(block)
+    y += height
+  }
+  const finalBlocks = currentPage.columns.flat()
+  const split = balancedSplit(doc, finalBlocks, options, options.bottom - currentPage.top)
+  if (split) currentPage.columns = [finalBlocks.slice(0, split), finalBlocks.slice(split)]
+  return pages
+}
+
+function renderColumns(doc, columns, top, options) {
+  let maxY = top
+  for (const [column, blocks] of columns.entries()) {
+    let y = top
+    for (const [index, block] of blocks.entries()) {
+      renderBlock(doc, block, options, page.left + column * (options.width + 20), y, blocks[index - 1])
+      y = doc.y
+    }
+    maxY = Math.max(maxY, y)
+  }
+  doc.y = maxY
+}
+
+function flowColumns(doc, document, blocks, options) {
+  const nextTop = page.top + measure(doc, document.title, contentWidth(), 9, true, 1) + 12
+  const plans = planColumns(doc, blocks, { ...options, firstTop: doc.y, nextTop })
+  if (document.type === 'card' && plans.length !== 1) {
+    throw new Error(`${document.slug}: field card exceeds one page`)
+  }
+  for (const [index, plan] of plans.entries()) {
+    if (index > 0) addPage(doc, document)
+    renderColumns(doc, plan.columns, plan.top, options)
+  }
+}
+
+export function qrLayout(doc, links) {
+  const gap = 12
+  const width = (contentWidth() - gap * (links.length - 1)) / links.length
+  const captionTop = 86
+  const captionHeight = Math.max(...links.map(([label]) => measure(doc, label, width, 8, true, 1)))
+  return { gap, width, captionTop, height: Math.max(112, captionTop + captionHeight + 5) }
+}
+
+export async function renderQrLinks(doc, links, y) {
+  if (!links?.length) return
+  const { gap, width, captionTop, height } = qrLayout(doc, links)
+  if (y + height > bottomLimit()) throw new Error('QR resources exceed the content area')
+  doc.fillColor(colors.gray).font('Helvetica').fontSize(8)
+  doc.text('Scan a code or click a label to open the resource.', page.left, y, { width: contentWidth() })
+  for (const [index, [label, url]] of links.entries()) {
+    const x = page.left + index * (width + gap)
+    const image = await QRCode.toBuffer(url, {
+      errorCorrectionLevel: 'M', margin: 4, scale: 6,
+      color: { dark: '#102a43', light: '#ffffff' },
+    })
+    doc.image(image, x + (width - 70) / 2, y + 15, { width: 70, height: 70 })
+    doc.link(x + (width - 70) / 2, y + 15, 70, 70, url)
+    doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(8)
+    doc.text(label, x, y + captionTop, { width, align: 'center', lineGap: 1, link: url, underline: true })
+  }
+  doc.y = y + height
 }
 
 async function renderGuide(doc, document, blocks) {
-  addPage(doc)
+  addPage(doc, document)
   renderTitleBlock(doc, document)
-  flowColumns(doc, blocks, {
-    columnCount: 2,
-    columnGap: 20,
-    fontSize: 8.7,
-    headingSize: 10.2,
-    lineGap: 0.9,
+  flowColumns(doc, document, blocks, {
+    width: (contentWidth() - 20) / 2,
+    fontSize: 10, headingSize: 11.5, lineGap: 1.3, gap: 5,
+    bottom: bottomLimit(),
   })
-  await renderQrLinks(doc, document.qrLinks)
 }
 
 async function renderCard(doc, document, blocks) {
-  addPage(doc)
+  addPage(doc, document)
   renderTitleBlock(doc, document)
-  flowColumns(doc, blocks, {
-    columnCount: 2,
-    columnGap: 18,
-    fontSize: 6.6,
-    headingSize: 7.8,
-    lineGap: 0,
-    bottomLimit: bottomLimit() - (document.qrLinks?.length ? 92 : 0),
-  })
-  doc.y = Math.max(doc.y, page.height - page.bottom - page.footerHeight - 88)
-  await renderQrLinks(doc, document.qrLinks)
+  const qrTop = bottomLimit() - (document.qrLinks?.length ? qrLayout(doc, document.qrLinks).height : 0)
+  const options = {
+    width: (contentWidth() - 20) / 2,
+    fontSize: 9.5, headingSize: 10.5, lineGap: 1.1, gap: 5,
+    bottom: document.qrLinks?.length ? qrTop - 12 : bottomLimit(),
+  }
+  const split = balancedSplit(doc, blocks, options, options.bottom - doc.y)
+  if (split) {
+    renderColumns(doc, [blocks.slice(0, split), blocks.slice(split)], doc.y, options)
+  } else flowColumns(doc, document, blocks, options)
+  if (doc.y > options.bottom + 0.5) throw new Error(`${document.slug}: card overlaps QR area`)
+  await renderQrLinks(doc, document.qrLinks, qrTop)
 }
 
-async function renderForm(doc, document, blocks) {
-  addPage(doc)
+export function renderForm(doc, document, blocks) {
+  addPage(doc, document)
   renderTitleBlock(doc, document)
-  const rowHeight = 14
-  const fullHeight = 18
-  const gap = 18
-  const halfWidth = (contentWidth() - gap) / 2
-
-  const section = (title) => {
-    doc.fillColor(colors.orange).font('Helvetica-Bold').fontSize(8.8)
-    doc.text(title, page.left, doc.y, { width: contentWidth(), lineBreak: false })
-    doc
-      .strokeColor(colors.orange)
-      .lineWidth(0.8)
-      .moveTo(page.left, doc.y + 10)
-      .lineTo(page.left + contentWidth(), doc.y + 10)
-      .stroke()
-    doc.y += 11
-  }
-
-  const field = (label, x, y, width) => {
-    doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(6.4)
-    doc.text(`${label}:`, x, y, { width, lineBreak: false })
-    doc.strokeColor(colors.border).lineWidth(0.7)
-    doc.moveTo(x + 86, y + 8).lineTo(x + width, y + 8).stroke()
-  }
-
-  const fullField = (label) => {
+  const width = contentWidth()
+  for (let index = 0; index < blocks.length; index += 1) {
+    const block = blocks[index]
     const y = doc.y
-    doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(6.4)
-    doc.text(`${label}:`, page.left, y, { width: contentWidth(), lineBreak: false })
-    doc.strokeColor(colors.border).lineWidth(0.7)
-    doc.moveTo(page.left, y + 13).lineTo(page.width - page.right, y + 13).stroke()
-    doc.y += fullHeight
+    if (block.type === 'heading') {
+      const titleHeight = measure(doc, block.text, width - 12, 9, true, 0)
+      const boxHeight = titleHeight + spacing.formHeadingPadding * 2
+      doc.rect(page.left, y, width, boxHeight).fill(colors.lightBlue)
+      doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(9)
+      centeredHeading(doc, block.text, page.left + 6, y + spacing.formHeadingPadding, { width: width - 12, lineGap: 0 })
+      doc.y = y + boxHeight + spacing.headingToBody
+    } else if (block.type === 'item') {
+      const items = []
+      while (blocks[index]?.type === 'item') items.push(blocks[index++].text)
+      index -= 1
+      const cellWidth = width / 3
+      const rowHeight = Math.max(16, ...items.map(text => measure(doc, text, cellWidth - 16, 8, false, 0) + 5))
+      for (const [itemIndex, text] of items.entries()) {
+        const x = page.left + (itemIndex % 3) * cellWidth
+        const rowY = y + Math.floor(itemIndex / 3) * rowHeight
+        doc.fillColor(colors.navy).font('Helvetica').fontSize(8)
+        drawMarker(doc, 'check', x, rowY, 12)
+        doc.fillColor(colors.navy)
+        doc.text(text, x + 12, rowY, { width: cellWidth - 16 })
+      }
+      doc.y = y + Math.ceil(items.length / 3) * rowHeight + 3
+    } else if (block.type === 'field') {
+      const labels = block.text.split(' | ')
+      const cellWidth = (width - (labels.length - 1) * 20) / labels.length
+      const rowHeight = Math.max(
+        /Planned Route|Overdue Instructions/.test(block.text) ? 32 : 24,
+        ...labels.map(label => measure(doc, label, cellWidth, 8, false, 0) + 15),
+      )
+      for (const [labelIndex, label] of labels.entries()) {
+        const x = page.left + labelIndex * (cellWidth + 20)
+        doc.fillColor(colors.navy).font('Helvetica').fontSize(8)
+        doc.text(label, x, y, { width: cellWidth, lineGap: 0 })
+        doc.strokeColor(colors.gray).lineWidth(0.5)
+          .moveTo(x, y + rowHeight - 5).lineTo(x + cellWidth, y + rowHeight - 5).stroke()
+      }
+      doc.y = y + rowHeight
+    } else {
+      doc.fillColor(colors.navy).font('Helvetica').fontSize(8)
+      linkedText(doc, block.text, page.left, y, { width, lineGap: 1 })
+      doc.y += 6
+    }
+    if (doc.y > bottomLimit()) throw new Error(`${document.slug}: form exceeds one page (${doc.y})`)
   }
-
-  const pair = (leftLabel, rightLabel) => {
-    const y = doc.y
-    field(leftLabel, page.left, y, halfWidth)
-    field(rightLabel, page.left + halfWidth + gap, y, halfWidth)
-    doc.y += rowHeight
-  }
-
-  section('PERSONAL INFORMATION')
-  pair('Full Name', 'Phone Number')
-  pair('Number in Group', 'Ages')
-  fullField('Names of All Group Members')
-  fullField('Medical Conditions / Medications / Allergies')
-
-  section('TRIP DETAILS')
-  pair('Destination / Trail Name', 'Date of Trip')
-  fullField('Planned Route (trailhead, trail names, junctions, turnaround point)')
-  fullField('Alternate Route / Backup Plan')
-  pair('Departure Time', 'Expected Return Time')
-  pair('Trailhead Parking Location', 'Latest Return Before Overdue')
-
-  section('VEHICLE INFORMATION')
-  pair('Vehicle Make / Model / Color', 'License Plate')
-  fullField('Where Vehicle Will Be Parked')
-
-  section('EMERGENCY CONTACT')
-  pair('Contact Name', 'Contact Phone')
-
-  section('TEN ESSENTIALS CHECK')
-  const checklist = [
-    'Map & compass', 'GPS / phone w/ offline maps', 'Headlamp', 'First aid kit',
-    'Emergency shelter', 'Fire starting', 'Extra food', 'Extra water + filter',
-    'Warm layers', 'Rain gear', 'Whistle', 'Satellite communicator',
-  ]
-  doc.font('Helvetica').fontSize(6.1)
-  const colWidth = contentWidth() / 4
-  checklist.forEach((item, index) => {
-    const x = page.left + (index % 4) * colWidth
-    const y = doc.y + Math.floor(index / 4) * 10
-    doc.rect(x, y + 2, 5, 5).strokeColor(colors.border).stroke()
-    doc.fillColor(colors.navy).text(item, x + 10, y, { width: colWidth - 12 })
-  })
-  doc.y += Math.ceil(checklist.length / 4) * 10 + 4
 }
 
-function drawHeaderFooter(doc, document) {
+export function drawHeaderFooter(doc, document) {
   const range = doc.bufferedPageRange()
   for (let i = range.start; i < range.start + range.count; i += 1) {
     doc.switchToPage(i)
-    doc.rect(0, 0, page.width, page.headerHeight).fill(colors.navy)
-    drawLogo(doc, 18, 8, 32)
-    doc.fillColor('white').font('Helvetica-Bold').fontSize(8.5)
-    doc.text('PIERCE COUNTY 4x4 SEARCH & RESCUE', 58, 9, { width: 300 })
-    doc.fillColor('#dbe5ef').font('Helvetica').fontSize(7.2)
-    doc.text(`${SITE_DOMAIN} | 501(c)(3) Non-Profit | Serving Since 1984`, 58, 25, { width: 310 })
-    doc.roundedRect(page.width - 112, 9, 84, 30, 2).fill(colors.orange)
-    doc.fillColor('white').font('Helvetica-Bold').fontSize(7.5)
-    doc.text('EMERGENCY', page.width - 108, 14, { width: 76, align: 'center' })
-    doc.text('CALL 911', page.width - 108, 25, { width: 76, align: 'center' })
-
+    doc.image(logoPath, page.left, 16, { width: 44, height: 44 })
+    doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(10)
+    doc.text('PIERCE COUNTY 4x4', page.left + 55, 21, { width: 310 })
+    doc.text('SEARCH & RESCUE', page.left + 55, 34, { width: 310 })
+    doc.fillColor(colors.gray).font('Helvetica').fontSize(8)
+    doc.text('Volunteer service • Pierce County, Washington', page.left + 55, 48, { width: 310 })
+    doc.roundedRect(page.width - page.right - 99, 20, 99, 37, 3).fill(colors.orange)
+    doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(8)
+    const labelHeight = fontMetrics(doc).capHeight
+    doc.fontSize(12)
+    const callHeight = fontMetrics(doc).capHeight
+    const labelY = 20 + (37 - labelHeight - spacing.headingToBody - callHeight) / 2
+    doc.fontSize(8).text(document.type === 'form' ? 'IF OVERDUE' : 'EMERGENCY',
+      page.width - page.right - 95, labelY + labelHeight, { width: 91, align: 'center', baseline: 'alphabetic' })
+    doc.fontSize(12).text('CALL 911', page.width - page.right - 95,
+      labelY + labelHeight + spacing.headingToBody + callHeight, { width: 91, align: 'center', baseline: 'alphabetic' })
+    doc.strokeColor(colors.orange).lineWidth(1.5)
+      .moveTo(page.left, 70).lineTo(page.width - page.right, 70).stroke()
     const footerY = page.height - page.footerHeight
-    doc.strokeColor(colors.orange).lineWidth(0.7)
+    doc.strokeColor(colors.border).lineWidth(0.7)
     doc.moveTo(page.left, footerY).lineTo(page.width - page.right, footerY).stroke()
-    doc.fillColor(colors.gray).font('Helvetica').fontSize(6.7)
-    if (document.type === 'guide') {
-      doc.text(`${ORG_NAME} | ${ADDRESS} | ${SITE_DOMAIN}`, page.left, footerY + 8, {
-        width: contentWidth() - 70,
-        lineBreak: false,
-      })
-      doc.text('We do not charge for our services, nor do we receive tax dollars.', page.left, footerY + 20, {
-        width: contentWidth() - 70,
-        lineBreak: false,
-      })
-    } else {
-      doc.text(`${ORG_NAME} | 501(c)(3) | ${SITE_DOMAIN} | Print, laminate, keep in your pack.`, page.left, footerY + 12, {
-        width: contentWidth() - 70,
-        lineBreak: false,
-      })
-    }
-    doc.fillColor(colors.gray).font('Helvetica').fontSize(7)
-    doc.text(`Page ${i + 1 - range.start}/${range.count}`, page.width - page.right - 54, footerY + 12, {
-      width: 54,
+    doc.fillColor(colors.navy).font('Helvetica-Bold').fontSize(8)
+    doc.text(`${SITE_DOMAIN}/safety`, page.left, footerY + 9, {
+      width: 140, link: `${SITE_URL}/safety#safety-guides`,
+    })
+    doc.fillColor(colors.gray).font('Helvetica').fontSize(8)
+    const note = document.type === 'form' ? 'Leave this plan with your emergency contact.'
+      : document.type === 'card' ? 'Print at 100% • Laminate • Keep in your pack'
+        : 'Outdoor safety series • Plan ahead. Come home safe.'
+    doc.text(note, page.left + 145, footerY + 9, { width: 330 })
+    doc.text(`${i + 1 - range.start} / ${range.count}`, page.width - page.right - 50, footerY + 9, {
+      width: 50,
       align: 'right',
-      lineBreak: false,
     })
   }
 }
 
-async function writePdf(document) {
-  const sourcePath = path.join(sourceDir, `${document.slug}.txt`)
-  const outputPath = path.join(outputDir, `${document.slug}.pdf`)
-  const source = fs.readFileSync(sourcePath, 'utf8')
-  const blocks = removeExtractedBoilerplate(parseSource(source), document)
-  const doc = createDocument()
-  const chunks = []
-
-  doc.on('data', (chunk) => chunks.push(chunk))
-  const done = new Promise((resolve) => doc.on('end', resolve))
-
+export async function renderDocument(doc, document, blocks) {
   if (document.type === 'card') {
     await renderCard(doc, document, blocks)
   } else if (document.type === 'form') {
@@ -681,13 +724,35 @@ async function writePdf(document) {
   }
 
   drawHeaderFooter(doc, document)
+  if (document.type !== 'guide' && doc.bufferedPageRange().count !== 1) {
+    throw new Error(`${document.slug}: must remain one page`)
+  }
+}
+
+async function writePdf(document) {
+  const sourcePath = path.join(sourceDir, `${document.slug}.txt`)
+  const outputPath = path.join(outputDir, `${document.slug}.pdf`)
+  const source = fs.readFileSync(sourcePath, 'utf8')
+  const blocks = parseSource(cleanSource(source, document))
+  const doc = createDocument(document)
+  const chunks = []
+
+  doc.on('data', (chunk) => chunks.push(chunk))
+  const done = new Promise((resolve, reject) => {
+    doc.on('end', resolve)
+    doc.on('error', reject)
+  })
+
+  await renderDocument(doc, document, blocks)
   doc.end()
   await done
   fs.writeFileSync(outputPath, Buffer.concat(chunks))
 }
 
-fs.mkdirSync(outputDir, { recursive: true })
-for (const document of documents) {
-  await writePdf(document)
-  console.log(`generated public/guides/${document.slug}.pdf`)
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  fs.mkdirSync(outputDir, { recursive: true })
+  for (const document of documents) {
+    await writePdf(document)
+    console.log(`generated public/guides/${document.slug}.pdf`)
+  }
 }

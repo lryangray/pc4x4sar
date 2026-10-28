@@ -1,3 +1,30 @@
+export const safetyTips = [
+  {
+    title: 'Tell Someone Your Plans',
+    description: 'Always let a friend or family member know where you are going and when you expect to return.',
+  },
+  {
+    title: 'Carry the Ten Essentials',
+    description: 'Navigation, sun protection, insulation, illumination, first-aid, fire, repair tools, nutrition, hydration, and emergency shelter.',
+  },
+  {
+    title: 'Check Weather Conditions',
+    description: 'Mountain weather changes rapidly. Check forecasts before heading out and be prepared to turn back.',
+  },
+  {
+    title: 'Know Your Limits',
+    description: 'Choose trails and activities that match your fitness level and experience. It is okay to turn back.',
+  },
+  {
+    title: 'Stay On Marked Trails',
+    description: 'Going off-trail increases your risk of getting lost and makes it harder for rescuers to find you.',
+  },
+  {
+    title: 'Carry a Charged Phone',
+    description: 'Keep your phone charged and consider a portable battery. Turn on location services in case of emergency.',
+  },
+]
+
 export const faqs = [
   {
     question: 'How do I request search and rescue assistance?',
@@ -118,8 +145,8 @@ export const capabilities = [
       'Backcountry navigation',
       'Rider safety certification',
     ],
-    image: '/images/cap-training-helo.jpg',
-    imageAlt: 'SAR team members approaching helicopter during advanced training exercise',
+    image: '/images/gallery-atv-creek.jpg',
+    imageAlt: 'SAR team navigating ATVs through a rocky creek in backcountry terrain',
   },
   {
     category: 'Tracked Vehicles',
@@ -133,8 +160,8 @@ export const capabilities = [
       'Biennial recertification',
       'County equipment available',
     ],
-    image: '/images/cap-search-railroad.jpg',
-    imageAlt: 'SAR team with search dog conducting a search along railroad tracks',
+    image: '/images/gallery-sheriff-snowmobiles.jpg',
+    imageAlt: 'SAR members with sheriff snowmobiles in a snowy mountain landscape',
   },
 ]
 

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { handleScrollClick } from '@/lib/scroll'
+import { SAFETY_LIBRARY_PATH } from '@/lib/data/safety-guides'
 
 export default function Hero() {
   const [heroImageFailed, setHeroImageFailed] = useState(false)
@@ -72,13 +73,9 @@ export default function Hero() {
             <Link href="/volunteer" className="btn-primary text-lg">
               Volunteer With Us <span className="btn-arrow">→</span>
             </Link>
-            <a
-              href="#mission"
-              onClick={(e) => handleScrollClick(e, '#mission')}
-              className="btn-secondary text-lg"
-            >
-              Learn More
-            </a>
+            <Link href={SAFETY_LIBRARY_PATH} className="btn-secondary text-lg">
+              Free Safety Guides
+            </Link>
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@ Elbe Hills ORV Area
 Located near Elbe (south Pierce County). Offers 13 miles of motorized trails and a 20-site campground. Mix of single-track and
 double-track trails through DNR-managed forest land. Great for beginners and families.
 
-Nearby: Walker Valley (Skagit County)
+## Nearby: Walker Valley (Skagit County)
 A popular destination for Pierce County riders willing to make the drive. 36 miles of trails including single-track for motorcycles,
 double-track for ATVs, and 4x4 trails. Well-maintained DNR site with staging areas.
 
@@ -52,7 +52,6 @@ Before Every Ride
 
 On the Trail
 Ride within your ability. Speed is the leading cause of ATV/SxS injuries. Keep right on shared trails and announce yourself on blind
-
 corners. Be alert for logging trucks and other vehicles on forest roads — they can't stop quickly. Never ride alone in remote areas.
 
 SxS / UTV Specific
@@ -68,6 +67,8 @@ OHV areas are often remote with no cell service. Carry a satellite communicator 
 satellite 911 texting. Always ride with a buddy and file a trip plan with someone who isn't riding with you.
 
 IF SOMEONE IS INJURED
-1) Ensure the scene is safe (engine off, vehicle stabilized). 2) Don't move the injured person unless there's immediate danger. 3)
-Call 911 (or text via satellite). Give your GPS coordinates. 4) Send someone to the nearest road to guide responders. 5) Keep the
-injured person warm and calm until help arrives.
+1) Ensure the scene is safe (engine off, vehicle stabilized).
+2) Don't move the injured person unless there's immediate danger.
+3) Call 911 (or text via satellite). Give your GPS coordinates.
+4) Send someone to the nearest road to guide responders.
+5) Keep the injured person warm and calm until help arrives.
