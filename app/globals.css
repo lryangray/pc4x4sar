@@ -69,6 +69,18 @@
   .container-custom {
     @apply max-w-7xl mx-auto;
   }
+
+  .guide-action {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600;
+  }
+
+  .guide-anchor {
+    scroll-margin-top: var(--header-offset);
+  }
+
+  .guide-anchor:target {
+    @apply outline outline-2 outline-offset-4 outline-rescue-orange;
+  }
 }
 
 @layer utilities {
