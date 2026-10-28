@@ -187,6 +187,11 @@ export const sponsors = [
     url: 'https://www.duraclutch.com/',
   },
   {
+    name: 'ExtremeTerrain Clean Trail Project',
+    logo: '/sponsors/extremeterrain-clean-trail.png',
+    url: 'https://www.extremeterrain.com/clean-trail-initiative-program.html',
+  },
+  {
     name: 'ICOM America',
     logo: '/sponsors/icom.svg',
     url: 'https://www.icomamerica.com/',
